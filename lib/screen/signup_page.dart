@@ -21,15 +21,17 @@ class _SignupPageState extends State<SignupPage> {
         title: const Text("Sign Up"),
       ),
       body: Center(
-        key: _key,
-        child: Column(
-          children: [
-            emailInput(),
-            const SizedBox(height: 15),
-            passwordInput(),
-            const SizedBox(height: 15),
-            signUpButton(),
-          ],
+        child: Form(
+          key: _key,
+          child: Column(
+            children: [
+              emailInput(),
+              const SizedBox(height: 15),
+              passwordInput(),
+              const SizedBox(height: 15),
+              signUpButton(),
+            ],
+          ),
         ),
       ),
     );
