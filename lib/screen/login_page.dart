@@ -26,7 +26,9 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             emailInput(),
+            const SizedBox(height: 15),
             passwordInput(),
+            const SizedBox(height: 15),
             loginButton(),
           ],
         ),
