@@ -30,6 +30,9 @@ class _LoginPageState extends State<LoginPage> {
             passwordInput(),
             const SizedBox(height: 15),
             loginButton(),
+            TextButton(
+                onPressed: () => Navigator.pushNamed(context, '/signUp'),
+                child: const Text("Sign Up")),
           ],
         ),
       ),
