@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/home_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -16,6 +18,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      localizationsDelegates: [],
+      routes: {
+        '/': (context) => StartScreen(),
+      },
     );
   }
 }
