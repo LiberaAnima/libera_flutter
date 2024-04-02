@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:libera_flutter/screen/login_page.dart';
 import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -27,7 +28,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       localizationsDelegates: [],
       routes: {
-        '/': (context) => StartScreen(),
+        // '/': (context) => const StartScreen(),
+        '/': (context) => const LoginPage(),
+        // 'signup' : (context) => const SignUpPage(),
       },
     );
   }
