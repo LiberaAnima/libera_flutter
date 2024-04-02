@@ -1,13 +1,15 @@
 import "package:flutter/material.dart";
+import 'package:libera_flutter/screen/login_page.dart';
 
-class StartScreen extends StatefulWidget {
-  const StartScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  _StartScreenState createState() => _StartScreenState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _StartScreenState extends State<StartScreen> {
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
@@ -32,16 +34,20 @@ class _StartScreenState extends State<StartScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: <Color>[
-              Color.fromARGB(255, 255, 191, 114),
-              Color.fromARGB(255, 249, 215, 171),
+              Color.fromARGB(255, 255, 201, 135),
+              Color.fromARGB(255, 252, 225, 190),
             ],
           ),
         ),
-        child: const Center(
+        child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(style: TextStyle(color: Colors.white), "hello"),
+              ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, "/signUp"),
+                child: Text("signUp"),
+              ),
             ],
           ),
         ),
