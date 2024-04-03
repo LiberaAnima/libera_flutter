@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './main.dart';
+import '../main.dart';
 
 class PostPage extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class _PostPagePageState extends State<PostPage> {
           decoration: const InputDecoration(
             icon: Icon(Icons.speaker_notes),
             hintText: '投稿内容を記載します',
-            labelText: '内容 * ',
+            labelText: '内容',
           ),
         ),
       ),
