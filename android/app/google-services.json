@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "997188547316",
+    "project_id": "libera-b72ea",
+    "storage_bucket": "libera-b72ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997188547316:android:080d75e7389bb321ee64a1",
+        "android_client_info": {
+          "package_name": "com.example.libera_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBybdbXYoI1p_DIESpHKj-skrqzlxrwigY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

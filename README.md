@@ -2,6 +2,9 @@
 
 A new Flutter project.
 
+## Versions
+node 18.17.0
+
 ## Git Rules
 
 ### Prefixes
