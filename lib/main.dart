@@ -3,6 +3,7 @@ import 'package:libera_flutter/screen/post_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
+import 'package:libera_flutter/screen/postbook_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
 import 'firebase_options.dart';
 
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/logIn': (context) => const LoginPage(),
         '/signUp': (context) => const SignupPage(),
         '/postPage': (context) => PostPage(),
+        '/postBookPage' : (context) => PostBookPage(),
       },
     );
   }
