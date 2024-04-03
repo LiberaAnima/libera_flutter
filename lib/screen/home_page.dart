@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   label: 'class',
                 ),
+
                 NavigationDestination(
                   icon: Badge(
                     label: Text('4'),
