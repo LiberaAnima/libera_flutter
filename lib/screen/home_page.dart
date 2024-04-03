@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:libera_flutter/screen/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/login_page.dart';
+import 'package:libera_flutter/screen/postlist_page.dart';
+import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +16,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  int currentPageIndex = 0;
+  final List<Widget> _pages = <Widget>[
+    // const HomePage(),
+    const BookMarketListPage(),
+    const PostListPage(),
+    const ProfilePage(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -22,59 +33,76 @@ class _HomePageState extends State<HomePage> {
           return const LoginPage();
         } else {
           return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              onTap: (int Index) {
-                if (Index == 0) {
-                  Navigator.pushNamed(context, '/');
-                } else if (Index == 1) {
-                  Navigator.pushNamed(context, '/postlist');
-                } else if (Index == 2) {
-                  Navigator.pushNamed(context, '/profile');
-                }
+            bottomNavigationBar: NavigationBar(
+              onDestinationSelected: (int index) {
+                setState(
+                  () {
+                    currentPageIndex = index;
+                  },
+                );
               },
-              items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: "Home",
+              indicatorColor: Colors.amber,
+              selectedIndex: currentPageIndex,
+              destinations: const <Widget>[
+                NavigationDestination(
+                  selectedIcon: Icon(Icons.home),
+                  icon: Icon(Icons.home_outlined),
+                  label: 'Home',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.article),
-                  label: "掲示板",
+                NavigationDestination(
+                  icon: Badge(child: Icon(Icons.notifications_sharp)),
+                  label: 'book',
                 ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: "Profile",
+                NavigationDestination(
+                  icon: Badge(
+                    label: Text('2'),
+                    child: Icon(Icons.messenger_sharp),
+                  ),
+                  label: 'postlist',
                 ),
-                // BottomNavigationBarItem(
-                //     icon: Icon(Icons.person), label: "myPage"),
+                NavigationDestination(
+                  icon: Badge(
+                    label: Text('3'),
+                    child: Icon(Icons.messenger_sharp),
+                  ),
+                  label: 'class',
+                ),
+                NavigationDestination(
+                  icon: Badge(
+                    label: Text('4'),
+                    child: Icon(Icons.messenger_sharp),
+                  ),
+                  label: 'profile',
+                ),
               ],
             ),
-            body: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: <Color>[
-                    Color.fromARGB(255, 255, 201, 135),
-                    Color.fromARGB(255, 252, 225, 190),
-                  ],
-                ),
-              ),
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(style: TextStyle(color: Colors.white), "hello"),
-                    ElevatedButton(
-                      onPressed: () async => await _auth
-                          .signOut()
-                          .then((_) => Navigator.pushNamed(context, "/logIn")),
-                      child: Text("Log Out"),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            body: _pages[currentPageIndex],
+            // body: Container(
+            //   decoration: const BoxDecoration(
+            //     gradient: LinearGradient(
+            //       begin: Alignment.topCenter,
+            //       end: Alignment.bottomCenter,
+            //       colors: <Color>[
+            //         Color.fromARGB(255, 255, 201, 135),
+            //         Color.fromARGB(255, 252, 225, 190),
+            //       ],
+            //     ),
+            //   ),
+            //   child: Center(
+            //     child: Column(
+            //       mainAxisSize: MainAxisSize.min,
+            //       children: [
+            //         Text(style: TextStyle(color: Colors.white), "hello"),
+            //         ElevatedButton(
+            //           onPressed: () async => await _auth
+            //               .signOut()
+            //               .then((_) => Navigator.pushNamed(context, "/logIn")),
+            //           child: Text("Log Out"),
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           );
         }
       },
