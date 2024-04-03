@@ -38,8 +38,8 @@ class _HomePageState extends State<HomePage> {
                   label: "Home",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.business),
-                  label: "Business",
+                  icon: Icon(Icons.article),
+                  label: "掲示板",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),
