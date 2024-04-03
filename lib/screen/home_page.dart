@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:libera_flutter/screen/bookmarketlist_page.dart';
+import 'package:libera_flutter/screen/class_page.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
     const MainPage(),
     const BookMarketListPage(),
     const PostListPage(),
+    const ClassPage(),
     const ProfilePage(),
   ];
 
