@@ -23,6 +23,15 @@ class _HomePageState extends State<HomePage> {
         } else {
           return Scaffold(
             bottomNavigationBar: BottomNavigationBar(
+              onTap: (int Index) {
+                if (Index == 0) {
+                  Navigator.pushNamed(context, '/');
+                } else if (Index == 1) {
+                  Navigator.pushNamed(context, '/postlist');
+                } else if (Index == 2) {
+                  Navigator.pushNamed(context, '/mypage');
+                }
+              },
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
@@ -36,6 +45,8 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.school),
                   label: "School",
                 ),
+                // BottomNavigationBarItem(
+                //     icon: Icon(Icons.person), label: "myPage"),
               ],
             ),
             body: Container(
