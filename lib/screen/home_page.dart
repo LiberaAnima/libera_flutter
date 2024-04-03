@@ -80,32 +80,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             body: _pages[currentPageIndex],
-            // body: Container(
-            //   decoration: const BoxDecoration(
-            //     gradient: LinearGradient(
-            //       begin: Alignment.topCenter,
-            //       end: Alignment.bottomCenter,
-            //       colors: <Color>[
-            //         Color.fromARGB(255, 255, 201, 135),
-            //         Color.fromARGB(255, 252, 225, 190),
-            //       ],
-            //     ),
-            //   ),
-            //   child: Center(
-            //     child: Column(
-            //       mainAxisSize: MainAxisSize.min,
-            //       children: [
-            //         Text(style: TextStyle(color: Colors.white), "hello"),
-            //         ElevatedButton(
-            //           onPressed: () async => await _auth
-            //               .signOut()
-            //               .then((_) => Navigator.pushNamed(context, "/logIn")),
-            //           child: Text("Log Out"),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           );
         }
       },
