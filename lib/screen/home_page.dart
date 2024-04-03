@@ -51,27 +51,27 @@ class _HomePageState extends State<HomePage> {
                   label: 'Home',
                 ),
                 NavigationDestination(
-                  icon: Badge(child: Icon(Icons.notifications_sharp)),
+                  icon: Badge(child: Icon(Icons.book)),
                   label: 'book',
                 ),
                 NavigationDestination(
                   icon: Badge(
                     label: Text('2'),
-                    child: Icon(Icons.messenger_sharp),
+                    child: Icon(Icons.article),
                   ),
                   label: 'postlist',
                 ),
                 NavigationDestination(
                   icon: Badge(
                     label: Text('3'),
-                    child: Icon(Icons.messenger_sharp),
+                    child: Icon(Icons.class_),
                   ),
                   label: 'class',
                 ),
                 NavigationDestination(
                   icon: Badge(
                     label: Text('4'),
-                    child: Icon(Icons.messenger_sharp),
+                    child: Icon(Icons.person),
                   ),
                   label: 'profile',
                 ),
