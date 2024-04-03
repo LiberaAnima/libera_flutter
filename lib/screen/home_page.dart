@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
                 } else if (Index == 1) {
                   Navigator.pushNamed(context, '/postlist');
                 } else if (Index == 2) {
-                  Navigator.pushNamed(context, '/mypage');
+                  Navigator.pushNamed(context, '/profile');
                 }
               },
               items: const <BottomNavigationBarItem>[
@@ -42,8 +42,8 @@ class _HomePageState extends State<HomePage> {
                   label: "Business",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.school),
-                  label: "School",
+                  icon: Icon(Icons.person),
+                  label: "Profile",
                 ),
                 // BottomNavigationBarItem(
                 //     icon: Icon(Icons.person), label: "myPage"),
