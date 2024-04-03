@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:libera_flutter/post.dart';
+import 'package:libera_flutter/screen/post_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
