@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:libera_flutter/screen/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/login_page.dart';
+import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
 
   int currentPageIndex = 0;
   final List<Widget> _pages = <Widget>[
-    // const HomePage(),
+    const MainPage(),
     const BookMarketListPage(),
     const PostListPage(),
     const ProfilePage(),
