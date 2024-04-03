@@ -39,6 +39,14 @@ class _MainPagePageState extends State<MainPage> {
                     .then((_) => Navigator.pushNamed(context, "/logIn")),
                 child: Text("Log Out"),
               ),
+              ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, '/post'),
+                child: Text("post"),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, '/postbook'),
+                child: Text("postbook"),
+              )
             ],
           ),
         ),
