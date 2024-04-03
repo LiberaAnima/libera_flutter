@@ -57,12 +57,6 @@ class _HomePageState extends State<HomePage> {
                     ElevatedButton(
                       onPressed: () async => await _auth
                           .signOut()
-                          .then((_) => Navigator.pushNamed(context, "/post")),
-                      child: Text("Posting"),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async => await _auth
-                          .signOut()
                           .then((_) => Navigator.pushNamed(context, "/logIn")),
                       child: Text("Log Out"),
                     ),
@@ -72,9 +66,9 @@ class _HomePageState extends State<HomePage> {
                       child: Text("post"),
                     ),
                     ElevatedButton(
-                        onPressed: () =>
+                      onPressed: () =>
                           Navigator.pushNamed(context, '/postBookPage'),
-                        child: Text("post textbooks"),
+                      child: Text("post textbooks"),
                     ),
                   ],
                 ),

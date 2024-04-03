@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import '../main.dart';
 
 class PostPage extends StatefulWidget {
@@ -39,6 +41,10 @@ class _PostPagePageState extends State<PostPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          FirebaseFirestore.instance
+              .collection('posts')
+              .doc()
+              .set({'post_message': _textEditingController.text});
           _onSubmitted(_textEditingController.text);
         },
         child: Icon(Icons.send),
