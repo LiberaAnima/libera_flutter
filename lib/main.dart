@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './post.dart';
 
 void main() {
   runApp(const MyApp());
@@ -34,17 +35,25 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("Demo"),
+        title: const Text("Libela"),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              '授業の口コミを書いてください',
             ),
           ],
         ),
+      ),
+      floatingActionButton: IconButton(
+        icon: Icon(Icons.edit),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return PostPage();
+          }));
+        },
       ),
     );
   }
