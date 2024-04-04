@@ -39,7 +39,9 @@ class _PostPagePageState extends State<PostPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _onSubmitted(_textEditingController.text);
+          print('_textEditingController.text: ${_textEditingController.text}');
+          // _onSubmitted(_textEditingController.text);
+          Navigator.pushNamed(context, '/');
         },
         child: Icon(Icons.send),
       ),
