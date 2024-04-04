@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:image_picker/image_picker.dart';
 import '../main.dart';
 
 class PostBookPage extends StatefulWidget {
@@ -16,9 +19,10 @@ class _PostBookPagePageState extends State<PostBookPage> {
   TextEditingController _bookauthorEditingController = TextEditingController();
   TextEditingController _priceEditingController = TextEditingController();
   TextEditingController _detailsEditingController = TextEditingController();
+  File? _bookImage;
 
-  void _onSubmitted(
-      String bookname, String bookauthor, String price, String details) {
+  void _onSubmitted(String bookname, String bookauthor, String price,
+      String details, File? bookImage) {
     /// 入力欄をクリアにする
     ///
     /// firebase との連携
@@ -26,6 +30,19 @@ class _PostBookPagePageState extends State<PostBookPage> {
     _bookauthorEditingController.clear();
     _priceEditingController.clear();
     _detailsEditingController.clear();
+    setState(() {
+      _bookImage = null;
+    });
+  }
+
+  Future<void> _pickImage() async {
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _bookImage = File(pickedFile.path);
+      });
+    }
   }
 
   @override
@@ -62,6 +79,16 @@ class _PostBookPagePageState extends State<PostBookPage> {
               labelText: '著者名*',
             ),
           ),
+          if (_bookImage != null)
+            Image.file(
+              _bookImage!,
+              width: 100,
+              height: 100,
+            ),
+          ElevatedButton(
+            onPressed: _pickImage,
+            child: Text('テキストの画像を選択'),
+          ),
           TextField(
             controller: _priceEditingController,
             enabled: true,
@@ -97,6 +124,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
           // _onSubmitted(
           //     _booknameEditingController.text,
           //     _bookauthorEditingController.text,
+          //     _bookImage,
           //     _priceEditingController.text,
           //     _detailsEditingController.text);
           Navigator.pushNamed(context, '/');
