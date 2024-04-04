@@ -67,6 +67,11 @@ class _HomePageState extends State<HomePage> {
                     ),
                     ElevatedButton(
                       onPressed: () =>
+                          Navigator.pushNamed(context, '/postViewPage'),
+                      child: Text("post view"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () =>
                           Navigator.pushNamed(context, '/postBookPage'),
                       child: Text("post textbooks"),
                     ),
