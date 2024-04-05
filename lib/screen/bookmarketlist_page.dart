@@ -36,7 +36,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
     // 他の投稿データも追加
   ];
 
-  DropdownButton<String> _buildDropdownButoon() {
+  DropdownButton<String> _buildDropdownButton() {
     return DropdownButton<String>(
       icon: const Icon(Icons.arrow_drop_down),
       value: _selectedFaculty,
@@ -59,7 +59,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
     return Scaffold(
       appBar: AppBar(
           title: Row(
-        children: <Widget>[_buildDropdownButoon(), Text("本のマーケット")],
+        children: <Widget>[_buildDropdownButton(), Text("本のマーケット")],
       )),
       body: ListView.builder(
         itemCount: _posts.length,
@@ -74,19 +74,20 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                 children: <Widget>[
                   Image.network(
                     post['imageUrl'],
-                    width: 100,
-                    height: 100,
+                    width: 80,
+                    height: 80,
                     fit: BoxFit.cover,
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          post['bookname'],
-                          style: Theme.of(context).textTheme.headline6,
-                        ),
+                        Text(post['bookname'],
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            )),
                         Text(post['faculty']),
                         Text(post['postedTime']),
                       ],
@@ -98,8 +99,8 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                       Text(
                         "${post['price']}円",
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.green[700],
+                          fontSize: 17,
+                          color: Colors.orange[700],
                           fontWeight: FontWeight.bold,
                         ),
                       ),
