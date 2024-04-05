@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+const List<String> list_sex = <String>['男性', '女性', 'その他'];
+const List<String> list_school = <String>['関西学院大学', '神戸大学'];
+
 class Signup2Page extends StatefulWidget {
   final UserCredential userCredential;
 
@@ -15,6 +18,9 @@ class _Signup2PageState extends State<Signup2Page> {
   final _ageController = TextEditingController();
   final _genderController = TextEditingController();
   final _schoolController = TextEditingController();
+
+  String dropdouwnValue = 'Sex';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +48,22 @@ class _Signup2PageState extends State<Signup2Page> {
                 labelText: 'School',
               ),
             ),
+            DropdownMenu<String>(
+              menuStyle: MenuStyle(backgroundColor: ),
+              initialSelection: list_sex.first,
+              onSelected: (String? value) {
+                setState(
+                  () {
+                    dropdouwnValue = value!;
+                  },
+                );
+              },
+              dropdownMenuEntries: list_sex
+                  .map<DropdownMenuEntry<String>>((String value) =>
+                      DropdownMenuEntry<String>(value: value, label: value))
+                  .toList(),
+            ),
+            
             ElevatedButton(
               onPressed: () async {
                 final user = FirebaseAuth.instance.currentUser;
@@ -55,6 +77,7 @@ class _Signup2PageState extends State<Signup2Page> {
                     'age': _ageController.text,
                     'gender': _genderController.text,
                     'school': _schoolController.text,
+                    'faculty': '',
                     'uid': user.uid,
                   });
 
