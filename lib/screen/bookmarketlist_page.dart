@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/postbook_page.dart';
 
 class BookMarketListPage extends StatefulWidget {
   const BookMarketListPage({Key? key}) : super(key: key);
@@ -20,6 +21,15 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
             Text("本のマーケット一覧画面"),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PostBookPage()),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
