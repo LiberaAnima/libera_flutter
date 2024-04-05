@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../main.dart';
 
 class PostBookPage extends StatefulWidget {
@@ -22,10 +24,27 @@ class _PostBookPagePageState extends State<PostBookPage> {
   File? _bookImage;
 
   void _onSubmitted(String bookname, String bookauthor, String price,
-      String details, File? bookImage) {
+      String details, File? bookImage) async {
+    //firebase storageに画像をアップロード,URL取得
+    String imageUrl = '';
+    if (bookImage != null) {
+      String fileName = 'books/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      FirebaseStorage storage = FirebaseStorage.instance;
+      TaskSnapshot snapshot = await storage.ref(fileName).putFile(bookImage);
+      imageUrl = await snapshot.ref.getDownloadURL();
+    }
+
+    //firestoreにデータを追加
+    CollectionReference books = FirebaseFirestore.instance.collection('books');
+    await books.add({
+      'bookname': bookname,
+      'bookauthor': bookauthor,
+      'price': price,
+      'details': details,
+      'imageUrl': imageUrl,
+    });
+
     /// 入力欄をクリアにする
-    ///
-    /// firebase との連携
     _booknameEditingController.clear();
     _bookauthorEditingController.clear();
     _priceEditingController.clear();
@@ -121,12 +140,12 @@ class _PostBookPagePageState extends State<PostBookPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print(_booknameEditingController.text); // デバッグ用
-          // _onSubmitted(
-          //     _booknameEditingController.text,
-          //     _bookauthorEditingController.text,
-          //     _bookImage,
-          //     _priceEditingController.text,
-          //     _detailsEditingController.text);
+          _onSubmitted(
+              _booknameEditingController.text,
+              _bookauthorEditingController.text,
+              _detailsEditingController.text,
+              _priceEditingController.text,
+              _bookImage);
           Navigator.pushNamed(context, '/');
         },
         child: Icon(Icons.send),
