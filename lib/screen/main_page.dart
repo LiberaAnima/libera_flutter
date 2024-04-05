@@ -60,6 +60,26 @@ class _MainPagePageState extends State<MainPage> {
                       Text('School: ${data['school']}',
                           style: TextStyle(color: Colors.black)),
                       // ...
+                      ElevatedButton(
+                        onPressed: () async => await _auth
+                            .signOut()
+                            .then((_) => Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                  (Route<dynamic> route) => false,
+                                )),
+                        child: Text("Log Out"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pushNamed(context, '/post'),
+                        child: Text("post"),
+                      ),
+                      ElevatedButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/postbook'),
+                        child: Text("postbook"),
+                      )
                     ],
                   ),
                 );
@@ -69,25 +89,6 @@ class _MainPagePageState extends State<MainPage> {
               return CircularProgressIndicator();
             },
           ),
-
-          // ElevatedButton(
-          //   onPressed: () async => await _auth
-          //       .signOut()
-          //       .then((_) => Navigator.pushAndRemoveUntil(
-          //             context,
-          //             MaterialPageRoute(builder: (context) => LoginPage()),
-          //             (Route<dynamic> route) => false,
-          //           )),
-          //   child: Text("Log Out"),
-          // ),
-          // ElevatedButton(
-          //   onPressed: () => Navigator.pushNamed(context, '/post'),
-          //   child: Text("post"),
-          // ),
-          // ElevatedButton(
-          //   onPressed: () => Navigator.pushNamed(context, '/postbook'),
-          //   child: Text("postbook"),
-          // )
         ),
       ),
     );
