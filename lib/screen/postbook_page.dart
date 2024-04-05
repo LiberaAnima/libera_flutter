@@ -140,12 +140,12 @@ class _PostBookPagePageState extends State<PostBookPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print(_booknameEditingController.text); // デバッグ用
-          // _onSubmitted(
-          //     _booknameEditingController.text,
-          //     _bookauthorEditingController.text,
-          //     _bookImage,
-          //     _priceEditingController.text,
-          //     _detailsEditingController.text);
+          _onSubmitted(
+              _booknameEditingController.text,
+              _bookauthorEditingController.text,
+              _detailsEditingController.text,
+              _priceEditingController.text,
+              _bookImage);
           Navigator.pushNamed(context, '/');
         },
         child: Icon(Icons.send),
