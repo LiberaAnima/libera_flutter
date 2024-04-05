@@ -80,7 +80,10 @@ class _PostBookPagePageState extends State<PostBookPage> {
             obscureText: false,
             maxLines: 1,
             decoration: const InputDecoration(
-              icon: Icon(Icons.speaker_notes),
+              icon: Icon(
+                Icons.speaker_notes,
+                color: Colors.black,
+              ),
               hintText: '例)微分積分入門 第二版',
               labelText: 'テキスト名*',
             ),
@@ -93,7 +96,10 @@ class _PostBookPagePageState extends State<PostBookPage> {
             obscureText: false,
             maxLines: 1,
             decoration: const InputDecoration(
-              icon: Icon(Icons.person),
+              icon: Icon(
+                Icons.person,
+                color: Colors.black,
+              ),
               hintText: '例)田中太郎',
               labelText: '著者名*',
             ),
@@ -104,23 +110,48 @@ class _PostBookPagePageState extends State<PostBookPage> {
               width: 100,
               height: 100,
             ),
-          ElevatedButton(
-            onPressed: _pickImage,
-            child: Text('テキストの画像を選択'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center, // 要素を中央に配置
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0), // アイコンの位置を下に調整
+                child: Icon(Icons.image, color: Colors.black),
+              ),
+              SizedBox(width: 10), // アイコンとボタンの間のスペース
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: Text('テキストの画像を選択'),
+              ),
+            ],
           ),
-          TextField(
-            controller: _priceEditingController,
-            enabled: true,
-            maxLength: 5,
-            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            style: TextStyle(color: Colors.black),
-            obscureText: false,
-            maxLines: 1,
-            decoration: const InputDecoration(
-              icon: Icon(Icons.currency_yen),
-              hintText: '例)○○○○',
-              labelText: '価格(円)*',
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _priceEditingController,
+                  enabled: true,
+                  maxLength: 5,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  style: TextStyle(color: Colors.black),
+                  obscureText: false,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                    icon: Icon(
+                      Icons.currency_yen,
+                      color: Colors.black,
+                    ),
+                    hintText: '例) 1500',
+                    labelText: '価格(円)*',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text('円', style: TextStyle(fontSize: 16)),
+              ),
+            ],
           ),
           TextField(
             controller: _detailsEditingController,
@@ -130,7 +161,10 @@ class _PostBookPagePageState extends State<PostBookPage> {
             obscureText: false,
             maxLines: 5,
             decoration: const InputDecoration(
-              icon: Icon(Icons.subject),
+              icon: Icon(
+                Icons.subject,
+                color: Colors.black,
+              ),
               hintText: 'テキストの詳細、テキストの状態、取引場所など',
               labelText: '詳細 ',
             ),
