@@ -121,6 +121,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
               hintText: '例)○○○○',
               labelText: '価格(円)*',
             ),
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           ),
           TextField(
             controller: _detailsEditingController,
