@@ -97,10 +97,14 @@ class _SignupPageState extends State<SignupPage> {
                 content: Text("Sign Up Success"),
               ),
             );
-          } on FirebaseAuthException catch (e) {
+          } on FirebaseAuthException catch (error) {
+            if (error.code == 'email-already-in-use') {
+              //
+            }
+            ScaffoldMessenger.of(context).clearSnackBars();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("aa"),
+                content: Text(error.message ?? "Authentication Failed"),
               ),
             );
           }
