@@ -108,21 +108,31 @@ class _PostBookPagePageState extends State<PostBookPage> {
             onPressed: _pickImage,
             child: Text('テキストの画像を選択'),
           ),
-          TextField(
-            controller: _priceEditingController,
-            enabled: true,
-            maxLength: 5,
-            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-            style: TextStyle(color: Colors.black),
-            obscureText: false,
-            maxLines: 1,
-            decoration: const InputDecoration(
-              icon: Icon(Icons.currency_yen),
-              hintText: '例)○○○○',
-              labelText: '価格(円)*',
-            ),
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _priceEditingController,
+                  enabled: true,
+                  maxLength: 5,
+                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                  style: TextStyle(color: Colors.black),
+                  obscureText: false,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                    icon: Icon(Icons.currency_yen),
+                    hintText: '例) 1500',
+                    labelText: '価格(円)*',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Text('円', style: TextStyle(fontSize: 16)),
+              ),
+            ],
           ),
           TextField(
             controller: _detailsEditingController,
