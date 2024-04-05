@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -86,12 +87,22 @@ class _SignupPageState extends State<SignupPage> {
       onPressed: () async {
         if (_key.currentState!.validate()) {
           try {
-            final credential = await _auth
-                .createUserWithEmailAndPassword(
-                  email: _emailController.text,
-                  password: _passwordController.text,
-                )
-                .then((_) => Navigator.pushNamed(context, "/"));
+            final credential = await _auth.createUserWithEmailAndPassword(
+              email: _emailController.text,
+              password: _passwordController.text,
+            );
+
+            final user = credential.user;
+            await FirebaseFirestore.instance
+                .collection('users')
+                .doc(user?.uid)
+                .set({
+              'email': _emailController.text,
+              // 다른 필드를 추가하세요.
+            });
+
+            Navigator.pushNamed(context, "/");
+
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text("Sign Up Success"),
