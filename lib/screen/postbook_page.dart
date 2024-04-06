@@ -181,7 +181,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               _detailsEditingController.text,
               _priceEditingController.text,
               _bookImage);
-          Navigator.pushNamed(context, '/');
+          Navigator.pushNamed(context, '/bookmarketlist');
         },
         child: Icon(Icons.send),
       ),
