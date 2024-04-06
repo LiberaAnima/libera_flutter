@@ -111,13 +111,13 @@ class _PostBookPagePageState extends State<PostBookPage> {
               height: 100,
             ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, // 要素を中央に配置
+            mainAxisAlignment: MainAxisAlignment.start, // 要素を中央に配置
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 8.0), // アイコンの位置を下に調整
                 child: Icon(Icons.image, color: Colors.black),
               ),
-              SizedBox(width: 10), // アイコンとボタンの間のスペース
+              SizedBox(width: 80), // アイコンとボタンの間のスペース
               ElevatedButton(
                 onPressed: _pickImage,
                 child: Text('テキストの画像を選択'),
