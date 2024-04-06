@@ -175,13 +175,34 @@ class _PostBookPagePageState extends State<PostBookPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print(_booknameEditingController.text); // デバッグ用
-          _onSubmitted(
-              _booknameEditingController.text,
-              _bookauthorEditingController.text,
-              _detailsEditingController.text,
-              _priceEditingController.text,
-              _bookImage);
-          Navigator.pushNamed(context, '/bookmarketlist');
+          if (_booknameEditingController.text.isEmpty ||
+              _bookauthorEditingController.text.isEmpty ||
+              _priceEditingController.text.isEmpty) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('エラー'),
+                    content: Text('テキスト名、著者名、価格は必須事項です'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                });
+          } else {
+            _onSubmitted(
+                _booknameEditingController.text,
+                _bookauthorEditingController.text,
+                _detailsEditingController.text,
+                _priceEditingController.text,
+                _bookImage);
+            Navigator.pushNamed(context, '/bookmarketlist');
+          }
         },
         child: Icon(Icons.send),
       ),
