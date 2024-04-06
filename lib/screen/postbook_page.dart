@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,6 +35,19 @@ class _PostBookPagePageState extends State<PostBookPage> {
       imageUrl = await snapshot.ref.getDownloadURL();
     }
 
+    // Get current user
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      throw Exception('No user logged in');
+    }
+
+    // Get user's username from Firestore
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+    String username = userDoc.get('username');
+
     //firestoreにデータを追加
     CollectionReference books = FirebaseFirestore.instance.collection('books');
     await books.add({
@@ -42,6 +56,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
       'price': price,
       'details': details,
       'imageUrl': imageUrl,
+      'uid': user.uid,
+      'username': username,
     });
 
     /// 入力欄をクリアにする
