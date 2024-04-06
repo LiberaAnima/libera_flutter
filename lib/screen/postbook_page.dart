@@ -114,7 +114,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
             mainAxisAlignment: MainAxisAlignment.start, // 要素を中央に配置
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 8.0), // アイコンの位置を下に調整
+                padding: const EdgeInsets.only(
+                    top: 8.0, bottom: 8.0), // アイコンの位置を下に調整
                 child: Icon(Icons.image, color: Colors.black),
               ),
               SizedBox(width: 80), // アイコンとボタンの間のスペース
