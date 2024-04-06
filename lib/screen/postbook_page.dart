@@ -111,13 +111,14 @@ class _PostBookPagePageState extends State<PostBookPage> {
               height: 100,
             ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center, // 要素を中央に配置
+            mainAxisAlignment: MainAxisAlignment.start, // 要素を中央に配置
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 8.0), // アイコンの位置を下に調整
+                padding: const EdgeInsets.only(
+                    top: 8.0, bottom: 8.0), // アイコンの位置を下に調整
                 child: Icon(Icons.image, color: Colors.black),
               ),
-              SizedBox(width: 10), // アイコンとボタンの間のスペース
+              SizedBox(width: 80), // アイコンとボタンの間のスペース
               ElevatedButton(
                 onPressed: _pickImage,
                 child: Text('テキストの画像を選択'),
@@ -174,13 +175,34 @@ class _PostBookPagePageState extends State<PostBookPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           print(_booknameEditingController.text); // デバッグ用
-          _onSubmitted(
-              _booknameEditingController.text,
-              _bookauthorEditingController.text,
-              _detailsEditingController.text,
-              _priceEditingController.text,
-              _bookImage);
-          Navigator.pushNamed(context, '/');
+          if (_booknameEditingController.text.isEmpty ||
+              _bookauthorEditingController.text.isEmpty ||
+              _priceEditingController.text.isEmpty) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('エラー'),
+                    content: Text('テキスト名、著者名、価格は必須事項です'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                });
+          } else {
+            _onSubmitted(
+                _booknameEditingController.text,
+                _bookauthorEditingController.text,
+                _detailsEditingController.text,
+                _priceEditingController.text,
+                _bookImage);
+            Navigator.pushNamed(context, '/bookmarketlist');
+          }
         },
         child: Icon(Icons.send),
       ),
