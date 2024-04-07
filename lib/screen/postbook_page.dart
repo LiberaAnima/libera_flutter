@@ -46,6 +46,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
         .doc(user.uid)
         .get();
     String username = userDoc.get('username');
+    String faculty = userDoc.get('faculty');
 
     //firestoreにデータを追加
     CollectionReference books = FirebaseFirestore.instance.collection('books');
@@ -57,6 +58,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
       'imageUrl': imageUrl,
       'uid': user.uid,
       'username': username,
+      'faculty': faculty,
     });
 
     /// 入力欄をクリアにする
