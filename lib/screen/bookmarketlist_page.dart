@@ -103,7 +103,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                   fontWeight: FontWeight.bold,
                                 )),
                             Text(post['faculty'] ?? 'null'),
-                            Text(post['postedTime'] ?? 'null'),
+                            Text(post['username'] ?? 'null'),
                           ],
                         ),
                       ),
