@@ -59,6 +59,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
       'uid': user.uid,
       'username': username,
       'faculty': faculty,
+      'postedAt': FieldValue.serverTimestamp(),
     });
 
     /// 入力欄をクリアにする
@@ -124,8 +125,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
           if (_bookImage != null)
             Image.file(
               _bookImage!,
-              width: 100,
-              height: 100,
+              width: 200,
+              height: 200,
             ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start, // 要素を中央に配置
