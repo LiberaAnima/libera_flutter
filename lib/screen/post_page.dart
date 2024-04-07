@@ -37,10 +37,22 @@ class _PostPagePageState extends State<PostPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('_textEditingController.text: ${_textEditingController.text}');
-          // _onSubmitted(_textEditingController.text);
-          Navigator.pushNamed(context, '/');
+
+        onPressed: () async {
+          final User? user = _auth.currentUser;
+          if (user != null) {
+            final String uid = user.uid;
+            final DocumentSnapshot userDoc =
+                await _firestore.collection('users').doc(uid).get();
+            FirebaseFirestore.instance.collection('posts').doc().set({
+              'post_message': _textEditingController.text,
+              'date': date,
+              'name': userDoc['username'],
+              'uid': uid,
+            });
+            _onSubmitted(_textEditingController.text);
+            Navigator.pushNamed(context, '/');
+          }
         },
         child: Icon(Icons.send),
       ),
