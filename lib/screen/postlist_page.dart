@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+//いいね機能
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter/cupertino.dart';
+
 class PostListPage extends StatefulWidget {
   const PostListPage({Key? key}) : super(key: key);
 
@@ -12,8 +16,10 @@ class PostListPage extends StatefulWidget {
 class _PostListPagePageState extends State<PostListPage> {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> postlists =
-        FirebaseFirestore.instance.collection('posts').snapshots();
+    final Stream<QuerySnapshot> postlists = FirebaseFirestore.instance
+        .collection('posts')
+        .orderBy('date', descending: true)
+        .snapshots();
     return Scaffold(
       appBar: AppBar(
         title: Text("投稿一覧画面"),
@@ -35,18 +41,71 @@ class _PostListPagePageState extends State<PostListPage> {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   return ListTile(
-                    title: Text("投稿日: " +
-                        data['date'] +
-                        " 投稿者" +
-                        data['name'] +
-                        "  " +
-                        data['post_message']),
+                    title: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1, color: Colors.black), // 枠線を追加
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: EdgeInsets.all(4),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  data['date'],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['name'],
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['post_message'],
+                                ),
+                              ],
+                            ),
+                            FavoriteButton()
+                          ],
+                        )),
                   );
                 })
                 .toList()
                 .cast(),
           );
         },
+      ),
+    );
+  }
+}
+
+//いいね
+class FavoriteButton extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    final favorite = useState<bool>(false);
+    return IconButton(
+      onPressed: () =>
+          (favorite.value) ? favorite.value = false : favorite.value = true,
+      icon: Icon(
+        Icons.favorite,
+        color: (favorite.value) ? Colors.pink : Colors.black12,
       ),
     );
   }

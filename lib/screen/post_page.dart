@@ -68,6 +68,7 @@ class _PostPagePageState extends State<PostPage> {
               'post_message': _textEditingController.text,
               'date': date,
               'name': userDoc['username'],
+              'uid': uid,
             });
             _onSubmitted(_textEditingController.text);
             Navigator.pushNamed(context, '/');
