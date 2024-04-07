@@ -10,7 +10,10 @@ import 'package:libera_flutter/screen/postbook_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
+import 'package:libera_flutter/screen/view_post_page.dart';
+
 import 'firebase_options.dart';
+import 'package:libera_flutter/screen/post_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +43,6 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainPage(),
         '/logIn': (context) => const LoginPage(),
         '/signUp': (context) => const SignupPage(),
-        // '/signUp2': (context) => const Signup2Page(),
         '/profile': (context) => const ProfilePage(),
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
