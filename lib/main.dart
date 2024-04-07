@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:libera_flutter/screen/post_page.dart';
+import 'package:libera_flutter/screen/bookmarketlist_page.dart';
+import 'package:libera_flutter/screen/class_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
+import 'package:libera_flutter/screen/main_page.dart';
+import 'package:libera_flutter/screen/post_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
+import 'package:libera_flutter/screen/postlist_page.dart';
+import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
 import 'package:libera_flutter/screen/view_post_page.dart';
 
@@ -35,11 +40,15 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const HomePage(),
+        '/main': (context) => const MainPage(),
         '/logIn': (context) => const LoginPage(),
         '/signUp': (context) => const SignupPage(),
-        '/postPage': (context) => PostPage(),
-        '/postViewPage': (context) => PostViewPage(),
-        '/postBookPage': (context) => PostBookPage(),
+        '/profile': (context) => const ProfilePage(),
+        '/postlist': (context) => const PostListPage(),
+        '/bookmarketlist': (context) => const BookMarketListPage(),
+        '/class': (context) => const ClassPage(),
+        '/post': (context) => PostPage(),
+        '/postbook': (context) => const PostBookPage(),
       },
     );
   }

@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import '../main.dart';
 
 class PostBookPage extends StatefulWidget {
+  const PostBookPage({Key? key}) : super(key: key);
+
   @override
   _PostBookPagePageState createState() => _PostBookPagePageState();
 }
@@ -15,8 +17,11 @@ class _PostBookPagePageState extends State<PostBookPage> {
   TextEditingController _priceEditingController = TextEditingController();
   TextEditingController _detailsEditingController = TextEditingController();
 
-  void _onSubmitted(String bookname, String bookauthor, String price, String details) {
+  void _onSubmitted(
+      String bookname, String bookauthor, String price, String details) {
     /// 入力欄をクリアにする
+    ///
+    /// firebase との連携
     _booknameEditingController.clear();
     _bookauthorEditingController.clear();
     _priceEditingController.clear();
@@ -85,10 +90,16 @@ class _PostBookPagePageState extends State<PostBookPage> {
             ),
           ),
         ],
-        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _onSubmitted(_booknameEditingController.text, _bookauthorEditingController.text, _priceEditingController.text, _detailsEditingController.text);
+          print(_booknameEditingController.text); // デバッグ用
+          // _onSubmitted(
+          //     _booknameEditingController.text,
+          //     _bookauthorEditingController.text,
+          //     _priceEditingController.text,
+          //     _detailsEditingController.text);
+          Navigator.pushNamed(context, '/');
         },
         child: Icon(Icons.send),
       ),
