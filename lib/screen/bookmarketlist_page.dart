@@ -76,7 +76,6 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
 
           return ListView(
             padding: const EdgeInsets.all(16.0),
-
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> post =
                   document.data() as Map<String, dynamic>;
@@ -106,51 +105,35 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                             Text(post['faculty'] ?? 'null'),
                             Text(post['postedTime'] ?? 'null'),
                           ],
-
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Text(
+                            "${post['price']}円",
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.orange[700],
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Row(
                             children: <Widget>[
-                              Text(post['bookname'],
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              Text(post['faculty'] ?? 'unknown'),
-                              Text(post['postedTime'] ?? 'unknown'),
+                              const Icon(Icons.favorite_border),
+                              Text(post['likes'].toString()),
+                              const SizedBox(width: 8),
+                              const Icon(Icons.comment),
+                              Text(post['comments'].toString()),
                             ],
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              "${post['price']}円",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.orange[700],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Row(
-                              children: <Widget>[
-                                const Icon(Icons.favorite_border),
-                                Text(post['likes'].toString()),
-                                const SizedBox(width: 8),
-                                const Icon(Icons.comment),
-                                Text(post['comments'].toString()),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
-                );
-              },
-            ).toList(),
+                ),
+              );
+            }).toList(),
           );
         },
       ),
