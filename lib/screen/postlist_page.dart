@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //いいね機能
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:libera_flutter/screen/post_page.dart';
 
 class PostListPage extends StatefulWidget {
   const PostListPage({Key? key}) : super(key: key);
@@ -89,6 +90,15 @@ class _PostListPagePageState extends State<PostListPage> {
                 .cast(),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PostPage()),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
