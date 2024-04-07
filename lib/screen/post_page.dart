@@ -69,6 +69,7 @@ class _PostPagePageState extends State<PostPage> {
               'date': date,
               'name': userDoc['username'],
               'uid': uid,
+              'likes': [],
             });
             _onSubmitted(_textEditingController.text);
             Navigator.pushNamed(context, '/');
