@@ -5,6 +5,7 @@ import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
+import 'package:libera_flutter/screen/marketspecific_page.dart';
 import 'package:libera_flutter/screen/post_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfilePage(),
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
+        '/marketspecific': (context) => const MarketSpecificPage(),
         '/class': (context) => const ClassPage(),
         '/post': (context) => PostPage(),
         '/postbook': (context) => const PostBookPage(),

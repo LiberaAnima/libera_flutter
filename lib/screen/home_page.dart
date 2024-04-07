@@ -6,7 +6,6 @@ import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
-import 'package:libera_flutter/screen/signup_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
