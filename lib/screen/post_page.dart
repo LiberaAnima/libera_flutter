@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PostPage extends StatefulWidget {
@@ -37,16 +39,17 @@ class _PostPagePageState extends State<PostPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-
         onPressed: () async {
-          final User? user = _auth.currentUser;
+          final User? user = FirebaseAuth.instance.currentUser;
           if (user != null) {
             final String uid = user.uid;
-            final DocumentSnapshot userDoc =
-                await _firestore.collection('users').doc(uid).get();
+            final DocumentSnapshot userDoc = await FirebaseFirestore.instance
+                .collection('users')
+                .doc(uid)
+                .get();
             FirebaseFirestore.instance.collection('posts').doc().set({
               'post_message': _textEditingController.text,
-              'date': date,
+              'date': FieldValue.serverTimestamp(),
               'name': userDoc['username'],
               'uid': uid,
             });

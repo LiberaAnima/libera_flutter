@@ -54,7 +54,7 @@ class _PostListPagePageState extends State<PostListPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  data['date'],
+                                  data['date'].toDate().toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
