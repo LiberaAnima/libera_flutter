@@ -196,11 +196,13 @@ class _PostBookPagePageState extends State<PostBookPage> {
                 });
           } else {
             _onSubmitted(
-                _booknameEditingController.text,
-                _bookauthorEditingController.text,
-                _detailsEditingController.text,
-                _priceEditingController.text,
-                _bookImage);
+              _booknameEditingController.text,
+              _bookauthorEditingController.text,
+              _detailsEditingController.text,
+              _priceEditingController.text,
+              _bookImage,
+              // user.uid,
+            );
             Navigator.pushNamed(context, '/bookmarketlist');
           }
         },
