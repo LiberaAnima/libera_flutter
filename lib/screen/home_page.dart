@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
+import 'package:libera_flutter/components/bottom_nav.dart';
 import 'package:libera_flutter/screen/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/class_page.dart';
 import 'package:libera_flutter/screen/login_page.dart';
@@ -36,50 +37,14 @@ class _HomePageState extends State<HomePage> {
           return const LoginPage();
         } else {
           return Scaffold(
-            bottomNavigationBar: NavigationBar(
-              onDestinationSelected: (int index) {
-                setState(
-                  () {
-                    currentPageIndex = index;
-                  },
-                );
-              },
-              indicatorColor: Colors.amber,
-              selectedIndex: currentPageIndex,
-              destinations: const <Widget>[
-                NavigationDestination(
-                  selectedIcon: Icon(Icons.home),
-                  icon: Icon(Icons.home_outlined),
-                  label: 'Home',
-                ),
-                NavigationDestination(
-                  icon: Badge(child: Icon(Icons.book)),
-                  label: 'book',
-                ),
-                NavigationDestination(
-                  icon: Badge(
-                    label: Text('2'),
-                    child: Icon(Icons.article),
-                  ),
-                  label: 'postlist',
-                ),
-                NavigationDestination(
-                  icon: Badge(
-                    label: Text('3'),
-                    child: Icon(Icons.class_),
-                  ),
-                  label: 'class',
-                ),
-                NavigationDestination(
-                  icon: Badge(
-                    label: Text('4'),
-                    child: Icon(Icons.person),
-                  ),
-                  label: 'profile',
-                ),
-              ],
-            ),
             body: _pages[currentPageIndex],
+            bottomNavigationBar: BottomNav(
+              opPageSelected: (index) {
+                setState(() {
+                  currentPageIndex = index;
+                });
+              },
+            ),
           );
         }
       },

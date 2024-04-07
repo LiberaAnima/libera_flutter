@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         key: _key,
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 email: _emailController.text,
                 password: _passwordController.text,
               )
-              .then((_) => Navigator.pushNamed(context, '/'));
+              .then((_) => Navigator.pushReplacementNamed(context, '/'));
         } on FirebaseAuthException catch (e) {
           if (e.code == 'user-not-found') {
             debugPrint('No user found for that email');
