@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import '../main.dart';
+import 'package:intl/intl.dart';
 
 class PostPage extends StatefulWidget {
   @override
@@ -16,6 +17,9 @@ class _PostPagePageState extends State<PostPage> {
     _textEditingController.clear();
   }
 
+  DateTime now = DateTime.now();
+  DateFormat outputFormat = DateFormat('yyyy年MM月dd日 HH:mm');
+  late String date = outputFormat.format(now);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +48,7 @@ class _PostPagePageState extends State<PostPage> {
           FirebaseFirestore.instance
               .collection('posts')
               .doc()
-              .set({'post_message': _textEditingController.text});
+              .set({'post_message': _textEditingController.text, 'date': date});
           _onSubmitted(_textEditingController.text);
         },
         child: Icon(Icons.send),
