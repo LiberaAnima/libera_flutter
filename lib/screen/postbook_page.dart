@@ -215,8 +215,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
             _onSubmitted(
                 _booknameEditingController.text,
                 _bookauthorEditingController.text,
-                _detailsEditingController.text,
                 _priceEditingController.text,
+                _detailsEditingController.text,
                 _bookImage);
             Navigator.pushNamed(context, '/bookmarketlist');
           }
