@@ -92,9 +92,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          // ボタンが押された時のアクション
-        },
+        onPressed: () {},
         label: Text('チャットする'),
         icon: Icon(Icons.chat),
         backgroundColor: Colors.orange,
