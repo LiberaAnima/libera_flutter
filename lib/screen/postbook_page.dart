@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import '../main.dart';
 
 class PostBookPage extends StatefulWidget {
   const PostBookPage({Key? key}) : super(key: key);
@@ -34,6 +34,19 @@ class _PostBookPagePageState extends State<PostBookPage> {
       imageUrl = await snapshot.ref.getDownloadURL();
     }
 
+    // Get current user
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      throw Exception('No user logged in');
+    }
+
+    // Get user's username from Firestore
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
+    String username = userDoc.get('username');
+
     //firestoreにデータを追加
     CollectionReference books = FirebaseFirestore.instance.collection('books');
     await books.add({
@@ -42,6 +55,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
       'price': price,
       'details': details,
       'imageUrl': imageUrl,
+      'uid': user.uid,
+      'username': username,
     });
 
     /// 入力欄をクリアにする
