@@ -36,19 +36,17 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          Map<String, dynamic> user =
+          Map<String, dynamic> book =
               snapshot.data!.data() as Map<String, dynamic>;
+          print(book);
           return Scaffold(
             appBar: AppBar(
               title: Text("商品詳細画面"),
             ),
             body: Column(
               children: <Widget>[
-                Image.network(
-                    "https://firebasestorage.googleapis.com/v0/b/libera-b72ea.appspot.com/o/books%2F1712298476555.jpg?alt=media&token=31ef49ba-4b6d-4b37-8848-5e088288aa98",
-                    height: 300,
-                    width: double.infinity,
-                    fit: BoxFit.cover),
+                Image.network(book['imageUrl'],
+                    height: 300, width: double.infinity, fit: BoxFit.cover),
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Row(
@@ -61,12 +59,11 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text('ユーザーネーム: uiduid'),
+                          Text('ユーザーネーム: ${book['username']}'),
                           Row(
                             children: [
-                              Text('関西学院大学'),
+                              Text(book['faculty']),
                               SizedBox(width: 10),
-                              Text('文学部'),
                             ],
                           )
                         ],
@@ -80,7 +77,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        'キャリアで語る経営組織',
+                        book['bookname'],
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -90,7 +87,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text(
-                        '¥1,000',
+                        '¥${book['price']}',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -111,6 +108,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     ),
                   ],
                 ),
+                Text(book['details'])
               ],
             ),
             floatingActionButton: FloatingActionButton.extended(
