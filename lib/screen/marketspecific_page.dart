@@ -71,6 +71,13 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     ],
                   ),
                 ),
+                const Divider(
+                  height: 8,
+                  thickness: 1,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.grey,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
