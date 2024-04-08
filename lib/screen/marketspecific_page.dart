@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: MarketSpecificPage(),
-  ));
-}
+// void main() {
+//   runApp(MaterialApp(
+//     home: MarketSpecificPage(),
+//   ));
+// }
 
 class MarketSpecificPage extends StatefulWidget {
-  const MarketSpecificPage({Key? key}) : super(key: key);
+  final String uid;
+
+  const MarketSpecificPage({super.key, required this.uid});
 
   @override
   _MarketSpecificPageState createState() => _MarketSpecificPageState();

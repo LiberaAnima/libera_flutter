@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/marketspecific_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
 
 class BookMarketListPage extends StatefulWidget {
@@ -49,59 +50,71 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
               } else {
                 timeAgo = 'たった今';
               }
-              return Card(
-                margin: EdgeInsets.all(8),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Image.network(
-                        post['imageUrl'],
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MarketSpecificPage(
+                        uid: document.id,
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  );
+                },
+                child: Card(
+                  margin: EdgeInsets.all(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Image.network(
+                          post['imageUrl'],
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(post['bookname'],
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              Text(post['faculty'] ?? 'null'),
+                              Text(post['username'] ?? 'null'),
+                              Text(timeAgo),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            Text(post['bookname'],
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            Text(post['faculty'] ?? 'null'),
-                            Text(post['username'] ?? 'null'),
-                            Text(timeAgo),
+                            Text(
+                              "${post['price']}円",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.orange[700],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            // いいね数とコメント数を表示
+                            // Row(
+                            //   children: <Widget>[
+                            //     const Icon(Icons.favorite_border),
+                            //     Text(post['likes'].toString()),
+                            //     const SizedBox(width: 8),
+                            //     const Icon(Icons.comment),
+                            //     Text(post['comments'].toString()),
+                            //   ],
+                            // ),
                           ],
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "${post['price']}円",
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: Colors.orange[700],
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          // いいね数とコメント数を表示
-                          // Row(
-                          //   children: <Widget>[
-                          //     const Icon(Icons.favorite_border),
-                          //     Text(post['likes'].toString()),
-                          //     const SizedBox(width: 8),
-                          //     const Icon(Icons.comment),
-                          //     Text(post['comments'].toString()),
-                          //   ],
-                          // ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );
