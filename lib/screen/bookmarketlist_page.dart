@@ -35,7 +35,9 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
               Map<String, dynamic> post =
                   document.data() as Map<String, dynamic>;
 
-              DateTime postedAt = post['postedAt'].toDate() ?? DateTime.now();
+              DateTime postedAt = post['postedAt'] != null
+                  ? post['postedAt'].toDate()
+                  : DateTime.now();
 
               return GestureDetector(
                 onTap: () {
