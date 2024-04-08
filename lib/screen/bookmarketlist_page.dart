@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:libera_flutter/screen/marketspecific_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
+import 'package:libera_flutter/services/timeago.dart';
 
 class BookMarketListPage extends StatefulWidget {
   const BookMarketListPage({Key? key}) : super(key: key);
@@ -36,20 +37,6 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
 
               DateTime postedAt = post['postedAt'].toDate() ?? DateTime.now();
 
-              // 현재 날짜와 시간과의 차이를 계산합니다.
-              Duration difference = DateTime.now().difference(postedAt);
-
-              // 차이를 기반으로 표시할 문자열을 결정합니다.
-              String timeAgo;
-              if (difference.inDays > 0) {
-                timeAgo = '${difference.inDays}日前';
-              } else if (difference.inHours > 0) {
-                timeAgo = '${difference.inHours}時間前';
-              } else if (difference.inMinutes > 0) {
-                timeAgo = '${difference.inMinutes}文前';
-              } else {
-                timeAgo = 'たった今';
-              }
               return GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -86,7 +73,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                   )),
                               Text(post['faculty'] ?? 'null'),
                               Text(post['username'] ?? 'null'),
-                              Text(timeAgo),
+                              Text(timeAgo(postedAt)),
                             ],
                           ),
                         ),
