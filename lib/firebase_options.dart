@@ -49,6 +49,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '997188547316',
     projectId: 'libera-b72ea',
     authDomain: 'libera-b72ea.firebaseapp.com',
+    databaseURL: 'https://libera-b72ea-default-rtdb.firebaseio.com',
     storageBucket: 'libera-b72ea.appspot.com',
     measurementId: 'G-W9J5Z3Y4PL',
   );
@@ -58,6 +59,7 @@ class DefaultFirebaseOptions {
     appId: '1:997188547316:android:080d75e7389bb321ee64a1',
     messagingSenderId: '997188547316',
     projectId: 'libera-b72ea',
+    databaseURL: 'https://libera-b72ea-default-rtdb.firebaseio.com',
     storageBucket: 'libera-b72ea.appspot.com',
   );
 
@@ -66,6 +68,7 @@ class DefaultFirebaseOptions {
     appId: '1:997188547316:ios:d903d3e503c50cd5ee64a1',
     messagingSenderId: '997188547316',
     projectId: 'libera-b72ea',
+    databaseURL: 'https://libera-b72ea-default-rtdb.firebaseio.com',
     storageBucket: 'libera-b72ea.appspot.com',
     iosBundleId: 'com.example.liberaFlutter',
   );
@@ -75,6 +78,7 @@ class DefaultFirebaseOptions {
     appId: '1:997188547316:ios:fa4802d013492490ee64a1',
     messagingSenderId: '997188547316',
     projectId: 'libera-b72ea',
+    databaseURL: 'https://libera-b72ea-default-rtdb.firebaseio.com',
     storageBucket: 'libera-b72ea.appspot.com',
     iosBundleId: 'com.example.liberaFlutter.RunnerTests',
   );
