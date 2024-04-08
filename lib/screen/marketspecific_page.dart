@@ -16,6 +16,7 @@ class MarketSpecificPage extends StatefulWidget {
 }
 
 class _MarketSpecificPageState extends State<MarketSpecificPage> {
+  late Future<DocumentSnapshot> _future;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
