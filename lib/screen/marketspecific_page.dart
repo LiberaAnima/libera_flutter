@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
@@ -19,6 +20,8 @@ class MarketSpecificPage extends StatefulWidget {
 
 class _MarketSpecificPageState extends State<MarketSpecificPage> {
   late Future<DocumentSnapshot> _future;
+
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -45,6 +48,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
               : DateTime.now();
 
           print(book);
+          print(user?.uid);
+
           return Scaffold(
             appBar: AppBar(
               title: Text("商品詳細画面"),
@@ -58,9 +63,9 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   child: Row(
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundImage:
-                            NetworkImage('https://example.com/user-icon.jpg'),
-                      ),
+                          // backgroundImage:
+                          //     NetworkImage('https://example.com/user-icon.jpg'),
+                          ),
                       SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +126,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
               onPressed: () {
                 FirebaseFirestore.instance.collection('chatroom').add({
                   'bookname': book['bookname'],
-                  'who': [book['uid'], widget.uid],
+                  'who': [book['uid'], user?.uid],
                   'timestamp': DateTime.now(),
                 });
               },
