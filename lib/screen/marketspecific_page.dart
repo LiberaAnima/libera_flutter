@@ -118,7 +118,13 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
               ],
             ),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {},
+              onPressed: () {
+                FirebaseFirestore.instance.collection('chatroom').add({
+                  'bookname': book['bookname'],
+                  'who': [book['uid'], widget.uid],
+                  'timestamp': DateTime.now(),
+                });
+              },
               label: Text('チャットする'),
               icon: Icon(Icons.chat),
               backgroundColor: Colors.orange,

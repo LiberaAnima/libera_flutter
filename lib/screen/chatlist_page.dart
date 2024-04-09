@@ -3,19 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'chatroom_page.dart';
 
-class UserListScreen extends StatelessWidget {
+class ChatListPage extends StatefulWidget {
+  const ChatListPage({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('User List'),
-      ),
-      body: ChatlistPage(),
-    );
-  }
+  _ChatListPageState createState() => _ChatListPageState();
 }
 
-class ChatlistPage extends StatelessWidget {
+class _ChatListPageState extends State<ChatListPage> {
   @override
   Widget build(BuildContext context) {
     final String myUserId = 'YQEvhBeccnZQFjbg6P7pIzrRiid2'; // 実際には動的に取得することを想定

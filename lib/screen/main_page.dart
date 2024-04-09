@@ -46,6 +46,10 @@ class _MainPagePageState extends State<MainPage> {
               ElevatedButton(
                 onPressed: () => Navigator.pushNamed(context, '/postbook'),
                 child: Text("postbook"),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, '/chatlist'),
+                child: Text("chatlist"),
               )
             ],
           ),
