@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/services/timeago.dart';
 
 // void main() {
 //   runApp(MaterialApp(
@@ -38,6 +39,11 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
         } else {
           Map<String, dynamic> book =
               snapshot.data!.data() as Map<String, dynamic>;
+
+          DateTime postedAt = book['postedAt'] != null
+              ? book['postedAt'].toDate()
+              : DateTime.now();
+
           print(book);
           return Scaffold(
             appBar: AppBar(
@@ -98,13 +104,13 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 ),
                 Row(
                   children: <Widget>[
+                    // Padding(
+                    //   padding: EdgeInsets.all(8.0),
+                    //   child: Text('文学部'),
+                    // ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
-                      child: Text('文学部'),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('三日前'),
+                      child: Text(timeAgo(postedAt)),
                     ),
                   ],
                 ),
