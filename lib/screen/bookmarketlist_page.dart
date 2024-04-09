@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/marketspecific_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
+import 'package:libera_flutter/services/timeago.dart';
 
 class BookMarketListPage extends StatefulWidget {
   const BookMarketListPage({Key? key}) : super(key: key);
@@ -33,75 +35,75 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
               Map<String, dynamic> post =
                   document.data() as Map<String, dynamic>;
 
-              DateTime postedAt = post['postedAt'].toDate() ?? DateTime.now();
+              DateTime postedAt = post['postedAt'] != null
+                  ? post['postedAt'].toDate()
+                  : DateTime.now();
 
-              // 현재 날짜와 시간과의 차이를 계산합니다.
-              Duration difference = DateTime.now().difference(postedAt);
-
-              // 차이를 기반으로 표시할 문자열을 결정합니다.
-              String timeAgo;
-              if (difference.inDays > 0) {
-                timeAgo = '${difference.inDays}日前';
-              } else if (difference.inHours > 0) {
-                timeAgo = '${difference.inHours}時間前';
-              } else if (difference.inMinutes > 0) {
-                timeAgo = '${difference.inMinutes}文前';
-              } else {
-                timeAgo = 'たった今';
-              }
-              return Card(
-                margin: EdgeInsets.all(8),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Image.network(
-                        post['imageUrl'],
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MarketSpecificPage(
+                        uid: document.id,
                       ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  );
+                },
+                child: Card(
+                  margin: EdgeInsets.all(8),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Image.network(
+                          post['imageUrl'],
+                          width: 80,
+                          height: 80,
+                          fit: BoxFit.cover,
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(post['bookname'],
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  )),
+                              Text(post['faculty'] ?? 'null'),
+                              Text(post['username'] ?? 'null'),
+                              Text(timeAgo(postedAt)),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            Text(post['bookname'],
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                )),
-                            Text(post['faculty'] ?? 'null'),
-                            Text(post['username'] ?? 'null'),
-                            Text(timeAgo),
+                            Text(
+                              "${post['price']}円",
+                              style: TextStyle(
+                                fontSize: 17,
+                                color: Colors.orange[700],
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            // いいね数とコメント数を表示
+                            // Row(
+                            //   children: <Widget>[
+                            //     const Icon(Icons.favorite_border),
+                            //     Text(post['likes'].toString()),
+                            //     const SizedBox(width: 8),
+                            //     const Icon(Icons.comment),
+                            //     Text(post['comments'].toString()),
+                            //   ],
+                            // ),
                           ],
                         ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          Text(
-                            "${post['price']}円",
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: Colors.orange[700],
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          // いいね数とコメント数を表示
-                          // Row(
-                          //   children: <Widget>[
-                          //     const Icon(Icons.favorite_border),
-                          //     Text(post['likes'].toString()),
-                          //     const SizedBox(width: 8),
-                          //     const Icon(Icons.comment),
-                          //     Text(post['comments'].toString()),
-                          //   ],
-                          // ),
-                        ],
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const ProfilePage(),
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
-        '/marketspecific': (context) => const MarketSpecificPage(),
+        // '/marketspecific': (context) => const MarketSpecificPage(),
         '/class': (context) => const ClassPage(),
         '/post': (context) => PostPage(),
         '/postbook': (context) => const PostBookPage(),
