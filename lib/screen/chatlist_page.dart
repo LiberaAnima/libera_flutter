@@ -14,7 +14,7 @@ class UserListScreen extends StatelessWidget {
   }
 }
 
-class UsersList extends StatelessWidget {
+class ChatlistPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String myUserId = 'YQEvhBeccnZQFjbg6P7pIzrRiid2'; // 実際には動的に取得することを想定
