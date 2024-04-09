@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'main_page.dart';
 
 // void main() {
 //   runApp(MaterialApp(
@@ -41,6 +42,15 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
           print(book);
           return Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+                icon: Icon(Icons.home),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MainPage()),
+                  );
+                },
+              ),
               title: Text("商品詳細画面"),
             ),
             body: Column(
