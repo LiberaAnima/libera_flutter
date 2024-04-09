@@ -42,6 +42,7 @@ dependencies:
     cloud_firestore: ^4.15.10
     hooks_riverpod: ^0.14.0+4
     provider: ^5.0.0
+    flutter_chat_ui: ^1.6.12
 
 dev_dependencies:
     flutter_test:

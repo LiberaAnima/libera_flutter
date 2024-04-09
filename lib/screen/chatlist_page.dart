@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:libera_flutter/screen/chat_post.dart';
+
+import 'chatroom_page.dart';
 
 class UserListScreen extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class UserListScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('User List'),
       ),
-      body: UsersList(),
+      body: ChatlistPage(),
     );
   }
 }
@@ -52,7 +53,7 @@ class ChatlistPage extends StatelessWidget {
                           document.id; // 仮のconversationId生成ロジック
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (context) => ChatRoom(
+                          builder: (context) => ChatroomPage(
                               conversationId: conversationId, userId: myUserId),
                         ),
                       );
