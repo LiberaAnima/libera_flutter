@@ -153,6 +153,39 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     ),
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                      child: Text(
+                        '3いいね',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                      child: Text(
+                        '・',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
+                      child: Text(
+                        '10閲覧',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
             floatingActionButton: FloatingActionButton.extended(
