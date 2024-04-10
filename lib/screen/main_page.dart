@@ -33,6 +33,11 @@ class _MainPagePageState extends State<MainPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(style: TextStyle(color: Colors.white), "hello"),
+              Image.asset(
+                ('assets/images/icon.png'),
+                width: 300,
+                // color: Color.fromARGB(150, 255, 255, 255),
+              ),
               ElevatedButton(
                 onPressed: () async => await _auth
                     .signOut()
