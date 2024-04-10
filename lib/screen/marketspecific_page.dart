@@ -43,12 +43,9 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
           return Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                icon: Icon(Icons.home),
+                icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MainPage()),
-                  );
+                  Navigator.pop(context);
                 },
               ),
               title: Text("商品詳細画面"),
