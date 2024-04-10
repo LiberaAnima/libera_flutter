@@ -55,7 +55,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 Image.network(book['imageUrl'],
                     height: 300, width: double.infinity, fit: BoxFit.cover),
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.only(
+                      right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
                   child: Row(
                     children: <Widget>[
                       CircleAvatar(
@@ -185,6 +186,35 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                       ),
                     ),
                   ],
+                ),
+                const Divider(
+                  thickness: .5,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.grey,
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.flag, color: Colors.grey, size: 20),
+                    Padding(
+                      padding:
+                          EdgeInsets.only(top: 2.0, bottom: 2.0, left: 8.0),
+                      child: Text(
+                        '通報する',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                        ),
+                        textAlign: TextAlign.left,
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  thickness: .5,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.grey,
                 ),
               ],
             ),
