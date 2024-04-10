@@ -66,7 +66,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text('ユーザーネーム: ${book['username']}'),
+                          Text('出品者: ${book['username']}'),
                           Row(
                             children: [
                               Text(book['faculty']),
@@ -79,7 +79,6 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   ),
                 ),
                 const Divider(
-                  height: 8,
                   thickness: 1,
                   indent: 0,
                   endIndent: 0,
@@ -89,7 +88,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.only(
+                          top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
                       child: Text(
                         book['bookname'],
                         style: TextStyle(
@@ -99,7 +99,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.only(
+                          top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
                       child: Text(
                         '¥${book['price']}',
                         style: TextStyle(
@@ -113,16 +114,45 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 Row(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('文学部'),
+                      padding:
+                          EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
+                      child: Text(
+                        '文学部',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('三日前'),
+                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                      child: Text(
+                        '・',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                      child: Text(
+                        '三日前',
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      ),
                     ),
                   ],
                 ),
-                Text(book['details'])
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    book['details'],
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
               ],
             ),
             floatingActionButton: FloatingActionButton.extended(
