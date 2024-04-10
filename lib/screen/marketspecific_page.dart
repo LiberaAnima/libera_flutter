@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 // void main() {
@@ -129,6 +130,15 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   'who': [book['uid'], user?.uid],
                   'timestamp': DateTime.now(),
                 });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatRoom(
+                      conversationId: book['uid'],
+                      userId: user!.uid,
+                    ),
+                  ),
+                );
               },
               label: Text('チャットする'),
               icon: Icon(Icons.chat),

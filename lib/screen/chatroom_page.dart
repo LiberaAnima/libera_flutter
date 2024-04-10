@@ -30,8 +30,8 @@ class ChatroomPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
-          .collection('Messages')
-          .where('conversationId', isEqualTo: conversationId)
+          .collection('chatroom')
+          // .where('who'[0], isEqualTo: conversationId)
           .orderBy('timestamp', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -48,8 +48,11 @@ class ChatroomPage extends StatelessWidget {
         return Chat(
           messages: messages,
           onSendPressed: (types.PartialText message) async {
-            final docRef =
-                FirebaseFirestore.instance.collection('Messages').doc();
+            final docRef = FirebaseFirestore.instance
+                .collection('chatroom')
+                .doc()
+                .collection('messages')
+                .doc();
             await docRef.set({
               'conversationId': conversationId,
               'senderId': userId,
@@ -70,7 +73,7 @@ class ChatroomPage extends StatelessWidget {
                       onTap: () {
                         Navigator.of(context).pop(); // Close the bottom sheet
                         FirebaseFirestore.instance
-                            .collection('Messages')
+                            .collection('chatroom')
                             .doc(message.id)
                             .delete();
                       },
@@ -94,7 +97,7 @@ class ChatroomPage extends StatelessWidget {
       final text = data['text'] ?? '';
 
       return types.TextMessage(
-        author: types.User(id: data['senderId']),
+        author: types.User(id: data['senderId'] ?? ''),
         createdAt: timestamp.toDate().millisecondsSinceEpoch,
         id: doc.id,
         text: text,
