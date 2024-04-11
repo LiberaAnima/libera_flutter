@@ -187,8 +187,7 @@ class FavoriteButton extends HookWidget {
           }
 
           final List likelists = snapshot.data?['likes'] as List;
-          final bool isFavorite = likelists?.contains(uid) ?? false;
-
+          final bool isFavorite = likelists?.contains(uid) ?? false; //色を変化させる
           return Icon(
             Icons.favorite,
             size: 20,
