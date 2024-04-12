@@ -5,7 +5,6 @@ import 'main_page.dart';
 import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
-
 class MarketSpecificPage extends StatefulWidget {
   final String uid;
 
@@ -143,7 +142,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     Padding(
                       padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
                       child: Text(
-                        '三日前',
+                        timeAgo(postedAt),
                         style: TextStyle(
                           color: Colors.grey,
                         ),
@@ -191,8 +190,6 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                           color: Colors.grey,
                         ),
                       ),
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(timeAgo(postedAt)),
                     ),
                   ],
                 ),
