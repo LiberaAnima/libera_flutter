@@ -46,10 +46,10 @@ class _BottomNavState extends State<BottomNav> {
         ),
         NavigationDestination(
           icon: Badge(
-            label: Text('3'),
-            child: Icon(Icons.class_),
+            // label: Text('3'),
+            child: Icon(Icons.chat_bubble_outline),
           ),
-          label: 'class',
+          label: 'chat',
         ),
         NavigationDestination(
           icon: Badge(
