@@ -124,18 +124,22 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
               ],
             ),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                FirebaseFirestore.instance.collection('chatroom').add({
+              onPressed: () async {
+                final docRef = await FirebaseFirestore.instance
+                    .collection('chatroom')
+                    .add({
                   'bookname': book['bookname'],
                   'who': [book['uid'], user?.uid],
                   'timestamp': DateTime.now(),
                 });
+                final chatroomid = docRef.id;
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ChatRoom(
-                      conversationId: book['uid'],
+                      otherId: book['uid'],
                       userId: user!.uid,
+                      chatroomId: chatroomid ?? '',
                     ),
                   ),
                 );

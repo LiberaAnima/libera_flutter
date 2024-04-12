@@ -4,10 +4,12 @@ import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatRoom extends StatelessWidget {
-  final String conversationId;
+  final String otherId;
   final String userId;
+  final String chatroomId;
 
-  ChatRoom({required this.conversationId, required this.userId});
+  ChatRoom(
+      {required this.otherId, required this.userId, required this.chatroomId});
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +17,31 @@ class ChatRoom extends StatelessWidget {
       appBar: AppBar(
         title: Text('Chat App'),
       ),
-      body: ChatroomPage(conversationId: conversationId, userId: userId),
+      body: ChatroomPage(
+        otherId: otherId,
+        userId: userId,
+        chatroomId: chatroomId,
+      ),
     );
   }
 }
 
 class ChatroomPage extends StatelessWidget {
-  final String conversationId;
+  final String otherId;
   final String userId;
+  final String chatroomId;
 
-  ChatroomPage({required this.conversationId, required this.userId});
+  ChatroomPage(
+      {required this.otherId, required this.userId, required this.chatroomId});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('chatroom')
-          // .where('who'[0], isEqualTo: conversationId)
+          // .where('who'[0], isEqualTo: otherId)
+          .doc(chatroomId)
+          .collection('messages')
           .orderBy('timestamp', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -50,11 +60,11 @@ class ChatroomPage extends StatelessWidget {
           onSendPressed: (types.PartialText message) async {
             final docRef = FirebaseFirestore.instance
                 .collection('chatroom')
-                .doc()
+                .doc(chatroomId)
                 .collection('messages')
                 .doc();
             await docRef.set({
-              'conversationId': conversationId,
+              'otherId': otherId,
               'senderId': userId,
               'text': message.text,
               'timestamp': FieldValue.serverTimestamp(),

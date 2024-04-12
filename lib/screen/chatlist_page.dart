@@ -44,12 +44,14 @@ class _ChatListPageState extends State<ChatListPage> {
                   return ListTile(
                     title: Text(username),
                     onTap: () {
-                      String conversationId =
-                          document.id; // 仮のconversationId生成ロジック
+                      String otherId = document.id; // 仮のotherId生成ロジック
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ChatroomPage(
-                              conversationId: conversationId, userId: myUserId),
+                            otherId: otherId,
+                            userId: myUserId,
+                            chatroomId: '',
+                          ),
                         ),
                       );
                     },
