@@ -15,7 +15,22 @@ class _MainPagePageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("メイン画面"),
+        leading: Image.asset('assets/images/icon.png'),
+        // title: Text("メイン画面"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_none),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.account_circle),
+          ),
+        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -46,6 +61,10 @@ class _MainPagePageState extends State<MainPage> {
               ElevatedButton(
                 onPressed: () => Navigator.pushNamed(context, '/postbook'),
                 child: Text("postbook"),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pushNamed(context, '/chatlist'),
+                child: Text("chatlist"),
               )
             ],
           ),
