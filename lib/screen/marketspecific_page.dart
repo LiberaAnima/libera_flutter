@@ -227,6 +227,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () async {
+                // 채팅 이 이미있을경우 생성안되게 하기
                 final docRef = await FirebaseFirestore.instance
                     .collection('chatroom')
                     .add({
