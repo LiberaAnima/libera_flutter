@@ -39,7 +39,6 @@ class ChatroomPage extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('chatroom')
-          // .where('who'[0], isEqualTo: otherId)
           .doc(chatroomId)
           .collection('messages')
           .orderBy('timestamp', descending: true)

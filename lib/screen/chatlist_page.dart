@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/widgets.dart';
 
 import 'chatroom_page.dart';
 
@@ -11,56 +13,58 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final db = FirebaseFirestore.instance;
+
+  final User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
-    final String myUserId = 'YQEvhBeccnZQFjbg6P7pIzrRiid2'; // 実際には動的に取得することを想定
-
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance.collection('users').snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+      future: db.collection('chatroom').where('who').get(),
+      builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else {
+          // Process the snapshot data and return the desired widget
+          return (ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              var chatroomData =
+                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              if (chatroomData['who'].contains(user!.uid)) {
+                print(chatroomData);
+                return Container(
+                  child: Column(children: [
+                    ListTile(
+                      title: Text("tests"),
 
-        if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        }
-
-        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-          return Center(child: Text('No users found.'));
-        }
-
-        return ListView(
-          children: snapshot.data!.docs
-              .map((document) {
-                Map<String, dynamic> userData =
-                    document.data() as Map<String, dynamic>;
-                // ユーザー名が存在しない、または空文字列の場合はリストアイテムを作らない
-                if (userData['username'] == null ||
-                    userData['username']!.isEmpty) {
-                  return Container(); // 空のコンテナを返してアイテムを表示しない
-                } else {
-                  String username = userData['username'];
-                  return ListTile(
-                    title: Text(username),
-                    onTap: () {
-                      String otherId = document.id; // 仮のotherId生成ロジック
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => ChatroomPage(
-                            otherId: otherId,
-                            userId: myUserId,
-                            chatroomId: '',
+                      // subtitle: Text(chatroomData['description']),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatroomPage(
+                              chatroomId: chatroomData['uid'],
+                              otherId: chatroomData['who']
+                                  .firstWhere((id) => id != user!.uid),
+                              userId: user!.uid,
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                  );
-                }
-              })
-              .where((element) => element is! Container)
-              .toList(), // Container（空のリストアイテム）を除外する
-        );
+                        );
+                      },
+                    ),
+                  ]),
+                );
+              } else {
+                return SizedBox.shrink();
+              }
+            },
+          ));
+        }
       },
     );
   }

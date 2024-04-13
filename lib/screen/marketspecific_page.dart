@@ -229,6 +229,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 final docRef = await FirebaseFirestore.instance
                     .collection('chatroom')
                     .add({
+                  'uid': widget.uid,
                   'bookname': book['bookname'],
                   'who': [book['uid'], user?.uid],
                   'timestamp': DateTime.now(),
