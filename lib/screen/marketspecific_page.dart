@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'main_page.dart';
 import 'package:libera_flutter/screen/chatroom_page.dart';
@@ -229,19 +230,25 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 final docRef = await FirebaseFirestore.instance
                     .collection('chatroom')
                     .add({
-                  'uid': widget.uid,
                   'bookname': book['bookname'],
                   'who': [book['uid'], user?.uid],
                   'timestamp': DateTime.now(),
                 });
                 final chatroomid = docRef.id;
+                FirebaseFirestore.instance
+                    .collection('chatroom')
+                    .doc(chatroomid)
+                    .update({
+                  'id': chatroomid,
+                });
+                print(" chatroom id : " + chatroomid);
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => ChatRoom(
                       otherId: book['uid'],
                       userId: user!.uid,
-                      chatroomId: chatroomid ?? '',
+                      chatroomId: chatroomid,
                     ),
                   ),
                 );

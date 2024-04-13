@@ -13,8 +13,6 @@ class ChatListPage extends StatefulWidget {
 }
 
 class _ChatListPageState extends State<ChatListPage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final db = FirebaseFirestore.instance;
 
   final User? user = FirebaseAuth.instance.currentUser;
@@ -35,20 +33,45 @@ class _ChatListPageState extends State<ChatListPage> {
             itemBuilder: (context, index) {
               var chatroomData =
                   snapshot.data!.docs[index].data() as Map<String, dynamic>;
-              if (chatroomData['who'].contains(user!.uid)) {
-                print(chatroomData);
+
+              // print(chatroomData);
+              if (chatroomData['who'] != null &&
+                  chatroomData['who'].contains(user!.uid)) {
                 return Container(
                   child: Column(children: [
                     ListTile(
-                      title: Text("tests"),
-
+                      title:
+                          FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                        future: db
+                            .collection('users')
+                            .doc(chatroomData['who']
+                                .firstWhere((id) => id != user!.uid))
+                            .get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Text('Loading...');
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else {
+                            var userData =
+                                snapshot.data!.data() as Map<String, dynamic>;
+                            var nickname = userData['username'];
+                            print("chatroom :" + chatroomData['id']);
+                            return Text(nickname);
+                          }
+                        },
+                      ),
                       // subtitle: Text(chatroomData['description']),
                       onTap: () {
+                        // print("chatroom : " + chatroomData['who']);
+
+                        print(chatroomData['id']);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChatroomPage(
-                              chatroomId: chatroomData['uid'],
+                            builder: (context) => ChatRoom(
+                              chatroomId: chatroomData['id'],
                               otherId: chatroomData['who']
                                   .firstWhere((id) => id != user!.uid),
                               userId: user!.uid,
@@ -60,7 +83,7 @@ class _ChatListPageState extends State<ChatListPage> {
                   ]),
                 );
               } else {
-                return SizedBox.shrink();
+                return Text('');
               }
             },
           ));
