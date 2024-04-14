@@ -9,7 +9,7 @@ import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 void _launchURL() async {
-  final Uri reportFormsUrl = Uri.parse('https://google.com');
+  final Uri reportFormsUrl = Uri.parse('https://docs.google.com/forms/d/e/1FAIpQLSfmAKkMXTtKehTmJtA2mJq1vIr3KNgD1MLc-x9egUUo82P2WQ/viewform');
   if (await canLaunchUrl(reportFormsUrl)) {
     await launchUrl(reportFormsUrl);
   } else {
