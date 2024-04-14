@@ -393,6 +393,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
             ),
             bottomNavigationBar: BottomAppBar(
               shape: const CircularNotchedRectangle(),
+              color: Colors.white,
               notchMargin: 6.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -401,34 +402,53 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     onTap: () {},
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 15, horizontal: 20),
-                      decoration: ShapeDecoration(
-                        color: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(4),
-                        ),
+                          vertical: 15, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(color: Colors.blue, width: 2),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Row(
+                      child: const Icon(
+                        Icons.bookmark_border,
+                        color: Colors.blue,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Container(
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.bookmark_border,
-                            color: Colors.white,
-                            size: 20,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            "保存する",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w700,
-                              height: 0.09,
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              '¥${book['price']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                                height: 0.09,
+                              ),
                             ),
                           ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              book['bookname'],
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                                height: 0.12,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -475,7 +495,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            "チャット",
+                            "チャットする",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
