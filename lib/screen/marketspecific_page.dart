@@ -137,7 +137,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         padding:
                             EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
                         child: Text(
-                          '文学部',
+                          book['faculty'],
                           style: TextStyle(
                             color: Colors.grey,
                           ),
