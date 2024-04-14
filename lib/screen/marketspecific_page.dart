@@ -391,50 +391,50 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 ],
               ),
             ),
-
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () async {
-                // 채팅 이 이미있을경우 생성안되게 하기
-                final docRef = await FirebaseFirestore.instance
-                    .collection('chatroom')
-                    .add({
-                  'bookname': book['bookname'],
-                  'who': [book['uid'], user?.uid],
-                  'timestamp': DateTime.now(),
-                });
-                final chatroomid = docRef.id;
-                FirebaseFirestore.instance
-                    .collection('chatroom')
-                    .doc(chatroomid)
-                    .update({
-                  'id': chatroomid,
-                });
-                print(" chatroom id : " + chatroomid);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChatRoom(
-                      otherId: book['uid'],
-                      userId: user!.uid,
-                      chatroomId: chatroomid,
-                    ),
-
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.only(left: 60.0, right: 30.0),
+            bottomNavigationBar: BottomAppBar(
+              shape: const CircularNotchedRectangle(),
+              notchMargin: 6.0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FloatingActionButton.extended(
-                    heroTag: "bookmark",
-                    onPressed: () {},
-                    label: Text('保存する'),
-                    icon: Icon(Icons.bookmark_border),
-                    backgroundColor: Colors.blueGrey,
-                    shape: StadiumBorder(),
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 20),
+                      decoration: ShapeDecoration(
+                        color: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.bookmark_border,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            "保存する",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0.09,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  FloatingActionButton.extended(
-                    heroTag: "chat",
-                    onPressed: () async {
+                  InkWell(
+                    onTap: () async {
                       final docRef = await FirebaseFirestore.instance
                           .collection('chatroom')
                           .add({
@@ -454,11 +454,39 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         ),
                       );
                     },
-                    label: Text('チャット'),
-                    icon: Icon(Icons.chat_bubble_outline),
-                    backgroundColor: Colors.orange,
-                    shape: StadiumBorder(),
-
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 20),
+                      decoration: ShapeDecoration(
+                        color: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.chat,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            "チャット",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0.09,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
