@@ -25,6 +25,7 @@ class _MainPagePageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         leadingWidth: 100,
         leading: Image.asset('assets/images/icon.png'),
         // title: Text("メイン画面"),
@@ -57,7 +58,7 @@ class _MainPagePageState extends State<MainPage> {
         ],
       ),
       body: Container(
-        decoration: const BoxDecoration(),
+        color: Colors.white,
         child: Column(
           children: [
             Center(
@@ -90,7 +91,6 @@ class _MainPagePageState extends State<MainPage> {
                                     color: Colors.black),
                               ),
                             ),
-                            Text(userData?['email']),
                           ],
                         );
                       }

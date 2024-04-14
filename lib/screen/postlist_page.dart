@@ -28,7 +28,7 @@ class _PostListPagePageState extends State<PostListPage> {
         .snapshots();
     return Scaffold(
       appBar: AppBar(
-        title: Text("投稿一覧画面"),
+        title: Text("自由掲示板"),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postlists,

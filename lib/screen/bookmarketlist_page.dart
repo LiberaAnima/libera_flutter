@@ -16,6 +16,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text("本のマーケット一覧画面"),
       ),
       body: StreamBuilder<QuerySnapshot>(
