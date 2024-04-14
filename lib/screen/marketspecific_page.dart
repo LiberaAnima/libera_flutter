@@ -1,9 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'main_page.dart';
 import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
+
+void _launchURL() async {
+  final Uri reportFormsUrl = Uri.parse('https://google.com');
+  if (await canLaunchUrl(reportFormsUrl)) {
+    await launchUrl(reportFormsUrl);
+  } else {
+    print('Could not launch $reportFormsUrl'); //デバッグ用、外部URLに飛ばせるように設定する必要有
+  }
+}
 
 class MarketSpecificPage extends StatefulWidget {
   final String uid;
@@ -200,22 +211,32 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     endIndent: 0,
                     color: Colors.grey,
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.flag, color: Colors.grey, size: 20),
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: 2.0, bottom: 2.0, left: 8.0),
-                        child: Text(
-                          '通報する',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
+                    width: double.infinity,
+                    color: Colors.transparent,
+                    child: GestureDetector(
+                      onTap: _launchURL,
+                      behavior: HitTestBehavior.opaque,
+                      child: Row(
+                        children: [
+                          Icon(Icons.flag, color: Colors.grey, size: 20),
+                          SizedBox(width: 8),
+                          Text(
+                            '通報する',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          textAlign: TextAlign.left,
-                        ),
+                          Spacer(),
+                          Icon(Icons.keyboard_arrow_right,
+                              color: Colors.black, size: 20),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                   const Divider(
                     thickness: .5,
@@ -223,25 +244,27 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     endIndent: 0,
                     color: Colors.grey,
                   ),
-                  const SizedBox(height: 16),
-                  Container(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${book['username']}さんの他の販売商品',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w700,
-                            height: 0.10,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${book['username']}さんの他の販売商品',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0.10,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -292,7 +315,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    'price1',
+                                    'price1円',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -346,7 +369,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
-                                    'price2',
+                                    'price2円',
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 14,
@@ -373,6 +396,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   FloatingActionButton.extended(
+                    heroTag: "bookmark",
                     onPressed: () {},
                     label: Text('保存する'),
                     icon: Icon(Icons.bookmark_border),
@@ -380,6 +404,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     shape: StadiumBorder(),
                   ),
                   FloatingActionButton.extended(
+                    heroTag: "chat",
                     onPressed: () async {
                       final docRef = await FirebaseFirestore.instance
                           .collection('chatroom')
