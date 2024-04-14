@@ -47,11 +47,14 @@ class _PostPagePageState extends State<PostPage> {
                 .collection('users')
                 .doc(uid)
                 .get();
-            FirebaseFirestore.instance.collection('posts').doc().set({
+            final post = FirebaseFirestore.instance.collection('posts').doc();
+            post.set({
               'post_message': _textEditingController.text,
               'date': FieldValue.serverTimestamp(),
               'name': userDoc['username'],
+              'likes': [],
               'uid': uid,
+              'documentID': post.id,
             });
             _onSubmitted(_textEditingController.text);
             Navigator.pushNamed(context, '/');
