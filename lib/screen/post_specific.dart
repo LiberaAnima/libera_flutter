@@ -123,6 +123,130 @@ class _postSpecificPageState extends State<postSpecificPage> {
                       ),
                     ],
                   ),
+                  /*
+                  //返信内容を表示
+                  StreamBuilder<QuerySnapshot>(
+                    stream: responselists,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text('Something went wrong');
+                      }
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Text("Loading");
+                      }
+                      return ListView(
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                              Map<String, dynamic> data =
+                                  document.data()! as Map<String, dynamic>;
+                              if (data['documentID'] == post['documentID']) {
+                                return ListTile(
+                                  title: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: Colors.white), // 枠線を追加
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(1),
+                                      ),
+                                      padding: EdgeInsets.all(8),
+                                      child: Column(
+                                        children: [
+                                          Text('あいうえお'), //テスト用
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              CircleAvatar(
+                                                backgroundImage: NetworkImage(
+                                                    'https://example.com/user-icon.jpg'),
+                                              ),
+                                              SizedBox(width: 10),
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    'ユーザーネーム: 匿名',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 5),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                data['post_message'],
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 5),
+                                          Divider(
+                                            height: 10.0,
+                                            color: Color.fromRGBO(
+                                                165, 165, 165, 1),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                timeAgo(data['date'].toDate()),
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                              FavoriteButton(
+                                                documentid: data['documentID'],
+                                                collectionname: 'posts',
+                                              ),
+                                              Text(
+                                                'いいね ${data['likes'].length.toString()}  ',
+                                                style: TextStyle(
+                                                  fontSize: 10,
+                                                ),
+                                              ),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          postSpecificPage(
+                                                        id: data['documentID'],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                icon: Icon(
+                                                  Icons
+                                                      .messenger_outline_rounded,
+                                                  size: 20,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )),
+                                );
+                              }
+                              ;
+                            })
+                            .toList()
+                            .cast(),
+                      );
+                    },
+                  ),*/
+
                   Center(
                     child: TextField(
                       controller: _textEditingController,
@@ -139,124 +263,6 @@ class _postSpecificPageState extends State<postSpecificPage> {
                         labelText: '返信する * ',
                       ),
                     ),
-                  ),
-                  //返信内容を表示
-                  StreamBuilder<QuerySnapshot>(
-                    stream: responselists,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                      if (snapshot.hasError) {
-                        return const Text('Something went wrong');
-                      }
-
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Text("Loading");
-                      }
-
-                      return ListView(
-                        children: snapshot.data!.docs
-                            .map((DocumentSnapshot document) {
-                              Map<String, dynamic> data =
-                                  document.data()! as Map<String, dynamic>;
-                              return ListTile(
-                                title: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1,
-                                          color: Colors.white), // 枠線を追加
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(1),
-                                    ),
-                                    padding: EdgeInsets.all(8),
-                                    child: Column(
-                                      children: [
-                                        Text('あいうえお'), //テスト用
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            CircleAvatar(
-                                              backgroundImage: NetworkImage(
-                                                  'https://example.com/user-icon.jpg'),
-                                            ),
-                                            SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  'ユーザーネーム: 匿名',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 5),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              data['post_message'],
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(height: 5),
-                                        Divider(
-                                          height: 10.0,
-                                          color:
-                                              Color.fromRGBO(165, 165, 165, 1),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              timeAgo(data['date'].toDate()),
-                                              style: TextStyle(
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                            FavoriteButton(
-                                              documentid: data['documentID'],
-                                              collectionname: 'posts',
-                                            ),
-                                            Text(
-                                              'いいね ${data['likes'].length.toString()}  ',
-                                              style: TextStyle(
-                                                fontSize: 10,
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        postSpecificPage(
-                                                      id: data['documentID'],
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              icon: Icon(
-                                                Icons.messenger_outline_rounded,
-                                                size: 20,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )),
-                              );
-                            })
-                            .toList()
-                            .cast(),
-                      );
-                    },
                   ),
                 ],
               ),
