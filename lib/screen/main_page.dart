@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/profile_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -27,7 +28,20 @@ class _MainPagePageState extends State<MainPage> {
             icon: Icon(Icons.notifications_none),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              final String? uid = _auth.currentUser?.uid;
+              print(uid);
+
+              if (uid != null) {
+                // uid를 ProfilePage로 전달하면서 이동합니다.
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(uid: uid),
+                  ),
+                );
+              }
+            },
             icon: Icon(Icons.account_circle),
           ),
         ],
