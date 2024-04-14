@@ -9,8 +9,8 @@ import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/post_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
-import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
+import 'package:libera_flutter/screen/profile_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainPage(),
         '/logIn': (context) => const LoginPage(),
         '/signUp': (context) => const SignupPage(),
-        '/profile': (context) => const ProfilePage(),
+        '/profile': (context) =>
+            ProfileScreen(uid: '3rsT6B5CFkSlyf0VjkOXenvkNkn2'),
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
         // '/marketspecific': (context) => const MarketSpecificPage(),

@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:997188547316:ios:d903d3e503c50cd5ee64a1</string>
+	<key>DATABASE_URL</key>
+	<string>https://libera-b72ea-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
