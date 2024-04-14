@@ -58,7 +58,6 @@ class DefaultFirebaseOptions {
     appId: '1:997188547316:android:080d75e7389bb321ee64a1',
     messagingSenderId: '997188547316',
     projectId: 'libera-b72ea',
-    databaseURL: 'https://libera-b72ea-default-rtdb.firebaseio.com',
     storageBucket: 'libera-b72ea.appspot.com',
   );
 
@@ -67,7 +66,6 @@ class DefaultFirebaseOptions {
     appId: '1:997188547316:ios:d903d3e503c50cd5ee64a1',
     messagingSenderId: '997188547316',
     projectId: 'libera-b72ea',
-    databaseURL: 'https://libera-b72ea-default-rtdb.firebaseio.com',
     storageBucket: 'libera-b72ea.appspot.com',
     iosBundleId: 'com.example.liberaFlutter',
   );
