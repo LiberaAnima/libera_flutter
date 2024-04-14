@@ -17,6 +17,26 @@ class _ChatListPageState extends State<ChatListPage> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 
+  Future<String> getLastMessage(String chatroomId) async {
+    final lastmessage = await db
+        .collection('chatroom')
+        .doc(chatroomId)
+        .collection('messages')
+        .orderBy('timestamp', descending: true)
+        .limit(1)
+        .get();
+
+    if (lastmessage.docs.isEmpty) {
+      return 'No messages yet';
+    }
+    print(chatroomId);
+    print(lastmessage.docs.first.data()['message']);
+
+    final messageData = lastmessage.docs.first.data();
+    return messageData['message'] ?? 'No message content';
+  }
+  // get last messages
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -49,9 +69,6 @@ class _ChatListPageState extends State<ChatListPage> {
                     ),
                     padding: EdgeInsets.all(10),
                     child: Column(children: [
-                      SizedBox(
-                        height: 10,
-                      ),
                       ListTile(
                         title: FutureBuilder<
                             DocumentSnapshot<Map<String, dynamic>>>(
@@ -72,20 +89,33 @@ class _ChatListPageState extends State<ChatListPage> {
                               var nickname = userData['username'];
                               print("chatroom :" + chatroomData['id']);
                               return Container(
-                                  child: Column(
-                                children: [
-                                  Text(nickname),
-                                  Text('lastmessage'),
-                                ],
-                              ));
+                                child: Column(
+                                  children: [
+                                    Text(nickname),
+                                    FutureBuilder<String>(
+                                      future:
+                                          getLastMessage(chatroomData['id']),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Text(
+                                              'Loading last message...');
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else {
+                                          return Text(
+                                              'Last message: ${snapshot.data}');
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
                             }
                           },
                         ),
-                        // subtitle: Text(chatroomData['description']),
                         onTap: () {
-                          // print("chatroom : " + chatroomData['who']);
-
-                          print(chatroomData['id']);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
