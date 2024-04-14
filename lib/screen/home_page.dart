@@ -6,7 +6,7 @@ import 'package:libera_flutter/screen/chatlist_page.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
-import 'package:libera_flutter/screen/profile_page.dart';
+import 'package:libera_flutter/screen/school_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     const BookMarketListPage(),
     const PostListPage(),
     const ChatListPage(),
-    const ProfilePage(),
+    const SchoolPage(),
   ];
 
   @override
