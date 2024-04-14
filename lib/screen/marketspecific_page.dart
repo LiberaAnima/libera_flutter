@@ -463,6 +463,14 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         'timestamp': DateTime.now(),
                       });
                       final chatroomid = docRef.id;
+
+                      FirebaseFirestore.instance
+                          .collection('chatroom')
+                          .doc(chatroomid)
+                          .update({
+                        'id': chatroomid,
+                      });
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(
