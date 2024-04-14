@@ -2,9 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'main_page.dart';
 import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
+
+void _launchURL() async {
+  final Uri reportFormsUrl = Uri.parse('https://google.com');
+  if (await canLaunchUrl(reportFormsUrl)) {
+    await launchUrl(reportFormsUrl);
+  } else {
+    print('Could not launch $reportFormsUrl'); //デバッグ用、外部URLに飛ばせるように設定する必要有
+  }
+}
 
 class MarketSpecificPage extends StatefulWidget {
   final String uid;
@@ -57,174 +68,330 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
               ),
               title: Text("商品詳細画面"),
             ),
-            body: Column(
-              children: <Widget>[
-                Image.network(book['imageUrl'],
-                    height: 300, width: double.infinity, fit: BoxFit.cover),
-                Padding(
-                  padding: EdgeInsets.only(
-                      right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
-                  child: Row(
+            body: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Image.network(book['imageUrl'],
+                      height: 300, width: double.infinity, fit: BoxFit.cover),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
+                    child: Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                            // backgroundImage:
+                            //     NetworkImage('https://example.com/user-icon.jpg'),
+                            ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('出品者: ${book['username']}'),
+                            Row(
+                              children: [
+                                Text(book['faculty']),
+                                SizedBox(width: 10),
+                              ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.grey,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      CircleAvatar(
-                          // backgroundImage:
-                          //     NetworkImage('https://example.com/user-icon.jpg'),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
+                        child: Text(
+                          book['bookname'],
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                      SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('出品者: ${book['username']}'),
-                          Row(
-                            children: [
-                              Text(book['faculty']),
-                              SizedBox(width: 10),
-                            ],
-                          )
-                        ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
+                        child: Text(
+                          '¥${book['price']}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const Divider(
-                  thickness: 1,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.grey,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
-                      child: Text(
-                        book['bookname'],
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '文学部',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
-                      child: Text(
-                        '¥${book['price']}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '・',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '文学部',
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          timeAgo(postedAt),
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '・',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      book['details'],
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 16,
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        timeAgo(postedAt),
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    book['details'],
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 16,
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '3いいね',
-                        style: TextStyle(
-                          color: Colors.grey,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '3いいね',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '・',
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '・',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
-                      child: Text(
-                        '10閲覧',
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Padding(
+                        padding:
+                            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
+                        child: Text(
+                          '10閲覧',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const Divider(
-                  thickness: .5,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.grey,
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.flag, color: Colors.grey, size: 20),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: 2.0, bottom: 2.0, left: 8.0),
-                      child: Text(
-                        '通報する',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                        textAlign: TextAlign.left,
+                    ],
+                  ),
+                  const Divider(
+                    thickness: .5,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.grey,
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
+                    width: double.infinity,
+                    color: Colors.transparent,
+                    child: GestureDetector(
+                      onTap: _launchURL,
+                      behavior: HitTestBehavior.opaque,
+                      child: Row(
+                        children: [
+                          Icon(Icons.flag, color: Colors.grey, size: 20),
+                          SizedBox(width: 8),
+                          Text(
+                            '通報する',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                            textAlign: TextAlign.left,
+                          ),
+                          Spacer(),
+                          Icon(Icons.keyboard_arrow_right,
+                              color: Colors.black, size: 20),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-                const Divider(
-                  thickness: .5,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.grey,
-                ),
-              ],
+                  ),
+                  const Divider(
+                    thickness: .5,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.grey,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${book['username']}さんの他の販売商品',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0.10,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    height: 178,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 170,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(""),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'product name1',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'price1円',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Container(
+                            height: 170,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(""),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'product name2',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'price2円',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 80),
+                ],
+              ),
             ),
+
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () async {
                 // 채팅 이 이미있을경우 생성안되게 하기
@@ -251,13 +418,50 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                       userId: user!.uid,
                       chatroomId: chatroomid,
                     ),
+
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(left: 60.0, right: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FloatingActionButton.extended(
+                    heroTag: "bookmark",
+                    onPressed: () {},
+                    label: Text('保存する'),
+                    icon: Icon(Icons.bookmark_border),
+                    backgroundColor: Colors.blueGrey,
+                    shape: StadiumBorder(),
                   ),
-                );
-              },
-              label: Text('チャットする'),
-              icon: Icon(Icons.chat),
-              backgroundColor: Colors.orange,
-              shape: StadiumBorder(),
+                  FloatingActionButton.extended(
+                    heroTag: "chat",
+                    onPressed: () async {
+                      final docRef = await FirebaseFirestore.instance
+                          .collection('chatroom')
+                          .add({
+                        'bookname': book['bookname'],
+                        'who': [book['uid'], user?.uid],
+                        'timestamp': DateTime.now(),
+                      });
+                      final chatroomid = docRef.id;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatRoom(
+                            otherId: book['uid'],
+                            userId: user!.uid,
+                            chatroomId: chatroomid ?? '',
+                          ),
+                        ),
+                      );
+                    },
+                    label: Text('チャット'),
+                    icon: Icon(Icons.chat_bubble_outline),
+                    backgroundColor: Colors.orange,
+                    shape: StadiumBorder(),
+
+                  ),
+                ],
+              ),
             ),
           );
         }
