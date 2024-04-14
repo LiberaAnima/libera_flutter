@@ -8,14 +8,19 @@ import 'main_page.dart';
 import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
-void _launchURL() async {
-  final Uri reportFormsUrl = Uri.parse('https://docs.google.com/forms/d/e/1FAIpQLSfmAKkMXTtKehTmJtA2mJq1vIr3KNgD1MLc-x9egUUo82P2WQ/viewform');
-  if (await canLaunchUrl(reportFormsUrl)) {
-    await launchUrl(reportFormsUrl);
+Future<void>? _launchURL(Uri url) async {
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  )) {
+    await launchUrl(url);
   } else {
-    print('Could not launch $reportFormsUrl'); //デバッグ用、外部URLに飛ばせるように設定する必要有
+    print('Could not launch it.'); //デバッグ用、外部URLに飛ばせるように設定する必要有
   }
 }
+
+Uri url = Uri.parse(
+    'https://docs.google.com/forms/d/e/1FAIpQLSfmAKkMXTtKehTmJtA2mJq1vIr3KNgD1MLc-x9egUUo82P2WQ/viewform');
 
 class MarketSpecificPage extends StatefulWidget {
   final String uid;
@@ -218,7 +223,9 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     width: double.infinity,
                     color: Colors.transparent,
                     child: GestureDetector(
-                      onTap: _launchURL,
+                      onTap: () {
+                        _launchURL(url);
+                      },
                       behavior: HitTestBehavior.opaque,
                       child: Row(
                         children: [
