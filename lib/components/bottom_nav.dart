@@ -31,33 +31,32 @@ class _BottomNavState extends State<BottomNav> {
         NavigationDestination(
           selectedIcon: Icon(Icons.home),
           icon: Icon(Icons.home_outlined),
-          label: 'Home',
+          label: 'ホーム',
         ),
         NavigationDestination(
           icon: Badge(child: Icon(Icons.book)),
-          label: 'book',
+          label: 'フリマ',
         ),
         NavigationDestination(
           icon: Badge(
             label: Text('2'),
             child: Icon(Icons.article),
           ),
-          label: 'postlist',
+          label: '掲示板',
         ),
         NavigationDestination(
           icon: Badge(
             // label: Text('3'),
             child: Icon(Icons.chat_bubble_outline),
           ),
-          label: 'chat',
+          label: 'チャット',
         ),
         NavigationDestination(
-          icon: Badge(
-            label: Text('4'),
-            child: Icon(Icons.person),
-          ),
-          label: 'profile',
-        ),
+            icon: Badge(
+              label: Text('4'),
+              child: Icon(Icons.school),
+            ),
+            label: '授業'),
       ],
     );
   }

@@ -9,6 +9,7 @@ import 'package:libera_flutter/screen/chatlist_page.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
+import 'package:libera_flutter/screen/school_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/services/user_service.dart';
 
@@ -31,7 +32,8 @@ class _HomePageState extends State<HomePage> {
     const BookMarketListPage(),
     const PostListPage(),
     const ChatListPage(),
-    // ProfilePage(uid: FirebaseAuth.instance.currentUser!.uid),
+    const SchoolPage(),
+
   ];
 
   @override
