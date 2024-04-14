@@ -34,7 +34,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     print(widget.uid);
-    print(_user);
+    if (_user != null) {
+      print(_user!.faculty);
+    }
     return FutureBuilder<UserModel>(
       future: _userService.getUserData(widget.uid),
       builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
@@ -51,50 +53,44 @@ class _ProfilePageState extends State<ProfilePage> {
               iconTheme: IconThemeData(color: Colors.blue),
               elevation: 0,
             ),
+            body: _user == null
+                ? Center(child: CircularProgressIndicator())
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: ListView(
+                      children: <Widget>[
+                        SizedBox(height: 24),
+                        Text(
+                          _user!.username,
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          _user!.email,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        Divider(height: 40, thickness: 2),
+                        profileInfo('学部', _user!.faculty),
+                        profileInfo('学校', _user!.school),
+                        profileInfo('性別', _user!.gender),
+                        profileInfo('学年', _user!.year),
+                      ],
+                    ),
+                  ),
           );
         }
       },
     );
-    // child: Scaffold(
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.white,
-    //     title: Text('プロフィール', style: TextStyle(color: Colors.black)),
-    //     iconTheme: IconThemeData(color: Colors.blue),
-    //     elevation: 0,
-    //   ),
-    // body: _user == null
-    //     ? Center(child: CircularProgressIndicator())
-    //     : Padding(
-    //         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-    //         child: ListView(
-    //           children: <Widget>[
-    //             SizedBox(height: 24),
-    //             Text(
-    //               _user!.username,
-    //               style: TextStyle(
-    //                 fontSize: 24,
-    //                 fontWeight: FontWeight.bold,
-    //                 color: Colors.black,
-    //               ),
-    //               textAlign: TextAlign.center,
-    //             ),
-    //             SizedBox(height: 8),
-    //             Text(
-    //               _user!.email,
-    //               style: TextStyle(
-    //                 fontSize: 16,
-    //                 color: Colors.grey,
-    //               ),
-    //               textAlign: TextAlign.center,
-    //             ),
-    //             Divider(height: 40, thickness: 2),
-    //             profileInfo('学部', _user!.faculty),
-    //             profileInfo('学校', _user!.school),
-    //             profileInfo('性別', _user!.gender),
-    //             profileInfo('学年', _user!.year),
-    //           ],
-    //         ),
-    //       ),
+    // child: Scaffold
   }
 
   Widget profileInfo(String title, String value) {

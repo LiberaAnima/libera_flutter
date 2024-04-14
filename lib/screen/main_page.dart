@@ -90,7 +90,7 @@ class _MainPagePageState extends State<MainPage> {
                                     color: Colors.black),
                               ),
                             ),
-                            // Text(userData?['email']),
+                            Text(userData?['email']),
                           ],
                         );
                       }
