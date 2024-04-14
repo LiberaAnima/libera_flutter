@@ -56,173 +56,316 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
               ),
               title: Text("商品詳細画面"),
             ),
-            body: Column(
-              children: <Widget>[
-                Image.network(book['imageUrl'],
-                    height: 300, width: double.infinity, fit: BoxFit.cover),
-                Padding(
-                  padding: EdgeInsets.only(
-                      right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
-                  child: Row(
+            body: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Image.network(book['imageUrl'],
+                      height: 300, width: double.infinity, fit: BoxFit.cover),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
+                    child: Row(
+                      children: <Widget>[
+                        CircleAvatar(
+                            // backgroundImage:
+                            //     NetworkImage('https://example.com/user-icon.jpg'),
+                            ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text('出品者: ${book['username']}'),
+                            Row(
+                              children: [
+                                Text(book['faculty']),
+                                SizedBox(width: 10),
+                              ],
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.grey,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      CircleAvatar(
-                          // backgroundImage:
-                          //     NetworkImage('https://example.com/user-icon.jpg'),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
+                        child: Text(
+                          book['bookname'],
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
                           ),
-                      SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('出品者: ${book['username']}'),
-                          Row(
-                            children: [
-                              Text(book['faculty']),
-                              SizedBox(width: 10),
-                            ],
-                          )
-                        ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
+                        child: Text(
+                          '¥${book['price']}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const Divider(
-                  thickness: 1,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.grey,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
-                      child: Text(
-                        book['bookname'],
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
+                  Row(
+                    children: <Widget>[
+                      Padding(
+                        padding:
+                            EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '文学部',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                          top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
-                      child: Text(
-                        '¥${book['price']}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '・',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding:
-                          EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '文学部',
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          timeAgo(postedAt),
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '・',
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
+                    ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      book['details'],
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 16,
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        timeAgo(postedAt),
-                        style: TextStyle(
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    book['details'],
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 16,
                     ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '3いいね',
-                        style: TextStyle(
-                          color: Colors.grey,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '3いいね',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                      child: Text(
-                        '・',
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Padding(
+                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        child: Text(
+                          '・',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
-                      child: Text(
-                        '10閲覧',
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Padding(
+                        padding:
+                            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
+                        child: Text(
+                          '10閲覧',
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                const Divider(
-                  thickness: .5,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.grey,
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.flag, color: Colors.grey, size: 20),
-                    Padding(
-                      padding:
-                          EdgeInsets.only(top: 2.0, bottom: 2.0, left: 8.0),
-                      child: Text(
-                        '通報する',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
+                    ],
+                  ),
+                  const Divider(
+                    thickness: .5,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.grey,
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.flag, color: Colors.grey, size: 20),
+                      Padding(
+                        padding:
+                            EdgeInsets.only(top: 2.0, bottom: 2.0, left: 8.0),
+                        child: Text(
+                          '通報する',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey,
+                          ),
+                          textAlign: TextAlign.left,
                         ),
-                        textAlign: TextAlign.left,
                       ),
+                    ],
+                  ),
+                  const Divider(
+                    thickness: .5,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.grey,
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${book['username']}さんの他の販売商品',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w700,
+                            height: 0.10,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const Divider(
-                  thickness: .5,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Colors.grey,
-                ),
-              ],
+                  ),
+                  const SizedBox(height: 16),
+                  Container(
+                    width: double.infinity,
+                    height: 178,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 170,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(""),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'product name1',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'price1',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Container(
+                            height: 170,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    width: double.infinity,
+                                    decoration: ShapeDecoration(
+                                      image: DecorationImage(
+                                        image: NetworkImage(""),
+                                        fit: BoxFit.fill,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'product name2',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w400,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    'price2',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 14,
+                                      fontFamily: 'Inter',
+                                      fontWeight: FontWeight.w700,
+                                      height: 0.09,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 80),
+                ],
+              ),
             ),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () async {
