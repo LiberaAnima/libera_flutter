@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainPage(),
         '/logIn': (context) => const LoginPage(),
         '/signUp': (context) => const SignupPage(),
-        '/profile': (context) => const ProfilePage(),
+        // '/profile': (context) => const ProfilePage(),
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
         // '/marketspecific': (context) => const MarketSpecificPage(),

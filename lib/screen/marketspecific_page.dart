@@ -8,14 +8,19 @@ import 'main_page.dart';
 import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
-void _launchURL() async {
-  final Uri reportFormsUrl = Uri.parse('https://google.com');
-  if (await canLaunchUrl(reportFormsUrl)) {
-    await launchUrl(reportFormsUrl);
+Future<void>? _launchURL(Uri url) async {
+  if (!await launchUrl(
+    url,
+    mode: LaunchMode.externalApplication,
+  )) {
+    await launchUrl(url);
   } else {
-    print('Could not launch $reportFormsUrl'); //デバッグ用、外部URLに飛ばせるように設定する必要有
+    print('Could not launch it.'); //デバッグ用、外部URLに飛ばせるように設定する必要有
   }
 }
+
+Uri url = Uri.parse(
+    'https://docs.google.com/forms/d/e/1FAIpQLSfmAKkMXTtKehTmJtA2mJq1vIr3KNgD1MLc-x9egUUo82P2WQ/viewform');
 
 class MarketSpecificPage extends StatefulWidget {
   final String uid;
@@ -137,7 +142,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         padding:
                             EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
                         child: Text(
-                          '文学部',
+                          book['faculty'],
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -218,7 +223,9 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     width: double.infinity,
                     color: Colors.transparent,
                     child: GestureDetector(
-                      onTap: _launchURL,
+                      onTap: () {
+                        _launchURL(url);
+                      },
                       behavior: HitTestBehavior.opaque,
                       child: Row(
                         children: [
@@ -391,22 +398,70 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 ],
               ),
             ),
-            floatingActionButton: Padding(
-              padding: const EdgeInsets.only(left: 60.0, right: 30.0),
+            bottomNavigationBar: BottomAppBar(
+              shape: const CircularNotchedRectangle(),
+              color: Colors.white,
+              notchMargin: 6.0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FloatingActionButton.extended(
-                    heroTag: "bookmark",
-                    onPressed: () {},
-                    label: Text('保存する'),
-                    icon: Icon(Icons.bookmark_border),
-                    backgroundColor: Colors.blueGrey,
-                    shape: StadiumBorder(),
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(color: Colors.blue, width: 2),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Icon(
+                        Icons.bookmark_border,
+                        color: Colors.blue,
+                        size: 20,
+                      ),
+                    ),
                   ),
-                  FloatingActionButton.extended(
-                    heroTag: "chat",
-                    onPressed: () async {
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Container(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              '¥${book['price']}',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                                height: 0.09,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Text(
+                              book['bookname'],
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w700,
+                                height: 0.12,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () async {
                       final docRef = await FirebaseFirestore.instance
                           .collection('chatroom')
                           .add({
@@ -433,10 +488,39 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         ),
                       );
                     },
-                    label: Text('チャット'),
-                    icon: Icon(Icons.chat_bubble_outline),
-                    backgroundColor: Colors.orange,
-                    shape: StadiumBorder(),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 20),
+                      decoration: ShapeDecoration(
+                        color: Colors.orange,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.chat,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            "チャットする",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w700,
+                              height: 0.09,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
