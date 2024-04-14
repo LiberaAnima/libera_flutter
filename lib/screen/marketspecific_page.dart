@@ -367,31 +367,46 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 ],
               ),
             ),
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () async {
-                final docRef = await FirebaseFirestore.instance
-                    .collection('chatroom')
-                    .add({
-                  'bookname': book['bookname'],
-                  'who': [book['uid'], user?.uid],
-                  'timestamp': DateTime.now(),
-                });
-                final chatroomid = docRef.id;
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChatRoom(
-                      otherId: book['uid'],
-                      userId: user!.uid,
-                      chatroomId: chatroomid ?? '',
-                    ),
+            floatingActionButton: Padding(
+              padding: const EdgeInsets.only(left: 60.0, right: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FloatingActionButton.extended(
+                    onPressed: () {},
+                    label: Text('保存する'),
+                    icon: Icon(Icons.bookmark_border),
+                    backgroundColor: Colors.blueGrey,
+                    shape: StadiumBorder(),
                   ),
-                );
-              },
-              label: Text('チャットする'),
-              icon: Icon(Icons.chat),
-              backgroundColor: Colors.orange,
-              shape: StadiumBorder(),
+                  FloatingActionButton.extended(
+                    onPressed: () async {
+                      final docRef = await FirebaseFirestore.instance
+                          .collection('chatroom')
+                          .add({
+                        'bookname': book['bookname'],
+                        'who': [book['uid'], user?.uid],
+                        'timestamp': DateTime.now(),
+                      });
+                      final chatroomid = docRef.id;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatRoom(
+                            otherId: book['uid'],
+                            userId: user!.uid,
+                            chatroomId: chatroomid ?? '',
+                          ),
+                        ),
+                      );
+                    },
+                    label: Text('チャット'),
+                    icon: Icon(Icons.chat_bubble_outline),
+                    backgroundColor: Colors.orange,
+                    shape: StadiumBorder(),
+                  ),
+                ],
+              ),
             ),
           );
         }
