@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -390,6 +391,34 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 ],
               ),
             ),
+
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () async {
+                // 채팅 이 이미있을경우 생성안되게 하기
+                final docRef = await FirebaseFirestore.instance
+                    .collection('chatroom')
+                    .add({
+                  'bookname': book['bookname'],
+                  'who': [book['uid'], user?.uid],
+                  'timestamp': DateTime.now(),
+                });
+                final chatroomid = docRef.id;
+                FirebaseFirestore.instance
+                    .collection('chatroom')
+                    .doc(chatroomid)
+                    .update({
+                  'id': chatroomid,
+                });
+                print(" chatroom id : " + chatroomid);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatRoom(
+                      otherId: book['uid'],
+                      userId: user!.uid,
+                      chatroomId: chatroomid,
+                    ),
+
             floatingActionButton: Padding(
               padding: const EdgeInsets.only(left: 60.0, right: 30.0),
               child: Row(
@@ -429,6 +458,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     icon: Icon(Icons.chat_bubble_outline),
                     backgroundColor: Colors.orange,
                     shape: StadiumBorder(),
+
                   ),
                 ],
               ),

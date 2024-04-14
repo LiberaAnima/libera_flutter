@@ -36,10 +36,12 @@ class ChatroomPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (chatroomId.isEmpty) {
+      throw ArgumentError('chatroomId cannot be empty');
+    }
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
           .collection('chatroom')
-          // .where('who'[0], isEqualTo: otherId)
           .doc(chatroomId)
           .collection('messages')
           .orderBy('timestamp', descending: true)
@@ -53,47 +55,51 @@ class ChatroomPage extends StatelessWidget {
           return Center(child: Text('Error: ${snapshot.error}'));
         }
 
-        final messages = _firebaseMessagesToChatMessages(snapshot.data!.docs);
-
-        return Chat(
-          messages: messages,
-          onSendPressed: (types.PartialText message) async {
-            final docRef = FirebaseFirestore.instance
-                .collection('chatroom')
-                .doc(chatroomId)
-                .collection('messages')
-                .doc();
-            await docRef.set({
-              'otherId': otherId,
-              'senderId': userId,
-              'text': message.text,
-              'timestamp': FieldValue.serverTimestamp(),
-            });
-          },
-          user: types.User(id: userId),
-          onMessageLongPress: (context, message) {
-            if (message.author.id == userId) {
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => Wrap(
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(Icons.delete),
-                      title: Text('Delete Message'),
-                      onTap: () {
-                        Navigator.of(context).pop(); // Close the bottom sheet
-                        FirebaseFirestore.instance
-                            .collection('chatroom')
-                            .doc(message.id)
-                            .delete();
-                      },
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        );
+        if (snapshot.hasData) {
+          final messages = _firebaseMessagesToChatMessages(snapshot.data!.docs);
+          return Chat(
+            messages: messages,
+            onSendPressed: (types.PartialText message) async {
+              final docRef = FirebaseFirestore.instance
+                  .collection('chatroom')
+                  .doc(chatroomId)
+                  .collection('messages')
+                  .doc();
+              await docRef.set({
+                'otherId': otherId,
+                'senderId': userId,
+                'text': message.text,
+                'timestamp': FieldValue.serverTimestamp(),
+              });
+            },
+            user: types.User(id: userId),
+            onMessageLongPress: (context, message) {
+              if (message.author.id == userId) {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => Wrap(
+                    children: <Widget>[
+                      ListTile(
+                        leading: Icon(Icons.delete),
+                        title: Text('Delete Message'),
+                        onTap: () {
+                          Navigator.of(context).pop(); // Close the bottom sheet
+                          FirebaseFirestore.instance
+                              .collection('chatroom')
+                              .doc(chatroomId)
+                              .collection('messages')
+                              .doc(message.id)
+                              .delete();
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          );
+        }
+        return Container();
       },
     );
   }

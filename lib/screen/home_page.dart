@@ -2,12 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:libera_flutter/components/bottom_nav.dart';
 import 'package:libera_flutter/screen/bookmarketlist_page.dart';
-import 'package:libera_flutter/screen/class_page.dart';
+import 'package:libera_flutter/screen/chatlist_page.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
-import 'package:libera_flutter/screen/signup_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     const MainPage(),
     const BookMarketListPage(),
     const PostListPage(),
-    const ClassPage(),
+    const ChatListPage(),
     const ProfilePage(),
   ];
 
