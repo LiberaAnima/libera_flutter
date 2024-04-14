@@ -96,6 +96,22 @@ class _MainPagePageState extends State<MainPage> {
                       }
                     },
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Card.outlined(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 350,
+                          height: 150,
+                          child: Center(
+                            child: Text("何か入れる"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Text(style: TextStyle(color: Colors.white), "hello"),
                   ElevatedButton(
                     onPressed: () async => await _auth
