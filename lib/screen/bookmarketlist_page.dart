@@ -16,6 +16,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text("本のマーケット一覧画面"),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -29,85 +30,88 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
             return CircularProgressIndicator();
           }
 
-          return ListView(
-            padding: const EdgeInsets.all(16.0),
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> post =
-                  document.data() as Map<String, dynamic>;
+          return Container(
+            color: Colors.white,
+            child: ListView(
+              padding: const EdgeInsets.all(16.0),
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> post =
+                    document.data() as Map<String, dynamic>;
 
-              DateTime postedAt = post['postedAt'] != null
-                  ? post['postedAt'].toDate()
-                  : DateTime.now();
+                DateTime postedAt = post['postedAt'] != null
+                    ? post['postedAt'].toDate()
+                    : DateTime.now();
 
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MarketSpecificPage(
-                        uid: document.id,
-                      ),
-                    ),
-                  );
-                },
-                child: Card(
-                  margin: EdgeInsets.all(8),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Image.network(
-                          post['imageUrl'],
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MarketSpecificPage(
+                          uid: document.id,
                         ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      ),
+                    );
+                  },
+                  child: Card(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Image.network(
+                            post['imageUrl'],
+                            width: 80,
+                            height: 80,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(post['bookname'],
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                Text(post['faculty'] ?? 'null'),
+                                Text(post['username'] ?? 'null'),
+                                Text(timeAgo(postedAt)),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: <Widget>[
-                              Text(post['bookname'],
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold,
-                                  )),
-                              Text(post['faculty'] ?? 'null'),
-                              Text(post['username'] ?? 'null'),
-                              Text(timeAgo(postedAt)),
+                              Text(
+                                "${post['price']}円",
+                                style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.orange[700],
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              // いいね数とコメント数を表示
+                              // Row(
+                              //   children: <Widget>[
+                              //     const Icon(Icons.favorite_border),
+                              //     Text(post['likes'].toString()),
+                              //     const SizedBox(width: 8),
+                              //     const Icon(Icons.comment),
+                              //     Text(post['comments'].toString()),
+                              //   ],
+                              // ),
                             ],
                           ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              "${post['price']}円",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.orange[700],
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            // いいね数とコメント数を表示
-                            // Row(
-                            //   children: <Widget>[
-                            //     const Icon(Icons.favorite_border),
-                            //     Text(post['likes'].toString()),
-                            //     const SizedBox(width: 8),
-                            //     const Icon(Icons.comment),
-                            //     Text(post['comments'].toString()),
-                            //   ],
-                            // ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              );
-            }).toList(),
+                );
+              }).toList(),
+            ),
           );
         },
       ),

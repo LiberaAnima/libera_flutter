@@ -49,6 +49,8 @@ class _PostPagePageState extends State<PostPage> {
                 .get();
             final post = FirebaseFirestore.instance.collection('posts').doc();
             post.set({
+              // 匿名投稿の場合は、名前を「名無し」とする　( if 得意名　checks -> true)
+
               'post_message': _textEditingController.text,
               'date': FieldValue.serverTimestamp(),
               'name': userDoc['username'],

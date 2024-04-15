@@ -34,7 +34,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       localizationsDelegates: [],
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primaryColor: Colors.white,
+        // colorScheme:
+        //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 255, 255, 255)),
         useMaterial3: true,
       ),
       routes: {
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainPage(),
         '/logIn': (context) => const LoginPage(),
         '/signUp': (context) => const SignupPage(),
-        '/profile': (context) => const ProfilePage(),
+        // '/profile': (context) => const ProfilePage(),
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
         // '/marketspecific': (context) => const MarketSpecificPage(),
