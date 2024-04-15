@@ -40,7 +40,7 @@ class _PostListPagePageState extends State<PostListPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text("Loading");
           }
-
+//Column使うのがよさそう
           return ListView(
             children: snapshot.data!.docs
                 .map((DocumentSnapshot document) {
