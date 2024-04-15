@@ -60,16 +60,12 @@ class _PostListPagePageState extends State<PostListPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://example.com/user-icon.jpg'),
-                                ),
                                 SizedBox(width: 10),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'ユーザーネーム: 匿名',
+                                      '${data['name']}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
