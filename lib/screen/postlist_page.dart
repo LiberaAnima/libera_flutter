@@ -28,7 +28,7 @@ class _PostListPagePageState extends State<PostListPage> {
         .snapshots();
     return Scaffold(
       appBar: AppBar(
-        title: Text("自由掲示板"),
+        title: const Text("自由掲示板"),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postlists,
@@ -49,24 +49,24 @@ class _PostListPagePageState extends State<PostListPage> {
                   return ListTile(
                     title: Container(
                         decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1, color: Colors.white), // 枠線を追加
+                          border:
+                              Border.all(width: 1, color: Colors.grey), // 枠線を追加
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(1),
                         ),
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         child: Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
                                       '${data['name']}',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -74,7 +74,7 @@ class _PostListPagePageState extends State<PostListPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -83,8 +83,8 @@ class _PostListPagePageState extends State<PostListPage> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 5),
-                            Divider(
+                            const SizedBox(height: 5),
+                            const Divider(
                               height: 10.0,
                               color: Color.fromRGBO(165, 165, 165, 1),
                             ),
@@ -93,7 +93,7 @@ class _PostListPagePageState extends State<PostListPage> {
                               children: [
                                 Text(
                                   timeAgo(data['date'].toDate()),
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 10,
                                   ),
                                 ),
@@ -103,7 +103,7 @@ class _PostListPagePageState extends State<PostListPage> {
                                 ),
                                 Text(
                                   'いいね ${data['likes'].length.toString()}  ',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 10,
                                   ),
                                 ),
@@ -118,7 +118,7 @@ class _PostListPagePageState extends State<PostListPage> {
                                       ),
                                     );
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.messenger_outline_rounded,
                                     size: 20,
                                   ),
@@ -141,7 +141,7 @@ class _PostListPagePageState extends State<PostListPage> {
             MaterialPageRoute(builder: (context) => PostPage()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
