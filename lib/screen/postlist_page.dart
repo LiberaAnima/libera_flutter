@@ -28,6 +28,7 @@ class _PostListPagePageState extends State<PostListPage> {
         .collection('posts')
         .orderBy('date', descending: true)
         .snapshots();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("掲示板"),
