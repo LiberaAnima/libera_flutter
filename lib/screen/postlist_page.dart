@@ -96,7 +96,9 @@ class _PostListPagePageState extends State<PostListPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  timeAgo(data['date'].toDate()),
+                                  data['date'] != null
+                                      ? timeAgo(data['date'].toDate())
+                                      : 'Unknown date',
                                   style: TextStyle(
                                     fontSize: 10,
                                   ),
