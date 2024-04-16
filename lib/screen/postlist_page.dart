@@ -28,7 +28,7 @@ class _PostListPagePageState extends State<PostListPage> {
         .snapshots();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("自由掲示板"),
+        title: const Text("掲示板"),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postlists,
@@ -47,86 +47,94 @@ class _PostListPagePageState extends State<PostListPage> {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
                   return ListTile(
-                    title: Container(
-                        decoration: BoxDecoration(
-                          border:
-                              Border.all(width: 1, color: Colors.grey), // 枠線を追加
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                    title: Column(
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.grey),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(1),
+                            ),
+                            padding:
+                                const EdgeInsets.only(bottom: 8.0, top: 8.0),
+                            child: Column(
                               children: [
-                                const SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          '${data['name']}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10),
                                     Text(
-                                      '${data['name']}',
+                                      data['post_message'],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                const Divider(
+                                  height: 10.0,
+                                  color: Color.fromRGBO(165, 165, 165, 1),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      timeAgo(data['date'].toDate()),
                                       style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                    FavoriteButton(
+                                      documentid: data['documentID'],
+                                      collectionname: 'posts',
+                                    ),
+                                    Text(
+                                      '${data['likes'].length.toString()} いいね',
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                postSpecificPage(
+                                              id: data['documentID'],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(
+                                        Icons.messenger_outline_rounded,
+                                        size: 20,
                                       ),
                                     ),
                                   ],
                                 ),
                               ],
-                            ),
-                            const SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data['post_message'],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            const Divider(
-                              height: 10.0,
-                              color: Color.fromRGBO(165, 165, 165, 1),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  timeAgo(data['date'].toDate()),
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                FavoriteButton(
-                                  documentid: data['documentID'],
-                                  collectionname: 'posts',
-                                ),
-                                Text(
-                                  'いいね ${data['likes'].length.toString()}  ',
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => postSpecificPage(
-                                          id: data['documentID'],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    Icons.messenger_outline_rounded,
-                                    size: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
+                            )),
+                      ],
+                    ),
                   );
                 })
                 .toList()
