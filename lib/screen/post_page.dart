@@ -128,7 +128,7 @@ class _PostPagePageState extends State<PostPage> {
               'imageUrl': _bookImage != null ? _bookImage!.path : null,
             });
             _onSubmitted(_textEditingController.text);
-            Navigator.pushNamed(context, '/');
+            Navigator.pushNamed(context, '/postlist');
           }
         },
         child: Icon(Icons.send),
