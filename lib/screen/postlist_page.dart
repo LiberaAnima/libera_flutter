@@ -26,6 +26,7 @@ class _PostListPagePageState extends State<PostListPage> {
         .collection('posts')
         .orderBy('date', descending: true)
         .snapshots();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("自由掲示板"),
@@ -42,99 +43,80 @@ class _PostListPagePageState extends State<PostListPage> {
           }
 
           return ListView(
-            children: snapshot.data!.docs
-                .map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
-                  return ListTile(
-                    title: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1, color: Colors.white), // 枠線を追加
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(1),
-                        ),
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://example.com/user-icon.jpg'),
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              return ListTile(
+                title: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1, color: Colors.white),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(1),
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                'https://example.com/user-icon.jpg'),
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'ユーザーネーム: 匿名',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Text(data['post_message'] ?? 'No message'),
+                      Divider(
+                          height: 10.0,
+                          color: Color.fromRGBO(165, 165, 165, 1)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            data['date'] != null
+                                ? timeAgo(data['date'].toDate())
+                                : 'Unknown date',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          FavoriteButton(
+                            documentid: data['documentID'],
+                            collectionname: 'posts',
+                          ),
+                          Text(
+                            'いいね ${data['likes'].length.toString()}  ',
+                            style: TextStyle(fontSize: 10),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      postSpecificPage(id: data['documentID']),
                                 ),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'ユーザーネーム: 匿名',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data['post_message'],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                            Divider(
-                              height: 10.0,
-                              color: Color.fromRGBO(165, 165, 165, 1),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  timeAgo(data['date'].toDate()),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                FavoriteButton(
-                                  documentid: data['documentID'],
-                                  collectionname: 'posts',
-                                ),
-                                Text(
-                                  'いいね ${data['likes'].length.toString()}  ',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => postSpecificPage(
-                                          id: data['documentID'],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.messenger_outline_rounded,
-                                    size: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
-                  );
-                })
-                .toList()
-                .cast(),
+                              );
+                            },
+                            icon:
+                                Icon(Icons.messenger_outline_rounded, size: 20),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
           );
         },
       ),
