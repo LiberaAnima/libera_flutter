@@ -59,7 +59,7 @@ class _PostPagePageState extends State<PostPage> {
               'documentID': post.id,
             });
             _onSubmitted(_textEditingController.text);
-            Navigator.pushNamed(context, '/');
+            Navigator.pushNamed(context, '/postlist');
           }
         },
         child: Icon(Icons.send),
