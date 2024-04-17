@@ -134,7 +134,7 @@ class _PostListPagePageState extends State<PostListPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => postSpecificPage(
+                          builder: (context) => PostSpecificPage(
                             id: data['documentID'],
                           ),
                         ),
