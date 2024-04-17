@@ -123,151 +123,249 @@ class _PostListPagePageState extends State<PostListPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text("Loading");
           }
-          return ListView(
-            children: snapshot.data!.docs
-                .map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
-                  return GestureDetector(
-                    onTap: () {
-                      print(document.id);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => PostSpecificPage(
-                            id: data['documentID'],
+          return Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 10, right: 10, top: 10, bottom: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Colors.orange,
                           ),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                      child: ListTile(
-                        contentPadding:
-                            const EdgeInsets.only(top: 0, bottom: 0),
-                        title: Column(
-                          children: [
-                            const SizedBox(height: 5),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    Container(
-                                      padding: const EdgeInsets.all(8),
-                                      decoration: ShapeDecoration(
-                                        color: const Color(0xFFE0E0E0),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(3)),
-                                      ),
-                                      child: const Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                      child: Text(
+                        "雑談",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: "inter",
+                          fontWeight: FontWeight.w400,
+                          height: 0.11,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Colors.orange,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        "Q&A",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: "inter",
+                          fontWeight: FontWeight.w400,
+                          height: 0.11,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Colors.orange,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        "募集",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: "inter",
+                          fontWeight: FontWeight.w400,
+                          height: 0.11,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(
+                color: Colors.grey,
+                thickness: .5,
+                indent: 0,
+                endIndent: 0,
+              ),
+              Expanded(
+                child: ListView(
+                  children: snapshot.data!.docs
+                      .map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        return GestureDetector(
+                          onTap: () {
+                            print(document.id);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PostSpecificPage(
+                                  id: data['documentID'],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(),
+                              ),
+                            ),
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.only(top: 0, bottom: 0),
+                              title: Column(
+                                children: [
+                                  const SizedBox(height: 5),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
                                         children: [
-                                          Text(
-                                            "Q&A",
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w400,
-                                              height: 0.18,
+                                          const SizedBox(width: 10),
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: ShapeDecoration(
+                                              color: const Color(0xFFE0E0E0),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(3)),
+                                            ),
+                                            child: const Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Q&A",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 0.18,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  children: <Widget>[
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      '${data['name']}',
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: <Widget>[
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            '${data['name']}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      data['post_message'],
-                                    ),
-                                  ],
-                                ),
-                                const Divider(
-                                  color: Color.fromRGBO(165, 165, 165, 1),
-                                  thickness: .5,
-                                  indent: 15,
-                                  endIndent: 15,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      data['date'] != null
-                                          ? timeAgo(data['date'].toDate())
-                                          : 'Unknown date',
-                                      style: const TextStyle(
-                                        fontSize: 10,
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            data['post_message'],
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    FavoriteButton(
-                                      documentid: data['documentID'],
-                                      collectionname: 'posts',
-                                    ),
-                                    Text(
-                                      '${data['likes'].length.toString()} いいね',
-                                      style: const TextStyle(
-                                        fontSize: 10,
+                                      const Divider(
+                                        color: Color.fromRGBO(165, 165, 165, 1),
+                                        thickness: .5,
+                                        indent: 15,
+                                        endIndent: 15,
                                       ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    IconButton(
-                                      onPressed: () {
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: (context) =>
-                                        //         postSpecificPage(
-                                        //       id: data['documentID'],
-                                        //     ),
-                                        //   ),
-                                        // );
-                                      },
-                                      icon: const Icon(
-                                        Icons.messenger_outline_rounded,
-                                        size: 20,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            data['date'] != null
+                                                ? timeAgo(data['date'].toDate())
+                                                : 'Unknown date',
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                          FavoriteButton(
+                                            documentid: data['documentID'],
+                                            collectionname: 'posts',
+                                          ),
+                                          Text(
+                                            '${data['likes'].length.toString()} いいね',
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          IconButton(
+                                            onPressed: () {
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         postSpecificPage(
+                                              //       id: data['documentID'],
+                                              //     ),
+                                              //   ),
+                                              // );
+                                            },
+                                            icon: const Icon(
+                                              Icons.messenger_outline_rounded,
+                                              size: 20,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                })
-                .toList()
-                .cast(),
+                          ),
+                        );
+                      })
+                      .toList()
+                      .cast(),
+                ),
+              ),
+            ],
           );
         },
       ),
