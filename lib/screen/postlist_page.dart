@@ -32,7 +32,10 @@ class _PostListPagePageState extends State<PostListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("掲示板"),
+        title: const Text('掲示板'),
+        shape: Border(
+          bottom: BorderSide(color: Colors.orange, width: 2),
+        ),
       ),
       endDrawer: Drawer(
         child: Column(
