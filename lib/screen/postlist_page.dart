@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
@@ -32,6 +33,82 @@ class _PostListPagePageState extends State<PostListPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("掲示板"),
+      ),
+      endDrawer: Drawer(
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            const Text(
+              "カテゴリー",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Divider(
+              color: Colors.orange,
+              thickness: 1,
+              indent: 0,
+              endIndent: 0,
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('講義・授業'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('部活動・サークル'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('アルバイト'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('恋愛'),
+                onTap: null,
+              ),
+            ),
+          ],
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postlists,
