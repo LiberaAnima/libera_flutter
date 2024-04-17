@@ -48,124 +48,140 @@ class _PostListPagePageState extends State<PostListPage> {
                 .map((DocumentSnapshot document) {
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(),
-                      ),
-                    ),
-                    child: ListTile(
-                      contentPadding: const EdgeInsets.only(top: 0, bottom: 0),
-                      title: Column(
-                        children: [
-                          const SizedBox(height: 5),
-                          Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  const SizedBox(width: 10),
-                                  Container(
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: ShapeDecoration(
-                                      color: const Color(0xFFE0E0E0),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(3)),
-                                    ),
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Q&A",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'Inter',
-                                            fontWeight: FontWeight.w400,
-                                            height: 0.18,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                children: <Widget>[
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    '${data['name']}',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    data['post_message'],
-                                  ),
-                                ],
-                              ),
-                              const Divider(
-                                color: Color.fromRGBO(165, 165, 165, 1),
-                                thickness: .5,
-                                indent: 15,
-                                endIndent: 15,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(width: 10),
-                                  Text(
-                                    timeAgo(data['date'].toDate()),
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                  FavoriteButton(
-                                    documentid: data['documentID'],
-                                    collectionname: 'posts',
-                                  ),
-                                  Text(
-                                    '${data['likes'].length.toString()} いいね',
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  IconButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              postSpecificPage(
-                                            id: data['documentID'],
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.messenger_outline_rounded,
-                                      size: 20,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                  return GestureDetector(
+                    onTap: () {
+                      print(document.id);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => postSpecificPage(
+                            id: data['documentID'],
                           ),
-                        ],
+                        ),
+                      );
+                    },
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(),
+                        ),
+                      ),
+                      child: ListTile(
+                        contentPadding:
+                            const EdgeInsets.only(top: 0, bottom: 0),
+                        title: Column(
+                          children: [
+                            const SizedBox(height: 5),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    Container(
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: ShapeDecoration(
+                                        color: const Color(0xFFE0E0E0),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(3)),
+                                      ),
+                                      child: const Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Q&A",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: 'Inter',
+                                              fontWeight: FontWeight.w400,
+                                              height: 0.18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  children: <Widget>[
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      '${data['name']}',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 5),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      data['post_message'],
+                                    ),
+                                  ],
+                                ),
+                                const Divider(
+                                  color: Color.fromRGBO(165, 165, 165, 1),
+                                  thickness: .5,
+                                  indent: 15,
+                                  endIndent: 15,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      data['date'] != null
+                                          ? timeAgo(data['date'].toDate())
+                                          : 'Unknown date',
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                    FavoriteButton(
+                                      documentid: data['documentID'],
+                                      collectionname: 'posts',
+                                    ),
+                                    Text(
+                                      '${data['likes'].length.toString()} いいね',
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    IconButton(
+                                      onPressed: () {
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         postSpecificPage(
+                                        //       id: data['documentID'],
+                                        //     ),
+                                        //   ),
+                                        // );
+                                      },
+                                      icon: const Icon(
+                                        Icons.messenger_outline_rounded,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );

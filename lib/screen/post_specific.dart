@@ -69,10 +69,6 @@ class _postSpecificPageState extends State<postSpecificPage> {
                     padding: EdgeInsets.all(8.0),
                     child: Row(
                       children: <Widget>[
-                        CircleAvatar(
-                          backgroundImage:
-                              NetworkImage('https://example.com/user-icon.jpg'),
-                        ),
                         SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
