@@ -84,6 +84,9 @@ class _ChatListPageState extends State<ChatListPage> {
                             } else if (snapshot.hasError) {
                               return Text('Error: ${snapshot.error}');
                             } else {
+                              if (snapshot.data!.data() == null) {
+                                return Text('User not found');
+                              }
                               var userData =
                                   snapshot.data!.data() as Map<String, dynamic>;
                               var nickname = userData['username'];
