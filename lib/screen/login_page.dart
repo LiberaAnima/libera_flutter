@@ -53,6 +53,9 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       backgroundColor: Colors.white,
                     ),
                     onPressed: () => Navigator.pushNamed(context, '/signUp'),
@@ -129,6 +132,9 @@ class _LoginPageState extends State<LoginPage> {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           foregroundColor: Colors.black,
           backgroundColor: Colors.orange,
         ),
