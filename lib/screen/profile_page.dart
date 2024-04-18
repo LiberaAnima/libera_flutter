@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/services/user_service.dart';
 
@@ -13,11 +14,14 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   UserService _userService = UserService();
   UserModel? _user;
+  List<dynamic> _posts = [];
+  List<dynamic> _books = [];
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
+    _fetchPosts();
   }
 
   void _fetchUserData() async {
@@ -31,12 +35,25 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  void _fetchPosts() async {
+    var postsSnapshot = await FirebaseFirestore.instance
+        .collection('post')
+        .where('uid', isEqualTo: widget.uid)
+        .get();
+
+    var booksSnapshot = await FirebaseFirestore.instance
+        .collection('books')
+        .where('uid', isEqualTo: widget.uid)
+        .get();
+
+    setState(() {
+      _posts = postsSnapshot.docs.map((doc) => doc.data()).toList();
+      _books = booksSnapshot.docs.map((doc) => doc.data()).toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    print(widget.uid);
-    if (_user != null) {
-      print(_user!.faculty);
-    }
     return FutureBuilder<UserModel>(
       future: _userService.getUserData(widget.uid),
       builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
@@ -83,6 +100,43 @@ class _ProfilePageState extends State<ProfilePage> {
                         profileInfo('学校', _user!.school),
                         profileInfo('性別', _user!.gender),
                         profileInfo('学年', _user!.year),
+                        Divider(height: 40, thickness: 2),
+                        Text('自分の投稿',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        _posts.isEmpty
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Text('投稿がありません',
+                                    textAlign: TextAlign.center),
+                              )
+                            : Column(
+                                children: _posts
+                                    .map((post) => ListTile(
+                                          title: Text(post['post_message']),
+                                          subtitle: Text(
+                                              'Likes: ${post['likes'].length}'),
+                                        ))
+                                    .toList(),
+                              ),
+                        Divider(height: 40, thickness: 2),
+                        Text('フリマ投稿',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold)),
+                        _books.isEmpty
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                child: Text('フリマ投稿がありません',
+                                    textAlign: TextAlign.center),
+                              )
+                            : Column(
+                                children: _books
+                                    .map((book) => ListTile(
+                                          title: Text(book['bookname']),
+                                          subtitle: Text('${book['price']}円'),
+                                        ))
+                                    .toList(),
+                              ),
                       ],
                     ),
                   ),
@@ -90,7 +144,6 @@ class _ProfilePageState extends State<ProfilePage> {
         }
       },
     );
-    // child: Scaffold
   }
 
   Widget profileInfo(String title, String value) {

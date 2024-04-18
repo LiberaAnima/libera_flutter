@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 //いいね機能
@@ -11,6 +13,7 @@ import 'package:libera_flutter/services/likebutton.dart';
 
 //返信機能
 import 'package:libera_flutter/screen/post_specific.dart';
+import 'package:provider/provider.dart';
 
 class PostListPage extends StatefulWidget {
   const PostListPage({Key? key}) : super(key: key);
@@ -26,9 +29,89 @@ class _PostListPagePageState extends State<PostListPage> {
         .collection('posts')
         .orderBy('date', descending: true)
         .snapshots();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("自由掲示板"),
+        title: const Text('掲示板'),
+        shape: const Border(
+          bottom: BorderSide(color: Colors.orange, width: 2),
+        ),
+      ),
+      endDrawer: Drawer(
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            const Text(
+              "カテゴリー",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Divider(
+              color: Colors.orange,
+              thickness: 1,
+              indent: 0,
+              endIndent: 0,
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('講義・授業'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('部活動・サークル'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('アルバイト'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('恋愛'),
+                onTap: null,
+              ),
+            ),
+          ],
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postlists,
@@ -40,101 +123,249 @@ class _PostListPagePageState extends State<PostListPage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text("Loading");
           }
-
-          return ListView(
-            children: snapshot.data!.docs
-                .map((DocumentSnapshot document) {
-                  Map<String, dynamic> data =
-                      document.data()! as Map<String, dynamic>;
-                  return ListTile(
-                    title: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1, color: Colors.white), // 枠線を追加
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(1),
+          return Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 10, right: 10, top: 10, bottom: 4),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Colors.orange,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                        padding: EdgeInsets.all(8),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      'https://example.com/user-icon.jpg'),
+                      ),
+                      child: Text(
+                        "雑談",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: "inter",
+                          fontWeight: FontWeight.w400,
+                          height: 0.11,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Colors.orange,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        "Q&A",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: "inter",
+                          fontWeight: FontWeight.w400,
+                          height: 0.11,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 8),
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 1,
+                            color: Colors.orange,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: Text(
+                        "募集",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontFamily: "inter",
+                          fontWeight: FontWeight.w400,
+                          height: 0.11,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(
+                color: Colors.grey,
+                thickness: .5,
+                indent: 0,
+                endIndent: 0,
+              ),
+              Expanded(
+                child: ListView(
+                  children: snapshot.data!.docs
+                      .map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        return GestureDetector(
+                          onTap: () {
+                            print(document.id);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PostSpecificPage(
+                                  id: data['documentID'],
                                 ),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      'ユーザーネーム: 匿名',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(),
+                              ),
+                            ),
+                            child: ListTile(
+                              contentPadding:
+                                  const EdgeInsets.only(top: 0, bottom: 0),
+                              title: Column(
+                                children: [
+                                  const SizedBox(height: 5),
+                                  Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const SizedBox(width: 10),
+                                          Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: ShapeDecoration(
+                                              color: const Color(0xFFE0E0E0),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(3)),
+                                            ),
+                                            child: const Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  "Q&A",
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily: 'Inter',
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 0.18,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data['post_message'],
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5),
-                            Divider(
-                              height: 10.0,
-                              color: Color.fromRGBO(165, 165, 165, 1),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  timeAgo(data['date'].toDate()),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                FavoriteButton(
-                                  documentid: data['documentID'],
-                                  collectionname: 'posts',
-                                ),
-                                Text(
-                                  'いいね ${data['likes'].length.toString()}  ',
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => postSpecificPage(
-                                          id: data['documentID'],
-                                        ),
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        children: <Widget>[
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            '${data['name']}',
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.messenger_outline_rounded,
-                                    size: 20,
+                                      const SizedBox(height: 5),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            data['post_message'],
+                                          ),
+                                        ],
+                                      ),
+                                      const Divider(
+                                        color: Color.fromRGBO(165, 165, 165, 1),
+                                        thickness: .5,
+                                        indent: 15,
+                                        endIndent: 15,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            data['date'] != null
+                                                ? timeAgo(data['date'].toDate())
+                                                : 'Unknown date',
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                          FavoriteButton(
+                                            documentid: data['documentID'],
+                                            collectionname: 'posts',
+                                          ),
+                                          Text(
+                                            '${data['likes'].length.toString()} いいね',
+                                            style: const TextStyle(
+                                              fontSize: 10,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          IconButton(
+                                            onPressed: () {
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //     builder: (context) =>
+                                              //         postSpecificPage(
+                                              //       id: data['documentID'],
+                                              //     ),
+                                              //   ),
+                                              // );
+                                            },
+                                            icon: const Icon(
+                                              Icons.messenger_outline_rounded,
+                                              size: 20,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ],
-                        )),
-                  );
-                })
-                .toList()
-                .cast(),
+                          ),
+                        );
+                      })
+                      .toList()
+                      .cast(),
+                ),
+              ),
+            ],
           );
         },
       ),
@@ -145,7 +376,7 @@ class _PostListPagePageState extends State<PostListPage> {
             MaterialPageRoute(builder: (context) => PostPage()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
