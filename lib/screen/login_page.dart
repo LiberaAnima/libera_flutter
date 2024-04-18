@@ -25,13 +25,14 @@ class _LoginPageState extends State<LoginPage> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(
                 image: AssetImage('assets/images/icon.png'),
                 width: 200,
                 height: 200,
               ),
+              SizedBox(height: 30),
               emailInput(),
               const SizedBox(height: 15),
               passwordInput(),
