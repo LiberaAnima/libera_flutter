@@ -44,13 +44,23 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ],
               ),
+              SizedBox(height: 10),
               loginButton(),
+              SizedBox(
+                height: 10,
+              ),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                    ),
                     onPressed: () => Navigator.pushNamed(context, '/signUp'),
-                    child: const Text("Sign Up")),
-              )
+                    child: Text("Create Account")),
+              ),
+              SizedBox(
+                height: 80,
+              ),
             ],
           ),
         ),
@@ -114,30 +124,37 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  ElevatedButton loginButton() {
-    return ElevatedButton(
-      onPressed: () async {
-        try {
-          await _auth
-              .signInWithEmailAndPassword(
-                email: _emailController.text,
-                password: _passwordController.text,
-              )
-              .then((_) => Navigator.pushNamed(context, '/'));
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'user-not-found') {
-            debugPrint('No user found for that email');
-          } else if (e.code == 'wrong-password') {
-            debugPrint('Wrong password provided for that user');
+  SizedBox loginButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.orange,
+        ),
+        onPressed: () async {
+          try {
+            await _auth
+                .signInWithEmailAndPassword(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                )
+                .then((_) => Navigator.pushNamed(context, '/'));
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              debugPrint('No user found for that email');
+            } else if (e.code == 'wrong-password') {
+              debugPrint('Wrong password provided for that user');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("test"),
+              ),
+            );
           }
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("test"),
-            ),
-          );
-        }
-      },
-      child: const Text("Login"),
+        },
+        child: const Text("Login"),
+      ),
     );
   }
 }
