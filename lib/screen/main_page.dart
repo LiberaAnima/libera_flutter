@@ -133,12 +133,6 @@ class _MainPagePageState extends State<MainPage> {
                       ],
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () async => await _auth
-                        .signOut()
-                        .then((_) => Navigator.pushNamed(context, "/logIn")),
-                    child: const Text("Log Out"),
-                  ),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:libera_flutter/models/user_model.dart';
@@ -14,6 +15,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   UserService _userService = UserService();
   UserModel? _user;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   List<dynamic> _posts = [];
   List<dynamic> _books = [];
 
@@ -100,6 +102,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         profileInfo('学校', _user!.school),
                         profileInfo('性別', _user!.gender),
                         profileInfo('学年', _user!.year),
+                        ElevatedButton(
+                          onPressed: () async => await _auth.signOut().then(
+                              (_) => Navigator.pushNamed(context, "/logIn")),
+                          child: const Text("Log Out"),
+                        ),
                         Divider(height: 40, thickness: 2),
                         Text('自分の投稿',
                             style: TextStyle(
