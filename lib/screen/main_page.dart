@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
@@ -112,12 +113,31 @@ class _MainPagePageState extends State<MainPage> {
                       ],
                     ),
                   ),
-                  Text(style: TextStyle(color: Colors.white), "hello"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      menuIcon(Icons.home, "/chatlist", "学校ホーム"),
+                      menuIcon(Icons.discount, "", "学割"),
+                    ],
+                  ),
+                  Card.outlined(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: 350,
+                          height: 150,
+                          child: Center(
+                            child: Text("何か入れる"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   ElevatedButton(
                     onPressed: () async => await _auth
                         .signOut()
                         .then((_) => Navigator.pushNamed(context, "/logIn")),
-                    child: Text("Log Out"),
+                    child: const Text("Log Out"),
                   ),
                 ],
               ),
@@ -125,6 +145,26 @@ class _MainPagePageState extends State<MainPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Container menuIcon(IconData icon, String path, String title) {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+      ),
+      child: Column(children: [
+        IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, path);
+            // Navigateto page 1
+          },
+          icon: Icon(icon),
+        ),
+        Text(title)
+      ]),
     );
   }
 }
