@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,26 +15,57 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
       body: Center(
         key: _key,
-        child: Column(
-          children: [
-            emailInput(),
-            const SizedBox(height: 15),
-            passwordInput(),
-            const SizedBox(height: 15),
-            loginButton(),
-            TextButton(
-                onPressed: () => Navigator.pushNamed(context, '/signUp'),
-                child: const Text("Sign Up")),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image(
+                image: AssetImage('assets/images/icon.png'),
+                width: 200,
+                height: 200,
+              ),
+              SizedBox(height: 30),
+              emailInput(),
+              const SizedBox(height: 15),
+              passwordInput(),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text("Forgot Password?"),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              loginButton(),
+              SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      backgroundColor: Colors.white,
+                    ),
+                    onPressed: () => Navigator.pushNamed(context, '/signUp'),
+                    child: Text("Create Account")),
+              ),
+              SizedBox(
+                height: 80,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -50,6 +83,7 @@ class _LoginPageState extends State<LoginPage> {
         }
       },
       decoration: const InputDecoration(
+        prefixIcon: Icon(Icons.mail_outline),
         hintText: "Input your Email Address",
         labelText: "Email Address",
         // labelStyle: TextStyle(
@@ -62,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
 
   TextFormField passwordInput() {
     return TextFormField(
+      obscureText: _isObscure,
       controller: _passwordController,
       autofocus: true,
       validator: (val) {
@@ -71,9 +106,19 @@ class _LoginPageState extends State<LoginPage> {
           return null;
         }
       },
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
+        prefixIcon: Icon(Icons.lock_outline),
         hintText: "Input your Password",
         labelText: "Password",
+        suffixIcon: IconButton(
+          icon: Icon(Icons.visibility_off),
+          onPressed: () {
+            setState(() {
+              _isObscure = !_isObscure;
+            });
+          },
+        ),
+
         // labelStyle: TextStyle(
         //   fontSize: 18,
         //   fontWeight: FontWeight.bold,
@@ -82,30 +127,40 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  ElevatedButton loginButton() {
-    return ElevatedButton(
-      onPressed: () async {
-        try {
-          await _auth
-              .signInWithEmailAndPassword(
-                email: _emailController.text,
-                password: _passwordController.text,
-              )
-              .then((_) => Navigator.pushNamed(context, '/'));
-        } on FirebaseAuthException catch (e) {
-          if (e.code == 'user-not-found') {
-            debugPrint('No user found for that email');
-          } else if (e.code == 'wrong-password') {
-            debugPrint('Wrong password provided for that user');
+  SizedBox loginButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.orange,
+        ),
+        onPressed: () async {
+          try {
+            await _auth
+                .signInWithEmailAndPassword(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                )
+                .then((_) => Navigator.pushNamed(context, '/'));
+          } on FirebaseAuthException catch (e) {
+            if (e.code == 'user-not-found') {
+              debugPrint('No user found for that email');
+            } else if (e.code == 'wrong-password') {
+              debugPrint('Wrong password provided for that user');
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("test"),
+              ),
+            );
           }
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text("test"),
-            ),
-          );
-        }
-      },
-      child: const Text("Login"),
+        },
+        child: const Text("Login"),
+      ),
     );
   }
 }
