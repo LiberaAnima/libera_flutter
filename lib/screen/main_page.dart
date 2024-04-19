@@ -108,7 +108,7 @@ class _MainPagePageState extends State<MainPage> {
                           width: 350,
                           height: 150,
                           child: Center(
-                            child: Text("何か入れる"),
+                            child: Text("今日の時間割"),
                           ),
                         )
                       ],
@@ -119,7 +119,7 @@ class _MainPagePageState extends State<MainPage> {
                     children: [
                       menuIcon(Icons.home, "https://kwic.kwansei.ac.jp/login",
                           "学校ホーム"),
-                      menuIcon(Icons.discount, "/discount", "?"),
+                      menuIcon(Icons.discount, "/discount", "学割"),
                       menuIcon(Icons.discount, "/discount", "?"),
                       menuIcon(Icons.discount, "/discount", "?"),
                     ],
