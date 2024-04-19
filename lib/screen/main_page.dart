@@ -119,7 +119,7 @@ class _MainPagePageState extends State<MainPage> {
                     children: [
                       menuIcon(Icons.home, "https://kwic.kwansei.ac.jp/login",
                           "学校ホーム"),
-                      menuIcon(Icons.discount, "", "学割"),
+                      menuIcon(Icons.discount, "/discount", "学割"),
                     ],
                   ),
                   Card.outlined(
