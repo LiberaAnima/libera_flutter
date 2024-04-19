@@ -10,7 +10,6 @@ import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/post_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
 import 'package:libera_flutter/screen/postlist_page.dart';
-import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
 
 import 'firebase_options.dart';

@@ -5,15 +5,12 @@ import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 //いいね機能
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:libera_flutter/screen/post_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:libera_flutter/services/likebutton.dart';
 
 //返信機能
 import 'package:libera_flutter/screen/post_specific.dart';
-import 'package:provider/provider.dart';
 
 class PostListPage extends StatefulWidget {
   const PostListPage({Key? key}) : super(key: key);
