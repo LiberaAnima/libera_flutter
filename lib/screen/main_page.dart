@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
+import 'package:libera_flutter/services/launchUrl_service.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -116,7 +117,8 @@ class _MainPagePageState extends State<MainPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      menuIcon(Icons.home, "/chatlist", "学校ホーム"),
+                      menuIcon(Icons.home, "https://kwic.kwansei.ac.jp/login",
+                          "学校ホーム"),
                       menuIcon(Icons.discount, "", "学割"),
                     ],
                   ),
@@ -152,8 +154,12 @@ class _MainPagePageState extends State<MainPage> {
       child: Column(children: [
         IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, path);
-            // Navigateto page 1
+            if (path.startsWith('http')) {
+              launchURL(path);
+            } else {
+              Navigator.pushNamed(context, path);
+              // Navigate to a named route
+            }
           },
           icon: Icon(icon),
         ),

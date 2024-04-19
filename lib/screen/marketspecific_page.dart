@@ -2,20 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:libera_flutter/services/launchUrl_service.dart';
 import 'package:libera_flutter/screen/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
-
-Future<void>? _launchURL(Uri url) async {
-  if (!await launchUrl(
-    url,
-    mode: LaunchMode.externalApplication,
-  )) {
-    await launchUrl(url);
-  } else {
-    print('Could not launch it.'); //デバッグ用、外部URLに飛ばせるように設定する必要有
-  }
-}
 
 Uri url = Uri.parse(
     'https://docs.google.com/forms/d/e/1FAIpQLSfmAKkMXTtKehTmJtA2mJq1vIr3KNgD1MLc-x9egUUo82P2WQ/viewform');
@@ -222,10 +211,10 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     color: Colors.transparent,
                     child: GestureDetector(
                       onTap: () {
-                        _launchURL(url);
+                        launchURL(url);
                       },
                       behavior: HitTestBehavior.opaque,
-                      child: Row(
+                      child: const Row(
                         children: [
                           Icon(Icons.flag, color: Colors.grey, size: 20),
                           SizedBox(width: 8),
