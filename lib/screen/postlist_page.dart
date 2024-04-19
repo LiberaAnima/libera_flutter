@@ -42,7 +42,7 @@ class _PostListPagePageState extends State<PostListPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             FocusScope.of(context).unfocus();
             searchController.clear();
