@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:libera_flutter/screen/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/chatlist_page.dart';
 import 'package:libera_flutter/screen/class_page.dart';
@@ -15,6 +16,13 @@ import 'package:libera_flutter/screen/signup_page.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle().copyWith(
+      statusBarColor: Colors.white,
+      systemNavigationBarColor: Colors.white,
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -36,7 +44,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.white,
         // colorScheme:
-        //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 255, 255, 255)),
+        //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 242, 183, 7)),
         useMaterial3: true,
       ),
       routes: {
