@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/timetable_page.dart';
 
 class SchoolPage extends StatefulWidget {
   const SchoolPage({Key? key}) : super(key: key);
@@ -45,7 +46,7 @@ class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
         controller: _tabController,
         children: <Widget>[
           Center(
-            child: Text("時間割"),
+            child: TimeTablePage(),
           ),
           Center(
             child: Text("授業評価"),

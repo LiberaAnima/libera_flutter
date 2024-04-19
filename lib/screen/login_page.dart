@@ -111,7 +111,7 @@ class _LoginPageState extends State<LoginPage> {
         hintText: "Input your Password",
         labelText: "Password",
         suffixIcon: IconButton(
-          icon: Icon(Icons.visibility_off),
+          icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
           onPressed: () {
             setState(() {
               _isObscure = !_isObscure;
