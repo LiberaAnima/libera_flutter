@@ -155,7 +155,7 @@ class _MainPagePageState extends State<MainPage> {
         IconButton(
           onPressed: () {
             if (path.startsWith('http')) {
-              launchURL(path);
+              launchURL(Uri.parse(path));
             } else {
               Navigator.pushNamed(context, path);
               // Navigate to a named route
