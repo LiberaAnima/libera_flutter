@@ -74,77 +74,80 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             body: _user == null
                 ? Center(child: CircularProgressIndicator())
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ListView(
-                      children: <Widget>[
-                        SizedBox(height: 24),
-                        Text(
-                          _user!.username,
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          _user!.email,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        Divider(height: 40, thickness: 2),
-                        profileInfo('学部', _user!.faculty),
-                        profileInfo('学校', _user!.school),
-                        profileInfo('性別', _user!.gender),
-                        profileInfo('学年', _user!.year),
-                        ElevatedButton(
-                          onPressed: () async => await _auth.signOut().then(
-                              (_) => Navigator.pushNamed(context, "/logIn")),
-                          child: const Text("Log Out"),
-                        ),
-                        Divider(height: 40, thickness: 2),
-                        Text('自分の投稿',
+                : Container(
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ListView(
+                        children: <Widget>[
+                          SizedBox(height: 24),
+                          Text(
+                            _user!.username,
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        _posts.isEmpty
-                            ? Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text('投稿がありません',
-                                    textAlign: TextAlign.center),
-                              )
-                            : Column(
-                                children: _posts
-                                    .map((post) => ListTile(
-                                          title: Text(post['post_message']),
-                                          subtitle: Text(
-                                              'Likes: ${post['likes'].length}'),
-                                        ))
-                                    .toList(),
-                              ),
-                        Divider(height: 40, thickness: 2),
-                        Text('フリマ投稿',
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            _user!.email,
                             style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        _books.isEmpty
-                            ? Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Text('フリマ投稿がありません',
-                                    textAlign: TextAlign.center),
-                              )
-                            : Column(
-                                children: _books
-                                    .map((book) => ListTile(
-                                          title: Text(book['bookname']),
-                                          subtitle: Text('${book['price']}円'),
-                                        ))
-                                    .toList(),
-                              ),
-                      ],
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Divider(height: 40, thickness: 2),
+                          profileInfo('学部', _user!.faculty),
+                          profileInfo('学校', _user!.school),
+                          profileInfo('性別', _user!.gender),
+                          profileInfo('学年', _user!.year),
+                          ElevatedButton(
+                            onPressed: () async => await _auth.signOut().then(
+                                (_) => Navigator.pushNamed(context, "/logIn")),
+                            child: const Text("Log Out"),
+                          ),
+                          Divider(height: 40, thickness: 2),
+                          Text('自分の投稿',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          _posts.isEmpty
+                              ? Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('投稿がありません',
+                                      textAlign: TextAlign.center),
+                                )
+                              : Column(
+                                  children: _posts
+                                      .map((post) => ListTile(
+                                            title: Text(post['post_message']),
+                                            subtitle: Text(
+                                                'Likes: ${post['likes'].length}'),
+                                          ))
+                                      .toList(),
+                                ),
+                          Divider(height: 40, thickness: 2),
+                          Text('フリマ投稿',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          _books.isEmpty
+                              ? Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('フリマ投稿がありません',
+                                      textAlign: TextAlign.center),
+                                )
+                              : Column(
+                                  children: _books
+                                      .map((book) => ListTile(
+                                            title: Text(book['bookname']),
+                                            subtitle: Text('${book['price']}円'),
+                                          ))
+                                      .toList(),
+                                ),
+                        ],
+                      ),
                     ),
                   ),
           );
