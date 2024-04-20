@@ -24,6 +24,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
 
   final User? user = FirebaseAuth.instance.currentUser;
 
+  bool isBookmarked = false;
+
   @override
   void initState() {
     super.initState();
@@ -395,24 +397,40 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 children: <Widget>[
                   InkWell(
                     onTap: () async {
-                      print("bookmark");
-                      FirebaseFirestore.instance
-                          .collection('books')
-                          .doc(widget.uid)
-                          .update({
-                        'bookmark': FieldValue.arrayUnion([user?.uid]),
-                      });
+                      final User? user = FirebaseAuth.instance.currentUser;
+
+                      if (user != null) {
+                        setState(() {
+                          isBookmarked = !isBookmarked;
+                        });
+
+                        if (isBookmarked) {
+                          await FirebaseFirestore.instance
+                              .collection('books')
+                              .doc(widget.uid)
+                              .update({
+                            'bookmark': FieldValue.arrayUnion([user.uid]),
+                          });
+                        } else {
+                          await FirebaseFirestore.instance
+                              .collection('books')
+                              .doc(widget.uid)
+                              .update({
+                            'bookmark': FieldValue.arrayRemove([user.uid]),
+                          });
+                        }
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
+                        color: Colors.white,
                         border: Border.all(color: Colors.blue, width: 2),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Icon(
-                        Icons.bookmark_border,
+                      child: Icon(
+                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
                         color: Colors.blue,
                         size: 20,
                       ),
