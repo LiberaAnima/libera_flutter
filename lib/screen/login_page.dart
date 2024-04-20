@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/components/input_box.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -33,9 +34,13 @@ class _LoginPageState extends State<LoginPage> {
                 height: 200,
               ),
               SizedBox(height: 30),
-              emailInput(),
+              EmailInput(
+                controller: _emailController,
+              ),
               const SizedBox(height: 15),
-              passwordInput(),
+              PasswordInput(
+                controller: _passwordController,
+              ),
               Row(
                 children: [
                   TextButton(
@@ -67,62 +72,6 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  TextFormField emailInput() {
-    return TextFormField(
-      controller: _emailController,
-      autofocus: true,
-      validator: (val) {
-        if (val!.isEmpty) {
-          return "Please enter your email";
-        } else {
-          return null;
-        }
-      },
-      decoration: const InputDecoration(
-        prefixIcon: Icon(Icons.mail_outline),
-        hintText: "Input your Email Address",
-        labelText: "Email Address",
-        // labelStyle: TextStyle(
-        //   fontSize: 18,
-        //   fontWeight: FontWeight.bold,
-        // ),
-      ),
-    );
-  }
-
-  TextFormField passwordInput() {
-    return TextFormField(
-      obscureText: _isObscure,
-      controller: _passwordController,
-      autofocus: true,
-      validator: (val) {
-        if (val!.isEmpty) {
-          return "Please enter your password";
-        } else {
-          return null;
-        }
-      },
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.lock_outline),
-        hintText: "Input your Password",
-        labelText: "Password",
-        suffixIcon: IconButton(
-          icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
-          onPressed: () {
-            setState(() {
-              _isObscure = !_isObscure;
-            });
-          },
-        ),
-
-        // labelStyle: TextStyle(
-        //   fontSize: 18,
-        //   fontWeight: FontWeight.bold,
-        // ),
       ),
     );
   }

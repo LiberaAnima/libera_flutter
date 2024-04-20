@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:libera_flutter/components/input_box.dart';
 import 'package:libera_flutter/screen/signup2_page.dart';
 
 class SignupPage extends StatefulWidget {
@@ -26,58 +27,18 @@ class _SignupPageState extends State<SignupPage> {
           key: _key,
           child: Column(
             children: [
-              emailInput(),
+              EmailInput(
+                controller: _emailController,
+              ),
               const SizedBox(height: 15),
-              passwordInput(),
+              PasswordInput(
+                controller: _emailController,
+              ),
               const SizedBox(height: 15),
               signUpButton(),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  TextFormField emailInput() {
-    return TextFormField(
-      controller: _emailController,
-      autofocus: true,
-      validator: (val) {
-        if (val!.isEmpty) {
-          return "Please enter your email";
-        } else {
-          return null;
-        }
-      },
-      decoration: const InputDecoration(
-        hintText: "Input your Email Address",
-        labelText: "Email Address",
-        // labelStyle: TextStyle(
-        //   fontSize: 18,
-        //   fontWeight: FontWeight.bold,
-        // ),
-      ),
-    );
-  }
-
-  TextFormField passwordInput() {
-    return TextFormField(
-      controller: _passwordController,
-      autofocus: true,
-      validator: (val) {
-        if (val!.isEmpty) {
-          return "Please enter your password";
-        } else {
-          return null;
-        }
-      },
-      decoration: const InputDecoration(
-        hintText: "Input your Password",
-        labelText: "Password",
-        // labelStyle: TextStyle(
-        //   fontSize: 18,
-        //   fontWeight: FontWeight.bold,
-        // ),
       ),
     );
   }
