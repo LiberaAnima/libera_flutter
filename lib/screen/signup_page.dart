@@ -38,7 +38,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: 15),
                   PasswordInput(
-                    controller: _emailController,
+                    controller: _passwordController,
                   ),
                   const SizedBox(height: 10),
                   signUpButton(),
