@@ -169,15 +169,39 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     ),
                   ),
                   Row(
+                    // bookmark and view count
+
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                        child: Text(
-                          '3いいね',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                        child: StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('books')
+                              .doc(widget.uid)
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text("Error: ${snapshot.error}",
+                                  style: TextStyle(color: Colors.grey));
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              Map<String, dynamic>? data = snapshot.data?.data()
+                                  as Map<String, dynamic>?;
+                              if (data != null) {
+                                List<dynamic> bookmarks =
+                                    data['bookmark'] ?? [];
+                                return Text(bookmarks.length.toString(),
+                                    style: TextStyle(color: Colors.grey));
+                              }
+                            }
+
+                            return Text("Loading",
+                                style: TextStyle(color: Colors.grey));
+                          },
                         ),
                       ),
                       Padding(
@@ -297,32 +321,34 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'product name1',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'price1円',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w700,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
+                                // 他の商品の
+
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'product name1',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w400,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'price1円',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w700,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -351,32 +377,32 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'product name2',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'price2円',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w700,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'product name2',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w400,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'price2円',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w700,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
