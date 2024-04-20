@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
@@ -22,6 +23,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
   late Future<DocumentSnapshot> _future;
 
   final User? user = FirebaseAuth.instance.currentUser;
+
+  bool isBookmarked = false;
 
   @override
   void initState() {
@@ -166,18 +169,43 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     ),
                   ),
                   Row(
+                    // bookmark and view count
+
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Padding(
                         padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
-                        child: Text(
-                          '3いいね',
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
+                        child: StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('books')
+                              .doc(widget.uid)
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Text("Error: ${snapshot.error}",
+                                  style: TextStyle(color: Colors.grey));
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.active) {
+                              Map<String, dynamic>? data = snapshot.data?.data()
+                                  as Map<String, dynamic>?;
+                              if (data != null) {
+                                List<dynamic> bookmarks =
+                                    data['bookmark'] ?? [];
+                                return Text(
+                                    "保存数 : " + bookmarks.length.toString(),
+                                    style: TextStyle(color: Colors.grey));
+                              }
+                            }
+
+                            return Text("Loading",
+                                style: TextStyle(color: Colors.grey));
+                          },
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: Text(
                           '・',
@@ -190,7 +218,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         padding:
                             EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
                         child: Text(
-                          '10閲覧',
+                          "閲覧数 : " + book['viewCount'].toString(),
                           style: TextStyle(
                             color: Colors.grey,
                           ),
@@ -294,32 +322,34 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'product name1',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'price1円',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w700,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
+                                // 他の商品の
+
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'product name1',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w400,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'price1円',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w700,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -348,32 +378,32 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'product name2',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w400,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'price2円',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      fontFamily: 'Inter',
-                                      fontWeight: FontWeight.w700,
-                                      height: 0.09,
-                                    ),
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'product name2',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w400,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
+                                // Padding(
+                                //   padding: const EdgeInsets.all(8.0),
+                                //   child: Text(
+                                //     'price2円',
+                                //     style: TextStyle(
+                                //       color: Colors.black,
+                                //       fontSize: 14,
+                                //       fontFamily: 'Inter',
+                                //       fontWeight: FontWeight.w700,
+                                //       height: 0.09,
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -393,17 +423,41 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      final User? user = FirebaseAuth.instance.currentUser;
+
+                      if (user != null) {
+                        setState(() {
+                          isBookmarked = !isBookmarked;
+                        });
+
+                        if (isBookmarked) {
+                          await FirebaseFirestore.instance
+                              .collection('books')
+                              .doc(widget.uid)
+                              .update({
+                            'bookmark': FieldValue.arrayUnion([user.uid]),
+                          });
+                        } else {
+                          await FirebaseFirestore.instance
+                              .collection('books')
+                              .doc(widget.uid)
+                              .update({
+                            'bookmark': FieldValue.arrayRemove([user.uid]),
+                          });
+                        }
+                      }
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
                       decoration: BoxDecoration(
-                        color: Colors.transparent,
+                        color: Colors.white,
                         border: Border.all(color: Colors.blue, width: 2),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: const Icon(
-                        Icons.bookmark_border,
+                      child: Icon(
+                        isBookmarked ? Icons.bookmark : Icons.bookmark_border,
                         color: Colors.blue,
                         size: 20,
                       ),
@@ -449,31 +503,52 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      final docRef = await FirebaseFirestore.instance
+                      final chatroomQuery = await FirebaseFirestore.instance
                           .collection('chatroom')
-                          .add({
-                        'bookname': book['bookname'],
-                        'who': [book['uid'], user?.uid],
-                        'timestamp': DateTime.now(),
-                      });
-                      final chatroomid = docRef.id;
-                      FirebaseFirestore.instance
-                          .collection('chatroom')
-                          .doc(chatroomid)
-                          .update({
-                        'id': chatroomid,
-                      });
-                      print(" chatroom id : " + chatroomid);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChatRoom(
-                            otherId: book['uid'],
-                            userId: user!.uid,
-                            chatroomId: chatroomid,
+                          .where('who',
+                              arrayContainsAny: [book['uid'], user?.uid]).get();
+
+                      if (chatroomQuery.docs.isNotEmpty) {
+                        // Chatroom already exists, navigate to it
+                        final chatroomid = chatroomQuery.docs.first.id;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatRoom(
+                              otherId: book['uid'],
+                              userId: user!.uid,
+                              chatroomId: chatroomid,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        // Chatroom does not exist, create it
+                        final docRef = await FirebaseFirestore.instance
+                            .collection('chatroom')
+                            .add({
+                          'bookname': book['bookname'],
+                          'who': [book['uid'], user?.uid],
+                          'timestamp': DateTime.now(),
+                        });
+                        final chatroomid = docRef.id;
+                        FirebaseFirestore.instance
+                            .collection('chatroom')
+                            .doc(chatroomid)
+                            .update({
+                          'id': chatroomid,
+                        });
+                        print(" chatroom id : " + chatroomid);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatRoom(
+                              otherId: book['uid'],
+                              userId: user!.uid,
+                              chatroomId: chatroomid,
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(

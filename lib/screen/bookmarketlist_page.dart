@@ -44,6 +44,12 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
 
                 return GestureDetector(
                   onTap: () {
+                    DocumentReference docRef = FirebaseFirestore.instance
+                        .collection('books')
+                        .doc(document.id);
+
+                    // Increment the viewCount field
+                    docRef.update({'viewCount': FieldValue.increment(1)});
                     Navigator.push(
                       context,
                       MaterialPageRoute(
