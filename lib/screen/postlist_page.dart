@@ -309,7 +309,7 @@ class _PostListPagePageState extends State<PostListPage> {
                                         children: <Widget>[
                                           const SizedBox(width: 10),
                                           Text(
-                                            '${data['name']}',
+                                            '${data['title']}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
