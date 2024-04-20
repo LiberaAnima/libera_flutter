@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       localizationsDelegates: [],
       theme: ThemeData(
-        primaryColor: Colors.white,
+        primarySwatch: Colors.blue,
         // colorScheme:
         //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 242, 183, 7)),
         useMaterial3: true,

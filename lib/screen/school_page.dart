@@ -26,20 +26,23 @@ class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("授業画面"),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const <Widget>[
-            Tab(
-              icon: Icon(Icons.table_chart_outlined),
-              text: "時間割",
-            ),
-            Tab(
-              icon: Icon(Icons.auto_stories_sharp),
-              text: "授業評価",
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(85),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          bottom: TabBar(
+            controller: _tabController,
+            tabs: const <Widget>[
+              Tab(
+                icon: Icon(Icons.table_chart_outlined),
+                text: "時間割",
+              ),
+              Tab(
+                icon: Icon(Icons.auto_stories_sharp),
+                text: "授業評価",
+              ),
+            ],
+          ),
         ),
       ),
       body: TabBarView(
