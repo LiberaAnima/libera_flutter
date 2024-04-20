@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
@@ -393,7 +394,15 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   InkWell(
-                    onTap: () {},
+                    onTap: () async {
+                      print("bookmark");
+                      FirebaseFirestore.instance
+                          .collection('books')
+                          .doc(widget.uid)
+                          .update({
+                        'bookmark': FieldValue.arrayUnion([user?.uid]),
+                      });
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 15),
