@@ -194,7 +194,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                               if (data != null) {
                                 List<dynamic> bookmarks =
                                     data['bookmark'] ?? [];
-                                return Text(bookmarks.length.toString(),
+                                return Text(
+                                    "保存数 : " + bookmarks.length.toString(),
                                     style: TextStyle(color: Colors.grey));
                               }
                             }
@@ -204,7 +205,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                           },
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: Text(
                           '・',
@@ -217,7 +218,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         padding:
                             EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
                         child: Text(
-                          '10閲覧',
+                          "閲覧数 : " + book['viewCount'].toString(),
                           style: TextStyle(
                             color: Colors.grey,
                           ),
