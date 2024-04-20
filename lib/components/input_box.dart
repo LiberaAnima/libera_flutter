@@ -20,6 +20,9 @@ class EmailInput extends StatelessWidget {
       },
       decoration: const InputDecoration(
         prefixIcon: Icon(Icons.mail_outline),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
         hintText: "Input your Email Address",
         labelText: "Email Address",
       ),
@@ -53,7 +56,10 @@ class _PasswordInputState extends State<PasswordInput> {
         }
       },
       decoration: InputDecoration(
-        prefixIcon: Icon(Icons.lock_outline),
+        prefixIcon: const Icon(Icons.lock_outline),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
         hintText: "Input your Password",
         labelText: "Password",
         suffixIcon: IconButton(

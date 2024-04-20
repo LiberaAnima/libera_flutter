@@ -27,12 +27,12 @@ class _SignupPageState extends State<SignupPage> {
               key: _key,
               child: Column(
                 children: [
-                  Image(
+                  const Image(
                     image: AssetImage('assets/images/icon.png'),
                     width: 200,
                     height: 200,
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   EmailInput(
                     controller: _emailController,
                   ),
@@ -42,7 +42,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   const SizedBox(height: 10),
                   signUpButton(),
-                  SizedBox(
+                  const SizedBox(
                     height: 80,
                   ),
                 ],

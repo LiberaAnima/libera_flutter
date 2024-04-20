@@ -34,50 +34,75 @@ class _Signup2PageState extends State<Signup2Page> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextFormField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                  labelText: 'Nickname',
+              SizedBox(
+                width: double.infinity,
+                child: TextFormField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Nickname',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
                 ),
               ),
 
-              const Text("学校"),
-              SizedBox(
-                width: double.infinity,
-                child: DropdownMenu<String>(
-                  menuStyle: const MenuStyle(),
-                  initialSelection: list_school.first,
-                  onSelected: (String? value) {
-                    setState(
-                      () {
-                        schoolDropdouwnValue = value!;
-                      },
-                    );
-                  },
-                  dropdownMenuEntries: list_school
-                      .map<DropdownMenuEntry<String>>((String value) =>
-                          DropdownMenuEntry<String>(value: value, label: value))
-                      .toList(),
-                ),
+              const SizedBox(
+                height: 20,
+              ),
+
+              const Text("学校",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    barrierDismissible: true, // Add this line
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              schoolDropdouwnValue = list_school[index];
+                            });
+                          },
+                          children: list_school.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text(schoolDropdouwnValue),
               ),
               // faculty
-              const Text("学部"),
+              const Text("学部",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
 
               CupertinoButton(
                 onPressed: () {
                   showCupertinoModalPopup(
                     context: context,
+                    barrierDismissible: true, // Add this line
                     builder: (BuildContext context) {
-                      return CupertinoPicker(
-                        itemExtent: 32,
-                        onSelectedItemChanged: (int index) {
-                          setState(() {
-                            facultyDropdouwnValue = list_faculty[index];
-                          });
-                        },
-                        children: list_faculty.map((String value) {
-                          return Text(value);
-                        }).toList(),
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              facultyDropdouwnValue = list_faculty[index];
+                            });
+                          },
+                          children: list_faculty.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
                       );
                     },
                   );
@@ -85,59 +110,65 @@ class _Signup2PageState extends State<Signup2Page> {
                 child: Text(facultyDropdouwnValue),
               ),
 
-              DropdownMenu<String>(
-                menuStyle: const MenuStyle(),
-                initialSelection: list_faculty.first,
-                onSelected: (String? value) {
-                  setState(
-                    () {
-                      facultyDropdouwnValue = value!;
-                    },
-                  );
-                },
-                dropdownMenuEntries: list_faculty
-                    .map<DropdownMenuEntry<String>>((String value) =>
-                        DropdownMenuEntry<String>(value: value, label: value))
-                    .toList(),
-              ),
               // year
-              const Text("学科"),
-              const Text("学年"),
-              DropdownMenu<String>(
-                menuStyle: const MenuStyle(),
-                initialSelection: list_year.first,
-                onSelected: (String? value) {
-                  setState(
-                    () {
-                      yearDropdouwnValue = value!;
+              const Text("学年",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    barrierDismissible: true, // Add this line
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              yearDropdouwnValue = list_year[index];
+                            });
+                          },
+                          children: list_year.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
+                      );
                     },
                   );
                 },
-                dropdownMenuEntries: list_year
-                    .map<DropdownMenuEntry<String>>((String value) =>
-                        DropdownMenuEntry<String>(value: value, label: value))
-                    .toList(),
-              ),
-              const SizedBox(
-                height: 20,
+                child: Text(yearDropdouwnValue),
               ),
               // gender
-              const Text("性別"),
-              DropdownMenu<String>(
-                menuStyle: const MenuStyle(),
-                initialSelection: list_sex.first,
-                onSelected: (String? value) {
-                  setState(
-                    () {
-                      genderDropdouwnValue = value!;
+              const Text("性別",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    barrierDismissible: true, // Add this line
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              genderDropdouwnValue = list_sex[index];
+                            });
+                          },
+                          children: list_sex.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
+                      );
                     },
                   );
                 },
-                dropdownMenuEntries: list_sex
-                    .map<DropdownMenuEntry<String>>((String value) =>
-                        DropdownMenuEntry<String>(value: value, label: value))
-                    .toList(),
+                child: Text(genderDropdouwnValue),
               ),
+
               const SizedBox(
                 height: 20,
               ),
