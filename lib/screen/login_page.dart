@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/components/input_box.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +27,19 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(
+              const Image(
                 image: AssetImage('assets/images/icon.png'),
                 width: 200,
                 height: 200,
               ),
               SizedBox(height: 30),
-              emailInput(),
+              EmailInput(
+                controller: _emailController,
+              ),
               const SizedBox(height: 15),
-              passwordInput(),
+              PasswordInput(
+                controller: _passwordController,
+              ),
               Row(
                 children: [
                   TextButton(
@@ -64,65 +68,28 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 80,
               ),
+              Row(
+                // 利用契約、プライバシーポリシー、Q&A　リンク
+
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text("利用契約"),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text("プライバシーポリシー"),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text("Q&A"),
+                  ),
+                ],
+              )
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  TextFormField emailInput() {
-    return TextFormField(
-      controller: _emailController,
-      autofocus: true,
-      validator: (val) {
-        if (val!.isEmpty) {
-          return "Please enter your email";
-        } else {
-          return null;
-        }
-      },
-      decoration: const InputDecoration(
-        prefixIcon: Icon(Icons.mail_outline),
-        hintText: "Input your Email Address",
-        labelText: "Email Address",
-        // labelStyle: TextStyle(
-        //   fontSize: 18,
-        //   fontWeight: FontWeight.bold,
-        // ),
-      ),
-    );
-  }
-
-  TextFormField passwordInput() {
-    return TextFormField(
-      obscureText: _isObscure,
-      controller: _passwordController,
-      autofocus: true,
-      validator: (val) {
-        if (val!.isEmpty) {
-          return "Please enter your password";
-        } else {
-          return null;
-        }
-      },
-      decoration: InputDecoration(
-        prefixIcon: Icon(Icons.lock_outline),
-        hintText: "Input your Password",
-        labelText: "Password",
-        suffixIcon: IconButton(
-          icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
-          onPressed: () {
-            setState(() {
-              _isObscure = !_isObscure;
-            });
-          },
-        ),
-
-        // labelStyle: TextStyle(
-        //   fontSize: 18,
-        //   fontWeight: FontWeight.bold,
-        // ),
       ),
     );
   }
@@ -154,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
             }
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("test"),
+                content: Text("Login Failed"),
               ),
             );
           }

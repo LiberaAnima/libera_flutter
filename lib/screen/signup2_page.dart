@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 
 const List<String> list_sex = <String>['男性', '女性', 'その他'];
 const List<String> list_year = <String>['B1', 'B2', 'B3', 'B4', 'M1', 'M2'];
@@ -26,112 +28,190 @@ class _Signup2PageState extends State<Signup2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("授業画面"),
-      ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            DropdownMenu<String>(
-              menuStyle: MenuStyle(),
-              initialSelection: list_school.first,
-              onSelected: (String? value) {
-                setState(
-                  () {
-                    schoolDropdouwnValue = value!;
-                  },
-                );
-              },
-              dropdownMenuEntries: list_school
-                  .map<DropdownMenuEntry<String>>((String value) =>
-                      DropdownMenuEntry<String>(value: value, label: value))
-                  .toList(),
-            ),
-            // faculty
-            DropdownMenu<String>(
-              menuStyle: MenuStyle(),
-              initialSelection: list_faculty.first,
-              onSelected: (String? value) {
-                setState(
-                  () {
-                    facultyDropdouwnValue = value!;
-                  },
-                );
-              },
-              dropdownMenuEntries: list_faculty
-                  .map<DropdownMenuEntry<String>>((String value) =>
-                      DropdownMenuEntry<String>(value: value, label: value))
-                  .toList(),
-            ),
-            // year
-            DropdownMenu<String>(
-              menuStyle: MenuStyle(),
-              initialSelection: list_year.first,
-              onSelected: (String? value) {
-                setState(
-                  () {
-                    yearDropdouwnValue = value!;
-                  },
-                );
-              },
-              dropdownMenuEntries: list_year
-                  .map<DropdownMenuEntry<String>>((String value) =>
-                      DropdownMenuEntry<String>(value: value, label: value))
-                  .toList(),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            // gender
-            DropdownMenu<String>(
-              menuStyle: MenuStyle(),
-              initialSelection: list_sex.first,
-              onSelected: (String? value) {
-                setState(
-                  () {
-                    genderDropdouwnValue = value!;
-                  },
-                );
-              },
-              dropdownMenuEntries: list_sex
-                  .map<DropdownMenuEntry<String>>((String value) =>
-                      DropdownMenuEntry<String>(value: value, label: value))
-                  .toList(),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: 'Nickname',
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: double.infinity,
+                child: TextFormField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Nickname',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                  ),
+                ),
               ),
-            ),
 
-            ElevatedButton(
-              onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
-                print(user);
-                if (user != null) {
-                  await FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(user.uid)
-                      .set({
-                    'email': user.email,
-                    'uid': user.uid,
-                    'school': schoolDropdouwnValue,
-                    'faculty': facultyDropdouwnValue,
-                    'year': yearDropdouwnValue,
-                    'gender': genderDropdouwnValue,
-                    'username': _usernameController.text,
-                  });
+              const SizedBox(
+                height: 20,
+              ),
 
-                  Navigator.pushNamed(context, '/');
-                }
-              },
-              child: Text('Submit'),
-            ),
-          ],
+              const Text("学校",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    barrierDismissible: true, // Add this line
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              schoolDropdouwnValue = list_school[index];
+                            });
+                          },
+                          children: list_school.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text(schoolDropdouwnValue),
+              ),
+              // faculty
+              const Text("学部",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    barrierDismissible: true, // Add this line
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              facultyDropdouwnValue = list_faculty[index];
+                            });
+                          },
+                          children: list_faculty.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text(facultyDropdouwnValue),
+              ),
+
+              // year
+              const Text("学年",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    barrierDismissible: true, // Add this line
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              yearDropdouwnValue = list_year[index];
+                            });
+                          },
+                          children: list_year.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text(yearDropdouwnValue),
+              ),
+              // gender
+              const Text("性別",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    barrierDismissible: true, // Add this line
+                    builder: (BuildContext context) {
+                      return Container(
+                        height: 200, // You can change this value
+                        color: Colors.white,
+                        child: CupertinoPicker(
+                          itemExtent: 32,
+                          onSelectedItemChanged: (int index) {
+                            setState(() {
+                              genderDropdouwnValue = list_sex[index];
+                            });
+                          },
+                          children: list_sex.map((String value) {
+                            return Text(value);
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  );
+                },
+                child: Text(genderDropdouwnValue),
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    foregroundColor: Colors.black,
+                    backgroundColor: Colors.orange,
+                  ),
+                  onPressed: () async {
+                    final user = FirebaseAuth.instance.currentUser;
+                    print(user);
+                    if (user != null) {
+                      await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user.uid)
+                          .set({
+                        'email': user.email,
+                        'uid': user.uid,
+                        'school': schoolDropdouwnValue,
+                        'faculty': facultyDropdouwnValue,
+                        'year': yearDropdouwnValue,
+                        'gender': genderDropdouwnValue,
+                        'username': _usernameController.text,
+                      });
+
+                      Navigator.pushNamed(context, '/');
+                    }
+                  },
+                  child: const Text('Submit'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
