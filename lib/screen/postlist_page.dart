@@ -339,6 +339,13 @@ class _PostListPagePageState extends State<PostListPage> {
                                         children: [
                                           const SizedBox(width: 10),
                                           Text(
+                                            data["name"],
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
                                             data['date'] != null
                                                 ? timeAgo(data['date'].toDate())
                                                 : 'Unknown date',
