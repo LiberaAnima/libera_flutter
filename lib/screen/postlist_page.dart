@@ -63,7 +63,7 @@ class _PostListPagePageState extends State<PostListPage> {
       endDrawer: Drawer(
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 90),
             const Text(
               "カテゴリー",
               style: TextStyle(
