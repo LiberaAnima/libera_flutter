@@ -63,16 +63,26 @@ class _Signup2PageState extends State<Signup2Page> {
               // faculty
               const Text("学部"),
 
-              CupertinoPicker(
-                itemExtent: 32,
-                onSelectedItemChanged: (int index) {
-                  setState(() {
-                    facultyDropdouwnValue = list_faculty[index];
-                  });
+              CupertinoButton(
+                onPressed: () {
+                  showCupertinoModalPopup(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return CupertinoPicker(
+                        itemExtent: 32,
+                        onSelectedItemChanged: (int index) {
+                          setState(() {
+                            facultyDropdouwnValue = list_faculty[index];
+                          });
+                        },
+                        children: list_faculty.map((String value) {
+                          return Text(value);
+                        }).toList(),
+                      );
+                    },
+                  );
                 },
-                children: list_faculty.map((String value) {
-                  return Text(value);
-                }).toList(),
+                child: Text(facultyDropdouwnValue),
               ),
 
               DropdownMenu<String>(
