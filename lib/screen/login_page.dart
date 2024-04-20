@@ -69,6 +69,25 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(
                 height: 80,
               ),
+              Row(
+                // 利用契約、プライバシーポリシー、Q&A　リンク
+
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text("利用契約"),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text("プライバシーポリシー"),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pushNamed(context, '/'),
+                    child: const Text("Q&A"),
+                  ),
+                ],
+              )
             ],
           ),
         ),
@@ -103,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
             }
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("test"),
+                content: Text("Login Failed"),
               ),
             );
           }
