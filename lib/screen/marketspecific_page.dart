@@ -503,31 +503,52 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   ),
                   InkWell(
                     onTap: () async {
-                      final docRef = await FirebaseFirestore.instance
+                      final chatroomQuery = await FirebaseFirestore.instance
                           .collection('chatroom')
-                          .add({
-                        'bookname': book['bookname'],
-                        'who': [book['uid'], user?.uid],
-                        'timestamp': DateTime.now(),
-                      });
-                      final chatroomid = docRef.id;
-                      FirebaseFirestore.instance
-                          .collection('chatroom')
-                          .doc(chatroomid)
-                          .update({
-                        'id': chatroomid,
-                      });
-                      print(" chatroom id : " + chatroomid);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChatRoom(
-                            otherId: book['uid'],
-                            userId: user!.uid,
-                            chatroomId: chatroomid,
+                          .where('who',
+                              arrayContainsAny: [book['uid'], user?.uid]).get();
+
+                      if (chatroomQuery.docs.isNotEmpty) {
+                        // Chatroom already exists, navigate to it
+                        final chatroomid = chatroomQuery.docs.first.id;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatRoom(
+                              otherId: book['uid'],
+                              userId: user!.uid,
+                              chatroomId: chatroomid,
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        // Chatroom does not exist, create it
+                        final docRef = await FirebaseFirestore.instance
+                            .collection('chatroom')
+                            .add({
+                          'bookname': book['bookname'],
+                          'who': [book['uid'], user?.uid],
+                          'timestamp': DateTime.now(),
+                        });
+                        final chatroomid = docRef.id;
+                        FirebaseFirestore.instance
+                            .collection('chatroom')
+                            .doc(chatroomid)
+                            .update({
+                          'id': chatroomid,
+                        });
+                        print(" chatroom id : " + chatroomid);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ChatRoom(
+                              otherId: book['uid'],
+                              userId: user!.uid,
+                              chatroomId: chatroomid,
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
