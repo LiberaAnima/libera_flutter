@@ -20,18 +20,44 @@ class PostListPage extends StatefulWidget {
 }
 
 class _PostListPagePageState extends State<PostListPage> {
+  TextEditingController searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> postlists = FirebaseFirestore.instance
-        .collection('posts')
-        .orderBy('date', descending: true)
-        .snapshots();
+    Stream<QuerySnapshot> postlists;
+
+    if (searchController.text.isEmpty) {
+      postlists = FirebaseFirestore.instance
+          .collection('posts')
+          .orderBy('date', descending: true)
+          .snapshots();
+    } else {
+      postlists = FirebaseFirestore.instance
+          .collection("posts")
+          .where("title", isGreaterThanOrEqualTo: searchController.text)
+          .where("title", isLessThanOrEqualTo: searchController.text + '\uf8ff')
+          .orderBy('date', descending: true)
+          .snapshots();
+    }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('掲示板'),
-        shape: const Border(
-          bottom: BorderSide(color: Colors.orange, width: 2),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            FocusScope.of(context).unfocus();
+            searchController.clear();
+            setState(() {});
+          },
+        ),
+        title: TextField(
+          controller: searchController,
+          decoration: InputDecoration(
+            hintText: "投稿を検索",
+            suffixIcon: IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => setState(() {}),
+            ),
+          ),
         ),
       ),
       endDrawer: Drawer(
