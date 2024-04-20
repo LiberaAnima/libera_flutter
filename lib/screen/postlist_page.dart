@@ -63,7 +63,7 @@ class _PostListPagePageState extends State<PostListPage> {
       endDrawer: Drawer(
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 90),
             const Text(
               "カテゴリー",
               style: TextStyle(
@@ -309,7 +309,7 @@ class _PostListPagePageState extends State<PostListPage> {
                                         children: <Widget>[
                                           const SizedBox(width: 10),
                                           Text(
-                                            '${data['name']}',
+                                            '${data['title']}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -337,6 +337,13 @@ class _PostListPagePageState extends State<PostListPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            data["name"],
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                            ),
+                                          ),
                                           const SizedBox(width: 10),
                                           Text(
                                             data['date'] != null
