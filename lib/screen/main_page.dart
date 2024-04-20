@@ -102,16 +102,21 @@ class _MainPagePageState extends State<MainPage> {
                     height: 20,
                   ),
                   Card.outlined(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          width: 350,
-                          height: 150,
-                          child: Center(
-                            child: Text("今日の時間割"),
-                          ),
-                        )
-                      ],
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/class');
+                      },
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            width: 350,
+                            height: 150,
+                            child: Center(
+                              child: Text("今日の時間割"),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   Row(
