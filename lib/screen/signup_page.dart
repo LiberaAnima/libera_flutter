@@ -19,79 +19,100 @@ class _SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Sign Up"),
-      ),
       body: Center(
-        child: Form(
-          key: _key,
-          child: Column(
-            children: [
-              EmailInput(
-                controller: _emailController,
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Form(
+              key: _key,
+              child: Column(
+                children: [
+                  Image(
+                    image: AssetImage('assets/images/icon.png'),
+                    width: 200,
+                    height: 200,
+                  ),
+                  SizedBox(height: 30),
+                  EmailInput(
+                    controller: _emailController,
+                  ),
+                  const SizedBox(height: 15),
+                  PasswordInput(
+                    controller: _emailController,
+                  ),
+                  const SizedBox(height: 10),
+                  signUpButton(),
+                  SizedBox(
+                    height: 80,
+                  ),
+                ],
               ),
-              const SizedBox(height: 15),
-              PasswordInput(
-                controller: _emailController,
-              ),
-              const SizedBox(height: 15),
-              signUpButton(),
-            ],
-          ),
+            ),
+          ]),
         ),
       ),
     );
   }
 
-  ElevatedButton signUpButton() {
-    return ElevatedButton(
-      onPressed: () async {
-        if (_key.currentState!.validate()) {
-          try {
-            final credential = await _auth.createUserWithEmailAndPassword(
-              email: _emailController.text,
-              password: _passwordController.text,
-            );
+  SizedBox signUpButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.orange,
+        ),
+        onPressed: () async {
+          if (_key.currentState!.validate()) {
+            try {
+              final credential = await _auth.createUserWithEmailAndPassword(
+                email: _emailController.text,
+                password: _passwordController.text,
+              );
 
-            final user = credential.user;
-            print(user?.uid);
-            // await FirebaseFirestore.instance
-            //     .collection('users')
-            //     .doc(user?.uid)
-            //     .set(
-            //   {
-            //     'email': _emailController.text,
-            //     'uid': user?.uid,
-            //     // 다른 필드를 추가하세요.
-            //   },
-            // );
+              final user = credential.user;
+              print(user?.uid);
+              // await FirebaseFirestore.instance
+              //     .collection('users')
+              //     .doc(user?.uid)
+              //     .set(
+              //   {
+              //     'email': _emailController.text,
+              //     'uid': user?.uid,
+              //     // 다른 필드를 추가하세요.
+              //   },
+              // );
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => Signup2Page(userCredential: credential),
-              ),
-            );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Signup2Page(userCredential: credential),
+                ),
+              );
 
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("Sign Up Success"),
-              ),
-            );
-          } on FirebaseAuthException catch (error) {
-            if (error.code == 'email-already-in-use') {
-              //
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text("Sign Up Success"),
+                ),
+              );
+            } on FirebaseAuthException catch (error) {
+              if (error.code == 'email-already-in-use') {
+                //
+              }
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(error.message ?? "Authentication Failed"),
+                ),
+              );
             }
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(error.message ?? "Authentication Failed"),
-              ),
-            );
           }
-        }
-      },
-      child: const Text("Sign Up"),
+        },
+        child: const Text("Sign Up"),
+      ),
     );
   }
 }
