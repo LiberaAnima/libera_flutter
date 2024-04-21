@@ -1,5 +1,11 @@
+// import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+// import 'package:libera_flutter/services/likebutton.dart';
 
 class PostSpecificPage extends StatefulWidget {
   final String id;
@@ -32,17 +38,89 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post Details'),
+        title: const Text('投稿詳細'),
       ),
       body: _post != null
           ? Column(
-              children: [
-                Text('Title: ${_post!['title']}'),
-                Text('Content: ${_post!['post_message']}'),
-                // Add more fields as needed
+              children: <Widget>[
+                const SizedBox(width: 10),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "username",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        "2018-10-10 10:10:10",
+                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                      ),
+                      SizedBox(height: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "title",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "content",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: <Widget>[
+                          Text("10いいね"),
+                          SizedBox(width: 5),
+                          Text("5コメント"),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: <Widget>[
+                          Icon(Icons.thumb_up, color: Colors.red),
+                          SizedBox(width: 4),
+                          Text('いいね'),
+                          SizedBox(width: 16),
+                          Icon(Icons.comment, color: Colors.blue),
+                          SizedBox(width: 4),
+                          Text('コメント'),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                ),
+                const Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'コメントを入力してください。',
+                      suffixIcon: Icon(Icons.send),
+                    ),
+                  ),
+                ),
               ],
             )
-          : Center(child: CircularProgressIndicator()),
+          // Add more fields as needed
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }
