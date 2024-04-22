@@ -8,35 +8,39 @@ class TimeTablePage extends StatefulWidget {
 }
 
 List week = ['月', '火', '水', '木', '金'];
-var kColumnLength = 22;
-double kFirstColumnHeight = 20;
-double kBoxSize = 52;
+var kColumnLength = 10;
+double kFirstColumnHeight = 40;
+double kBoxSize = 120;
 
 class _TimeTablePageState extends State<TimeTablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        height: kColumnLength / 2 * kBoxSize + kColumnLength,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: Row(
-          children: [
-            buildTimeColumn(),
-            ...List.generate(
-              5,
-              (index) => Expanded(
-                flex: 4,
-                child: Column(
-                  children: buildDayColumn(index),
-                ),
-              ),
+      body: Center(
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Container(
+            height: kColumnLength / 2 * kBoxSize + kColumnLength + 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(12),
             ),
-          ],
-        ),
+            child: Row(
+              children: [
+                buildTimeColumn(),
+                ...List.generate(
+                  5,
+                  (index) => Expanded(
+                    flex: 4,
+                    child: Column(
+                      children: buildDayColumn(index),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -82,13 +86,16 @@ List<Widget> buildDayColumn(int index) {
           Column(
             children: [
               SizedBox(
-                height: 20,
-                child: Text(
-                  '${week[index]}',
+                height: kFirstColumnHeight,
+                child: Center(
+                  child: Text(
+                    '${week[index]}',
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
               ...List.generate(
-                kColumnLength,
+                kColumnLength.toInt(),
                 (index) {
                   if (index % 2 == 0) {
                     return const Divider(
@@ -96,9 +103,14 @@ List<Widget> buildDayColumn(int index) {
                       height: 0,
                     );
                   }
-                  return SizedBox(
-                    height: kBoxSize,
-                    child: Container(),
+                  return GestureDetector(
+                    onTap: () {
+                      print('tapped');
+                    },
+                    child: SizedBox(
+                      height: kBoxSize,
+                      child: Text("a"),
+                    ),
                   );
                 },
               ),
