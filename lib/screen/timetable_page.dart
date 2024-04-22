@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/all.dart';
 
@@ -13,8 +16,12 @@ class _TimeTablePageState extends State<TimeTablePage> {
   final List<String> numbers = ['1', '2', '3', '4', '5'];
   final Map<int, Map<String, String>> classes = {};
 
+//get current users
+  final User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
+    print(user?.uid);
     return Scaffold(
       body: Center(
         child: Container(
@@ -113,6 +120,19 @@ class _TimeTablePageState extends State<TimeTablePage> {
                         );
                         setState(() {
                           classes[index] = result!;
+                        });
+
+                        CollectionReference timetable = FirebaseFirestore
+                            .instance
+                            .collection('users')
+                            .doc(user?.uid)
+                            .collection('timetable');
+                        // Add the class information to the Firestore collection
+                        await timetable.add({
+                          // 'day': day,
+                          // 'period': period,
+                          'class': result!['class'],
+                          'room': result['room'],
                         });
                       },
                       child: Container(
