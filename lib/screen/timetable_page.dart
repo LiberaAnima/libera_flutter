@@ -11,7 +11,7 @@ class TimeTablePage extends StatefulWidget {
 class _TimeTablePageState extends State<TimeTablePage> {
   final List<String> days = ['月', '火', '水', '木', '金'];
   final List<String> numbers = ['1', '2', '3', '4', '5'];
-  final Map<int, String> classes = {};
+  final Map<int, Map<String, String>> classes = {};
 
   @override
   Widget build(BuildContext context) {
@@ -51,22 +51,60 @@ class _TimeTablePageState extends State<TimeTablePage> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () async {
-                        final className = await showDialog<String>(
+                        final result = await showDialog<Map<String, String>>(
                           context: context,
                           builder: (context) {
-                            String input = '';
+                            String className = '';
+                            String roomName = '';
+                            int period = index ~/ 5 + 1;
+                            String day = ''; // index % 5 -> room name
+                            switch (index % 5) {
+                              case 0:
+                                day = '月曜';
+                                break;
+                              case 1:
+                                day = '火曜';
+                                break;
+                              case 2:
+                                day = '水曜';
+                                break;
+                              case 3:
+                                day = '木曜';
+                                break;
+                              case 4:
+                                day = '金曜';
+                                break;
+                            }
                             return AlertDialog(
-                              title: Text('Enter class'),
-                              content: TextField(
-                                onChanged: (value) {
-                                  input = value;
-                                },
+                              title: Text('$day,$period限',
+                                  textAlign: TextAlign.center),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  TextField(
+                                    decoration:
+                                        InputDecoration(hintText: 'Class name'),
+                                    onChanged: (value) {
+                                      className = value;
+                                    },
+                                  ),
+                                  TextField(
+                                    decoration:
+                                        InputDecoration(hintText: 'Room name'),
+                                    onChanged: (value) {
+                                      roomName = value;
+                                    },
+                                  ),
+                                ],
                               ),
                               actions: [
                                 TextButton(
                                   child: Text('OK'),
                                   onPressed: () {
-                                    Navigator.of(context).pop(input);
+                                    Navigator.of(context).pop({
+                                      'class': className,
+                                      'room': roomName,
+                                    });
                                   },
                                 ),
                               ],
@@ -74,7 +112,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                           },
                         );
                         setState(() {
-                          classes[index] = className!;
+                          classes[index] = result!;
                         });
                       },
                       child: Container(
@@ -87,7 +125,22 @@ class _TimeTablePageState extends State<TimeTablePage> {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Center(
-                          child: Text(classes[index] ?? ''),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                classes[index]?['class'] ?? '',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(classes[index]?['room'] ?? ''),
+                            ],
+                          ),
                         ),
                       ),
                     );
