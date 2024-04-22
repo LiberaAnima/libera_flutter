@@ -1,5 +1,15 @@
+// import 'dart:html';
+
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+// import 'package:libera_flutter/services/likebutton.dart';
 
 class PostSpecificPage extends StatefulWidget {
   final String id;
@@ -12,6 +22,7 @@ class PostSpecificPage extends StatefulWidget {
 
 class _PostSpecificPageState extends State<PostSpecificPage> {
   DocumentSnapshot? _post;
+  bool _isAnonymous = false;
 
   @override
   void initState() {
@@ -32,17 +43,146 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Post Details'),
+        title: const Text('投稿詳細'),
       ),
       body: _post != null
           ? Column(
-              children: [
-                Text('Title: ${_post!['title']}'),
-                Text('Content: ${_post!['post_message']}'),
-                // Add more fields as needed
+              children: <Widget>[
+                const SizedBox(width: 10),
+                const Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "username",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        "2018-10-10 10:10:10",
+                        style: TextStyle(fontSize: 13, color: Colors.grey),
+                      ),
+                      SizedBox(height: 10),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "title",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            "contentfnajfnawiaggwdfiaifpudlafnaipaifnpoaiuefniaunepufinapiobrgaoprfnoawenfawhefpqwguionrapiugqpnwepfiwafgeapournaunpouwgnpoqagnaiuwnfpawinpoagnpaowgnrwqpoungfpounq",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            "10いいね",
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            "5コメント",
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: <Widget>[
+                          FilledButton(
+                            onPressed: null,
+                            child: Row(
+                              children: [
+                                Icon(Icons.favorite_border,
+                                    color: Colors.grey, size: 20),
+                                SizedBox(width: 5),
+                                Text('いいね'),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                ),
               ],
             )
-          : Center(child: CircularProgressIndicator()),
+          // Add more fields as needed
+          : const Center(child: CircularProgressIndicator()),
+      bottomSheet: Container(
+        padding:
+            const EdgeInsets.only(left: 2.0, right: 8.0, top: 8.0, bottom: 8.0),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Checkbox(
+              value: _isAnonymous,
+              onChanged: (bool? value) {
+                setState(() {
+                  _isAnonymous = value!;
+                });
+              },
+              fillColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.selected)) {
+                  return Colors.orange;
+                }
+                return Colors.white;
+              }),
+            ),
+            const Text("匿名",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                )),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'コメントを入力してください。',
+                          border: InputBorder.none,
+                          contentPadding:
+                              EdgeInsets.only(top: 12, bottom: 5, left: 15),
+                          suffixIcon: Icon(Icons.send),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
