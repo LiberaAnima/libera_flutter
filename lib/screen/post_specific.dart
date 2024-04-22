@@ -1,10 +1,14 @@
 // import 'dart:html';
 
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 // import 'package:libera_flutter/services/likebutton.dart';
 
 class PostSpecificPage extends StatefulWidget {
@@ -71,7 +75,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                             "title",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 20,
+                              fontSize: 18,
                             ),
                           ),
                           SizedBox(height: 10),
@@ -84,21 +88,49 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                       SizedBox(height: 10),
                       Row(
                         children: <Widget>[
-                          Text("10いいね"),
+                          Text(
+                            "10いいね",
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                            ),
+                          ),
                           SizedBox(width: 5),
-                          Text("5コメント"),
+                          Text(
+                            "5コメント",
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                            ),
+                          ),
                         ],
                       ),
                       SizedBox(height: 10),
                       Row(
                         children: <Widget>[
-                          Icon(Icons.thumb_up, color: Colors.red),
-                          SizedBox(width: 4),
-                          Text('いいね'),
+                          FilledButton(
+                            onPressed: null,
+                            child: Row(
+                              children: [
+                                Icon(Icons.favorite_border,
+                                    color: Colors.grey, size: 20),
+                                SizedBox(width: 5),
+                                Text('いいね'),
+                              ],
+                            ),
+                          ),
                           SizedBox(width: 16),
-                          Icon(Icons.comment, color: Colors.blue),
-                          SizedBox(width: 4),
-                          Text('コメント'),
+                          FilledButton(
+                            onPressed: null,
+                            child: Row(
+                              children: [
+                                Icon(Icons.messenger_outline_rounded,
+                                    color: Colors.grey, size: 20),
+                                SizedBox(width: 5),
+                                Text('コメント'),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ],
