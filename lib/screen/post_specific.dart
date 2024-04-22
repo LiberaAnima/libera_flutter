@@ -22,6 +22,7 @@ class PostSpecificPage extends StatefulWidget {
 
 class _PostSpecificPageState extends State<PostSpecificPage> {
   DocumentSnapshot? _post;
+  bool _isAnonymous = false;
 
   @override
   void initState() {
@@ -64,9 +65,6 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                         "2018-10-10 10:10:10",
                         style: TextStyle(fontSize: 13, color: Colors.grey),
                       ),
-                      Divider(
-                        color: Colors.grey,
-                      ),
                       SizedBox(height: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +78,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            "content",
+                            "contentfnajfnawiaggwdfiaifpudlafnaipaifnpoaiuefniaunepufinapiobrgaoprfnoawenfawhefpqwguionrapiugqpnwepfiwafgeapournaunpouwgnpoqagnaiuwnfpawinpoagnpaowgnrwqpoungfpounq",
                             style: TextStyle(fontSize: 15),
                           ),
                         ],
@@ -119,40 +117,72 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                               ],
                             ),
                           ),
-                          SizedBox(width: 16),
-                          FilledButton(
-                            onPressed: null,
-                            child: Row(
-                              children: [
-                                Icon(Icons.messenger_outline_rounded,
-                                    color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
-                                Text('コメント'),
-                              ],
-                            ),
-                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                ),
-                const Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'コメントを入力してください。',
-                      suffixIcon: Icon(Icons.send),
-                    ),
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
               ],
             )
           // Add more fields as needed
           : const Center(child: CircularProgressIndicator()),
+      bottomSheet: Container(
+        padding:
+            const EdgeInsets.only(left: 2.0, right: 8.0, top: 8.0, bottom: 8.0),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Checkbox(
+              value: _isAnonymous,
+              onChanged: (bool? value) {
+                setState(() {
+                  _isAnonymous = value!;
+                });
+              },
+              fillColor: MaterialStateProperty.resolveWith((states) {
+                if (states.contains(MaterialState.selected)) {
+                  return Colors.orange;
+                }
+                return Colors.white;
+              }),
+            ),
+            const Text("匿名",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold,
+                )),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey.shade300, width: 1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'コメントを入力してください。',
+                          border: InputBorder.none,
+                          contentPadding:
+                              EdgeInsets.only(top: 12, bottom: 5, left: 15),
+                          suffixIcon: Icon(Icons.send),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
