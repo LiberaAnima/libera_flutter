@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TimeTablePage extends StatefulWidget {
@@ -8,70 +7,105 @@ class TimeTablePage extends StatefulWidget {
   _TimeTablePageState createState() => _TimeTablePageState();
 }
 
-class TimeTableItem {
-  String title;
-  Color color;
-
-  TimeTableItem({this.title = '', this.color = Colors.white});
-}
+List week = ['月', '火', '水', '木', '金'];
+var kColumnLength = 22;
+double kFirstColumnHeight = 20;
+double kBoxSize = 52;
 
 class _TimeTablePageState extends State<TimeTablePage> {
-  List<List<TimeTableItem>> timeTable = List.generate(
-    5,
-    (_) => List.generate(5, (_) => TimeTableItem()),
-  );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            height: 500,
-            child: Table(
-              border: TableBorder.all(),
-              children: List.generate(
-                5,
-                (row) => TableRow(
-                  children: List.generate(
-                    5,
-                    (col) => InkWell(
-                      onTap: () async {
-                        final title = await showDialog<String>(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            title: Text('Enter lecture title'),
-                            content: TextField(),
-                            actions: [
-                              TextButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  Navigator.of(context).pop('Lecture title');
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                        setState(() {
-                          timeTable[row][col].title = title ?? '';
-                          timeTable[row][col].color = Colors.yellow;
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(8.0),
-                        color: timeTable[row][col].color,
-                        child: Text(timeTable[row][col].title),
-                      ),
-                    ),
-                  ),
+      body: Container(
+        height: kColumnLength / 2 * kBoxSize + kColumnLength,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            buildTimeColumn(),
+            ...List.generate(
+              5,
+              (index) => Expanded(
+                flex: 4,
+                child: Column(
+                  children: buildDayColumn(index),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
+}
+
+Expanded buildTimeColumn() {
+  return Expanded(
+    child: Column(
+      children: [
+        SizedBox(
+          height: kFirstColumnHeight,
+        ),
+        ...List.generate(
+          kColumnLength,
+          (index) {
+            if (index % 2 == 0) {
+              return const Divider(
+                color: Colors.grey,
+                height: 0,
+              );
+            }
+            return SizedBox(
+              height: kBoxSize,
+              child: Center(child: Text('${index ~/ 2 + 1}')),
+            );
+          },
+        ),
+      ],
+    ),
+  );
+}
+
+List<Widget> buildDayColumn(int index) {
+  return [
+    const VerticalDivider(
+      color: Colors.grey,
+      width: 0,
+    ),
+    Expanded(
+      flex: 4,
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              SizedBox(
+                height: 20,
+                child: Text(
+                  '${week[index]}',
+                ),
+              ),
+              ...List.generate(
+                kColumnLength,
+                (index) {
+                  if (index % 2 == 0) {
+                    return const Divider(
+                      color: Colors.grey,
+                      height: 0,
+                    );
+                  }
+                  return SizedBox(
+                    height: kBoxSize,
+                    child: Container(),
+                  );
+                },
+              ),
+            ],
+          )
+        ],
+      ),
+    ),
+  ];
 }
