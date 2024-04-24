@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/class_page.dart';
 import 'package:libera_flutter/screen/timetable_page.dart';
 
 class SchoolPage extends StatefulWidget {
@@ -26,20 +27,23 @@ class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("授業画面"),
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const <Widget>[
-            Tab(
-              icon: Icon(Icons.table_chart_outlined),
-              text: "時間割",
-            ),
-            Tab(
-              icon: Icon(Icons.auto_stories_sharp),
-              text: "授業評価",
-            ),
-          ],
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(85),
+        child: AppBar(
+          backgroundColor: Colors.white,
+          bottom: TabBar(
+            controller: _tabController,
+            tabs: const <Widget>[
+              Tab(
+                icon: Icon(Icons.table_chart_outlined),
+                text: "時間割",
+              ),
+              Tab(
+                icon: Icon(Icons.auto_stories_sharp),
+                text: "授業評価",
+              ),
+            ],
+          ),
         ),
       ),
       body: TabBarView(
@@ -49,7 +53,7 @@ class _SchoolPageState extends State<SchoolPage> with TickerProviderStateMixin {
             child: TimeTablePage(),
           ),
           Center(
-            child: Text("授業評価"),
+            child: ClassPage(),
           ),
         ],
       ),
