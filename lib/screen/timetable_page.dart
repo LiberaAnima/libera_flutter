@@ -97,35 +97,95 @@ class _TimeTablePageState extends State<TimeTablePage> {
                               List<dynamic> classInfo = data['timetable'][day]
                                   [period.toString()] as List<dynamic>;
                               // Display the data
-                              // print(classInfo.length);
-                              // print(classInfo);
 
                               if (classInfo.length >= 2) {
                                 print(classInfo[0] + 'a' + classInfo[1]);
-                                return Container(
-                                  margin: const EdgeInsets.all(5.0),
-                                  height: 200,
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    border: Border.all(color: Colors.grey),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        classInfo[0],
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
+                                return GestureDetector(
+                                  onTap: () async {
+                                    // Show dialog to get new class and room information
+                                    TextEditingController classController =
+                                        TextEditingController();
+                                    TextEditingController roomController =
+                                        TextEditingController();
+
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: Text('$day,$period限',
+                                              textAlign: TextAlign.center),
+                                          content: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: <Widget>[
+                                              TextField(
+                                                controller: classController,
+                                                decoration: InputDecoration(
+                                                    hintText:
+                                                        "Enter new class"),
+                                              ),
+                                              TextField(
+                                                controller: roomController,
+                                                decoration: InputDecoration(
+                                                    hintText: "Enter new room"),
+                                              ),
+                                            ],
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              child: Text('OK'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop({
+                                                  'class': roomController.text,
+                                                  'room': classController.text,
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+
+                                    String newClass = classController.text;
+                                    String newRoom = roomController.text;
+
+                                    // Update Firestore
+                                    DocumentReference userDoc =
+                                        FirebaseFirestore.instance
+                                            .collection('users')
+                                            .doc(user?.uid);
+                                    userDoc.update({
+                                      'timetable.$day.$period': [
+                                        newClass,
+                                        newRoom
+                                      ]
+                                    });
+                                  },
+                                  child: Container(
+                                    margin: const EdgeInsets.all(5.0),
+                                    height: 200,
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      border: Border.all(color: Colors.grey),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          classInfo[0],
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 15,
-                                      ),
-                                      Text(classInfo[1] ?? ''),
-                                    ],
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                        Text(classInfo[1] ?? ''),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }
@@ -197,7 +257,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                               );
                               if (result != null) {
                                 setState(() {
-                                  classes[index] = result!;
+                                  classes[index] = result;
                                 });
 
                                 // save the data in firebase
@@ -210,7 +270,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                 userDoc.update({
                                   'timetable.$day.$period':
                                       FieldValue.arrayUnion(
-                                          [result!['class'], result['room']])
+                                          [result['class'], result['room']])
                                 });
                               }
                             },
