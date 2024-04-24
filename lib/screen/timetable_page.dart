@@ -103,13 +103,30 @@ class _TimeTablePageState extends State<TimeTablePage> {
                               if (classInfo.length >= 2) {
                                 print(classInfo[0] + 'a' + classInfo[1]);
                                 return Container(
+                                  margin: const EdgeInsets.all(5.0),
+                                  height: 200,
+                                  width: 200,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
                                   child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(classInfo[0]),
-                                      Text(classInfo[1]),
+                                      Text(
+                                        classInfo[0],
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15,
+                                      ),
+                                      Text(classInfo[1] ?? ''),
                                     ],
                                   ),
-                                  // ... add more details ...
                                 );
                               }
                             }
