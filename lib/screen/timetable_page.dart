@@ -127,16 +127,9 @@ class _TimeTablePageState extends State<TimeTablePage> {
                             .collection('users')
                             .doc(user?.uid);
                         // Add the class information to the Firestore collection
-                        await userDoc.update({
-                          'timetable.$day': FieldValue.arrayUnion([
-                            {
-                              'period': period,
-                              'info': [
-                                result!['class'],
-                                result['room'],
-                              ],
-                            }
-                          ])
+                        userDoc.update({
+                          'timetable.$day.$period': FieldValue.arrayUnion(
+                              [result!['class'], result['room']])
                         });
                       },
                       child: Container(
