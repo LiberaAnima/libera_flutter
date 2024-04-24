@@ -58,30 +58,31 @@ class _TimeTablePageState extends State<TimeTablePage> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () async {
+                        int period = index ~/ 5 + 1;
+                        String day = ''; // index % 5 -> room name
+                        switch (index % 5) {
+                          case 0:
+                            day = '月曜';
+                            break;
+                          case 1:
+                            day = '火曜';
+                            break;
+                          case 2:
+                            day = '水曜';
+                            break;
+                          case 3:
+                            day = '木曜';
+                            break;
+                          case 4:
+                            day = '金曜';
+                            break;
+                        }
                         final result = await showDialog<Map<String, String>>(
                           context: context,
                           builder: (context) {
                             String className = '';
                             String roomName = '';
-                            int period = index ~/ 5 + 1;
-                            String day = ''; // index % 5 -> room name
-                            switch (index % 5) {
-                              case 0:
-                                day = '月曜';
-                                break;
-                              case 1:
-                                day = '火曜';
-                                break;
-                              case 2:
-                                day = '水曜';
-                                break;
-                              case 3:
-                                day = '木曜';
-                                break;
-                              case 4:
-                                day = '金曜';
-                                break;
-                            }
+
                             return AlertDialog(
                               title: Text('$day,$period限',
                                   textAlign: TextAlign.center),
@@ -122,17 +123,20 @@ class _TimeTablePageState extends State<TimeTablePage> {
                           classes[index] = result!;
                         });
 
-                        CollectionReference timetable = FirebaseFirestore
-                            .instance
+                        DocumentReference userDoc = FirebaseFirestore.instance
                             .collection('users')
-                            .doc(user?.uid)
-                            .collection('timetable');
+                            .doc(user?.uid);
                         // Add the class information to the Firestore collection
-                        await timetable.add({
-                          // 'day': day,
-                          // 'period': period,
-                          'class': result!['class'],
-                          'room': result['room'],
+                        await userDoc.update({
+                          'timetable.$day': FieldValue.arrayUnion([
+                            {
+                              'period': period,
+                              'info': [
+                                result!['class'],
+                                result['room'],
+                              ],
+                            }
+                          ])
                         });
                       },
                       child: Container(
