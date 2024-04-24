@@ -119,18 +119,22 @@ class _TimeTablePageState extends State<TimeTablePage> {
                             );
                           },
                         );
-                        setState(() {
-                          classes[index] = result!;
-                        });
+                        if (result != null) {
+                          setState(() {
+                            classes[index] = result!;
+                          });
 
-                        DocumentReference userDoc = FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user?.uid);
-                        // Add the class information to the Firestore collection
-                        userDoc.update({
-                          'timetable.$day.$period': FieldValue.arrayUnion(
-                              [result!['class'], result['room']])
-                        });
+                          // save the data in firebase
+
+                          DocumentReference userDoc = FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user?.uid);
+                          // Add the class information to the Firestore collection
+                          userDoc.update({
+                            'timetable.$day.$period': FieldValue.arrayUnion(
+                                [result!['class'], result['room']])
+                          });
+                        }
                       },
                       child: Container(
                         margin: const EdgeInsets.all(5.0),
