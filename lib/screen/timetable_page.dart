@@ -99,7 +99,6 @@ class _TimeTablePageState extends State<TimeTablePage> {
                               // Display the data
 
                               if (classInfo.length >= 2) {
-                                print(classInfo[0] + 'a' + classInfo[1]);
                                 return GestureDetector(
                                   onTap: () async {
                                     // Show dialog to get new class and room information
@@ -153,12 +152,14 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                         FirebaseFirestore.instance
                                             .collection('users')
                                             .doc(user?.uid);
-                                    userDoc.update({
+                                    await userDoc.update({
                                       'timetable.$day.$period': [
                                         newClass,
                                         newRoom
                                       ]
                                     });
+
+                                    setState(() {});
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.all(5.0),
