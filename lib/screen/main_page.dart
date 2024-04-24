@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
+import 'package:libera_flutter/screen/school_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:intl/intl.dart';
@@ -122,99 +123,104 @@ class _MainPagePageState extends State<MainPage> {
                             child: const Text("Log Out"),
                           ),
                           Card.outlined(
-                            child: GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, '/class');
-                              },
-                              child: FutureBuilder<DocumentSnapshot>(
-                                future: FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(userId)
-                                    .get(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    return Text("Something went wrong");
-                                  }
-
-                                  if (snapshot.hasData &&
-                                      !snapshot.data!.exists) {
-                                    return Text("Document does not exist");
-                                  }
-
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    Map<String, dynamic> data = snapshot.data!
-                                        .data() as Map<String, dynamic>;
-
-                                    tz.initializeTimeZones();
-                                    tz.TZDateTime now = tz.TZDateTime.now(
-                                        tz.getLocation('Asia/Tokyo'));
-                                    var formatter = DateFormat('EEEE');
-                                    String formattedDate =
-                                        formatter.format(now);
-                                    var todayTimetable = data['timetable']
-                                        [formattedDate.toLowerCase()];
-                                    print(formattedDate);
-
-                                    if (todayTimetable != null) {
-                                      Map<String, dynamic> todayClasses =
-                                          todayTimetable
-                                              as Map<String, dynamic>;
-                                      return Column(
-                                        children: todayClasses.entries
-                                            .map((classInfo) {
-                                          print(classInfo);
-                                          return Container(
-                                            color: Colors.white,
-                                            width: double.infinity,
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  "${classInfo.key}限",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                      color: Colors.black),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Text(
-                                                      "${classInfo.value[0]}",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 15,
-                                                          color: Colors.black),
-                                                    ),
-                                                    Text("  -  "),
-                                                    Text(
-                                                      "${classInfo.value[1]}",
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w700,
-                                                          fontSize: 15,
-                                                          color: Colors.black),
-                                                    )
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        }).toList(),
-                                      );
-                                    } else {
-                                      return Text("今日の時間割はありません");
+                            child: Container(
+                              color: Colors.white,
+                              padding: EdgeInsets.all(10),
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: FutureBuilder<DocumentSnapshot>(
+                                  future: FirebaseFirestore.instance
+                                      .collection('users')
+                                      .doc(userId)
+                                      .get(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<DocumentSnapshot>
+                                          snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Text("Something went wrong");
                                     }
-                                  }
-                                  return CircularProgressIndicator();
-                                },
+
+                                    if (snapshot.hasData &&
+                                        !snapshot.data!.exists) {
+                                      return Text("Document does not exist");
+                                    }
+
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      Map<String, dynamic> data = snapshot.data!
+                                          .data() as Map<String, dynamic>;
+
+                                      tz.initializeTimeZones();
+                                      tz.TZDateTime now = tz.TZDateTime.now(
+                                          tz.getLocation('Asia/Tokyo'));
+                                      var formatter = DateFormat('EEEE');
+                                      String formattedDate =
+                                          formatter.format(now);
+                                      var todayTimetable = data['timetable']
+                                          [formattedDate.toLowerCase()];
+                                      print(formattedDate);
+
+                                      if (todayTimetable != null) {
+                                        Map<String, dynamic> todayClasses =
+                                            todayTimetable
+                                                as Map<String, dynamic>;
+                                        return Column(
+                                          children: todayClasses.entries
+                                              .map((classInfo) {
+                                            print(classInfo);
+                                            return Container(
+                                              color: Colors.white,
+                                              width: double.infinity,
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "${classInfo.key}限",
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20,
+                                                        color: Colors.black),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        "${classInfo.value[0]}",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 15,
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      Text("  -  "),
+                                                      Text(
+                                                        "${classInfo.value[1]}",
+                                                        style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.w700,
+                                                            fontSize: 15,
+                                                            color:
+                                                                Colors.black),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          }).toList(),
+                                        );
+                                      } else {
+                                        return Text("今日の時間割はありません");
+                                      }
+                                    }
+                                    return CircularProgressIndicator();
+                                  },
+                                ),
                               ),
                             ),
                           ),
