@@ -74,19 +74,19 @@ class _TimeTablePageState extends State<TimeTablePage> {
                             String day = ''; // index % 5 -> room name
                             switch (index % 5) {
                               case 0:
-                                day = '月曜';
+                                day = 'monday';
                                 break;
                               case 1:
-                                day = '火曜';
+                                day = 'tuesday';
                                 break;
                               case 2:
-                                day = '水曜';
+                                day = 'wednesday';
                                 break;
                               case 3:
-                                day = '木曜';
+                                day = 'thursday';
                                 break;
                               case 4:
-                                day = '金曜';
+                                day = 'friday';
                                 break;
                             }
 
@@ -198,19 +198,19 @@ class _TimeTablePageState extends State<TimeTablePage> {
                               String day = ''; // index % 5 -> room name
                               switch (index % 5) {
                                 case 0:
-                                  day = '月曜';
+                                  day = 'monday';
                                   break;
                                 case 1:
-                                  day = '火曜';
+                                  day = 'tuesday';
                                   break;
                                 case 2:
-                                  day = '水曜';
+                                  day = 'wednesday';
                                   break;
                                 case 3:
-                                  day = '木曜';
+                                  day = 'thursday';
                                   break;
                                 case 4:
-                                  day = '金曜';
+                                  day = 'friday';
                                   break;
                               }
                               final result =

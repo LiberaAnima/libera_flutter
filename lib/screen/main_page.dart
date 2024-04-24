@@ -7,6 +7,8 @@ import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
+import 'package:intl/intl.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -121,16 +123,51 @@ class _MainPagePageState extends State<MainPage> {
                               onTap: () {
                                 Navigator.pushNamed(context, '/class');
                               },
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    width: 350,
-                                    height: 150,
-                                    child: Center(
-                                      child: Text("今日の時間割"),
-                                    ),
-                                  )
-                                ],
+                              child: FutureBuilder<DocumentSnapshot>(
+                                future: FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(userId)
+                                    .get(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    return Text("Something went wrong");
+                                  }
+
+                                  if (snapshot.hasData &&
+                                      !snapshot.data!.exists) {
+                                    return Text("Document does not exist");
+                                  }
+
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.done) {
+                                    Map<String, dynamic> data = snapshot.data!
+                                        .data() as Map<String, dynamic>;
+                                    var now = DateTime.now();
+                                    var formatter = DateFormat('EEEE');
+                                    String formattedDate =
+                                        formatter.format(now);
+                                    var todayTimetable = data['timetable']
+                                        [formattedDate.toLowerCase()];
+                                    print(todayTimetable);
+
+                                    if (todayTimetable != null) {
+                                      Map<String, dynamic> todayClasses =
+                                          todayTimetable
+                                              as Map<String, dynamic>;
+                                      return Column(
+                                        children: todayClasses.entries
+                                            .map((classInfo) {
+                                          return Text(
+                                              'Class: ${classInfo.key}, Room: ${classInfo.value}');
+                                        }).toList(),
+                                      );
+                                    } else {
+                                      return Text("今日の時間割はありません");
+                                    }
+                                  }
+                                  return CircularProgressIndicator();
+                                },
                               ),
                             ),
                           ),
