@@ -8,6 +8,9 @@ import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:intl/intl.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:intl/date_symbol_data_local.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -143,13 +146,16 @@ class _MainPagePageState extends State<MainPage> {
                                       ConnectionState.done) {
                                     Map<String, dynamic> data = snapshot.data!
                                         .data() as Map<String, dynamic>;
-                                    var now = DateTime.now();
+
+                                    tz.initializeTimeZones();
+                                    tz.TZDateTime now = tz.TZDateTime.now(
+                                        tz.getLocation('Asia/Tokyo'));
                                     var formatter = DateFormat('EEEE');
                                     String formattedDate =
                                         formatter.format(now);
                                     var todayTimetable = data['timetable']
                                         [formattedDate.toLowerCase()];
-                                    print(todayTimetable);
+                                    print(formattedDate);
 
                                     if (todayTimetable != null) {
                                       Map<String, dynamic> todayClasses =
@@ -158,8 +164,49 @@ class _MainPagePageState extends State<MainPage> {
                                       return Column(
                                         children: todayClasses.entries
                                             .map((classInfo) {
-                                          return Text(
-                                              'Class: ${classInfo.key}, Room: ${classInfo.value}');
+                                          print(classInfo);
+                                          return Container(
+                                            color: Colors.white,
+                                            width: double.infinity,
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  "${classInfo.key}限",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                      color: Colors.black),
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      "${classInfo.value[0]}",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 15,
+                                                          color: Colors.black),
+                                                    ),
+                                                    Text("  -  "),
+                                                    Text(
+                                                      "${classInfo.value[1]}",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontSize: 15,
+                                                          color: Colors.black),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          );
                                         }).toList(),
                                       );
                                     } else {

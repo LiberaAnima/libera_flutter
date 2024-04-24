@@ -47,6 +47,7 @@ dependencies:
     flutter_chat_ui: ^1.6.12
 
     intl: ^0.17.0
+    timezone: ^0.7.0
 
 dev_dependencies:
     flutter_test:
