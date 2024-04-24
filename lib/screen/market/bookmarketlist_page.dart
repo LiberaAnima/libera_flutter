@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:libera_flutter/screen/marketspecific_page.dart';
+import 'package:libera_flutter/screen/market/marketspecific_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 

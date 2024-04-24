@@ -224,6 +224,9 @@ class _MainPagePageState extends State<MainPage> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 20,
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -233,6 +236,21 @@ class _MainPagePageState extends State<MainPage> {
                               menuIcon(Icons.discount, "/discount", "?"),
                               menuIcon(Icons.discount, "/discount", "?"),
                             ],
+                          ),
+                          Container(
+                            width: double.infinity,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  "掲示板",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                Text("→")
+                              ],
+                            ),
                           ),
                           Card.outlined(
                             child: Column(
