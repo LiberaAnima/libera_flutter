@@ -97,11 +97,21 @@ class _TimeTablePageState extends State<TimeTablePage> {
                               List<dynamic> classInfo = data['timetable'][day]
                                   [period.toString()] as List<dynamic>;
                               // Display the data
-                              print(classInfo);
-                              return ListTile(
-                                title: Text("t"),
-                                // ... add more details ...
-                              );
+                              // print(classInfo.length);
+                              // print(classInfo);
+
+                              if (classInfo.length >= 2) {
+                                print(classInfo[0] + 'a' + classInfo[1]);
+                                return Container(
+                                  child: Column(
+                                    children: [
+                                      Text(classInfo[0]),
+                                      Text(classInfo[1]),
+                                    ],
+                                  ),
+                                  // ... add more details ...
+                                );
+                              }
                             }
                           }
                           return GestureDetector(
