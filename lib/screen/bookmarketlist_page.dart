@@ -16,7 +16,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         title: Text("本のマーケット一覧画面"),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -59,56 +59,107 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                       ),
                     );
                   },
-                  child: Card(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Image.network(
-                            post['imageUrl'],
-                            width: 80,
-                            height: 80,
-                            fit: BoxFit.cover,
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(post['bookname'],
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                                Text(post['faculty'] ?? 'null'),
-                                Text(post['username'] ?? 'null'),
-                                Text(timeAgo(postedAt)),
-                              ],
-                            ),
-                          ),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(),
+                      ),
+                    ),
+                    child: ListTile(
+                      contentPadding:
+                          const EdgeInsets.only(top: 0.0, bottom: 0.0),
+                      title: Column(
+                        children: [
+                          const SizedBox(height: 5),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: <Widget>[
-                              Text(
-                                "${post['price']}円",
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  color: Colors.orange[700],
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: <Widget>[
+                                  Image.network(
+                                    post['imageUrl'],
+                                    width: 80,
+                                    height: 80,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(post['bookname'],
+                                          style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold,
+                                          )),
+                                      Text(
+                                        "${post['price']}円",
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.orange[700],
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Divider(
+                                        color: Colors.grey,
+                                        thickness: 5,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            post['username'] ?? 'null',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            post['faculty'] ?? 'null',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
+                                            timeAgo(postedAt),
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                          // Text(
+                                          //   '${post['bookmark'].length.toString()}保存' ??
+                                          //       'null',
+                                          //   style: TextStyle(
+                                          //     fontSize: 12,
+                                          //   ),
+                                          // ),
+                                          // Text(
+                                          //   '${post['viewCount'].toString()}閲覧' ??
+                                          //       'null',
+                                          //   style: TextStyle(
+                                          //     fontSize: 12,
+                                          //   ),
+                                          // ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+
+                                  // いいね数とコメント数を表示
+                                  // Row(
+                                  //   children: <Widget>[
+                                  //     const Icon(Icons.favorite_border),
+                                  //     Text(post['likes'].toString()),
+                                  //     const SizedBox(width: 8),
+                                  //     const Icon(Icons.comment),
+                                  //     Text(post['comments'].toString()),
+                                  //   ],
+                                  // ),
+                                ],
                               ),
-                              // いいね数とコメント数を表示
-                              // Row(
-                              //   children: <Widget>[
-                              //     const Icon(Icons.favorite_border),
-                              //     Text(post['likes'].toString()),
-                              //     const SizedBox(width: 8),
-                              //     const Icon(Icons.comment),
-                              //     Text(post['comments'].toString()),
-                              //   ],
-                              // ),
                             ],
                           ),
                         ],
