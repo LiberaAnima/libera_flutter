@@ -238,9 +238,10 @@ class _MainPagePageState extends State<MainPage> {
                             ],
                           ),
                           Container(
+                            padding: EdgeInsets.only(left: 40),
                             width: double.infinity,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
                                   "掲示板",
@@ -248,7 +249,6 @@ class _MainPagePageState extends State<MainPage> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Text("→")
                               ],
                             ),
                           ),

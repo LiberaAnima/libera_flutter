@@ -128,7 +128,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
-                                          '${post['bookmark'].length.toString()} 保存',
+                                          '${post['bookmark']?.length?.toString() ?? '0'} 保存',
                                           style: const TextStyle(
                                             fontSize: 12,
                                           ),

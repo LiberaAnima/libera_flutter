@@ -41,24 +41,7 @@ class _PostListPagePageState extends State<PostListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            FocusScope.of(context).unfocus();
-            searchController.clear();
-            setState(() {});
-          },
-        ),
-        title: TextField(
-          controller: searchController,
-          decoration: InputDecoration(
-            hintText: "投稿を検索",
-            suffixIcon: IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () => setState(() {}),
-            ),
-          ),
-        ),
+        title: const Text('掲示板'),
       ),
       endDrawer: Drawer(
         child: Column(
@@ -148,6 +131,16 @@ class _PostListPagePageState extends State<PostListPage> {
           }
           return Column(
             children: [
+              TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                  hintText: 'Search...',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.only(
                     left: 10, right: 10, top: 10, bottom: 4),
