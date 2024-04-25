@@ -359,15 +359,15 @@ class _PostListPagePageState extends State<PostListPage> {
                                           const SizedBox(width: 10),
                                           IconButton(
                                             onPressed: () {
-                                              // Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         postSpecificPage(
-                                              //       id: data['documentID'],
-                                              //     ),
-                                              //   ),
-                                              // );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PostSpecificPage(
+                                                    id: data['documentID'],
+                                                  ),
+                                                ),
+                                              );
                                             },
                                             icon: const Icon(
                                               Icons.messenger_outline_rounded,

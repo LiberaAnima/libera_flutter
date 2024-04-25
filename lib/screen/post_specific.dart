@@ -45,17 +45,25 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
       appBar: AppBar(
         title: const Text('投稿詳細'),
       ),
-      body: _post != null
-          ? Column(
+      body: FutureBuilder<DocumentSnapshot>(
+        future:
+            FirebaseFirestore.instance.collection('posts').doc(widget.id).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            print(data);
+            return Column(
               children: <Widget>[
                 const SizedBox(width: 10),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "username",
+                        data['name'],
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
@@ -126,9 +134,15 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
               ],
-            )
-          // Add more fields as needed
-          : const Center(child: CircularProgressIndicator()),
+            );
+          } else if (snapshot.hasError) {
+            return Text("no data");
+          }
+          return CircularProgressIndicator();
+        },
+      )
+      // Add more fields as needed
+      ,
       bottomSheet: Container(
         padding:
             const EdgeInsets.only(left: 2.0, right: 8.0, top: 8.0, bottom: 8.0),
