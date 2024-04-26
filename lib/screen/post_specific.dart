@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,26 +24,14 @@ class PostSpecificPage extends StatefulWidget {
 }
 
 class _PostSpecificPageState extends State<PostSpecificPage> {
-  DocumentSnapshot? _post;
   bool _isAnonymous = false;
+  final TextEditingController _commentController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchPost();
-  }
-
-  void _fetchPost() async {
-    final postRef =
-        FirebaseFirestore.instance.collection('posts').doc(widget.id);
-    final post = await postRef.get();
-    setState(() {
-      _post = post;
-    });
-  }
+  final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
+    print(user?.uid);
     return Scaffold(
       appBar: AppBar(
         title: const Text('投稿詳細'),
@@ -173,18 +162,49 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                   border: Border.all(color: Colors.grey.shade300, width: 1),
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: _commentController, // Add this
                         decoration: InputDecoration(
                           hintText: 'コメントを入力してください。',
                           border: InputBorder.none,
                           contentPadding:
                               EdgeInsets.only(top: 12, bottom: 5, left: 15),
-                          suffixIcon: Icon(Icons.send),
                         ),
+                        onSubmitted: (value) async {
+                          // Add this
+                          await FirebaseFirestore.instance
+                              .collection('posts')
+                              .doc(widget.id)
+                              .collection('comments')
+                              .add({
+                            'text': value,
+                            'timestamp': DateTime.now(),
+                            'user': user?.uid,
+                            // Add other fields as needed
+                          });
+                          _commentController.clear();
+                        },
                       ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.send),
+                      onPressed: () async {
+                        // Add this
+                        await FirebaseFirestore.instance
+                            .collection('posts')
+                            .doc(widget.id)
+                            .collection('comments')
+                            .add({
+                          'text': _commentController.text,
+                          'timestamp': DateTime.now(),
+                          'user': user?.uid,
+                          // Add other fields as needed
+                        });
+                        _commentController.clear();
+                      },
                     ),
                   ],
                 ),
