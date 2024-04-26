@@ -123,6 +123,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                       .collection('posts')
                       .doc(widget.id)
                       .collection('comments')
+                      .orderBy('timestamp', descending: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
