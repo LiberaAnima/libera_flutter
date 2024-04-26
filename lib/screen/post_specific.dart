@@ -9,6 +9,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:libera_flutter/services/likebutton.dart';
+import 'package:libera_flutter/services/timeago.dart';
 // import 'package:libera_flutter/services/likebutton.dart';
 
 class PostSpecificPage extends StatefulWidget {
@@ -45,12 +47,14 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
       appBar: AppBar(
         title: const Text('投稿詳細'),
       ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future:
-            FirebaseFirestore.instance.collection('posts').doc(widget.id).get(),
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('posts')
+            .doc(widget.id)
+            .snapshots(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.connectionState == ConnectionState.active) {
             Map<String, dynamic> data =
                 snapshot.data!.data() as Map<String, dynamic>;
             print(data);
@@ -70,7 +74,9 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                         ),
                       ),
                       Text(
-                        "2018-10-10 10:10:10",
+                        data['date'] != null
+                            ? timeAgo(data['date'].toDate())
+                            : 'Unknown date',
                         style: TextStyle(fontSize: 13, color: Colors.grey),
                       ),
                       SizedBox(height: 10),
@@ -78,7 +84,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "title",
+                            data['title'],
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -86,7 +92,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            "contentfnajfnawiaggwdfiaifpudlafnaipaifnpoaiuefniaunepufinapiobrgaoprfnoawenfawhefpqwguionrapiugqpnwepfiwafgeapournaunpouwgnpoqagnaiuwnfpawinpoagnpaowgnrwqpoungfpounq",
+                            data['post_message'],
                             style: TextStyle(fontSize: 15),
                           ),
                         ],
@@ -95,7 +101,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                       Row(
                         children: <Widget>[
                           Text(
-                            "10いいね",
+                            '${data['likes'].length.toString()} いいね',
                             style: TextStyle(
                               fontSize: 13,
                               color: Colors.grey,
@@ -112,20 +118,9 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                         ],
                       ),
                       SizedBox(height: 10),
-                      Row(
-                        children: <Widget>[
-                          FilledButton(
-                            onPressed: null,
-                            child: Row(
-                              children: [
-                                Icon(Icons.favorite_border,
-                                    color: Colors.grey, size: 20),
-                                SizedBox(width: 5),
-                                Text('いいね'),
-                              ],
-                            ),
-                          ),
-                        ],
+                      FavoriteButton(
+                        documentid: data['documentID'],
+                        collectionname: 'posts',
                       ),
                     ],
                   ),
@@ -135,10 +130,11 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                 ),
               ],
             );
-          } else if (snapshot.hasError) {
-            return Text("no data");
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator();
+          } else {
+            return const Text('Error');
           }
-          return CircularProgressIndicator();
         },
       )
       // Add more fields as needed
