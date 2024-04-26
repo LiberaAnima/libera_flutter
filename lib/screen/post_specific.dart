@@ -214,6 +214,12 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                         ),
                         onSubmitted: (value) async {
                           // Add this
+
+                          final DocumentSnapshot userDoc =
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(user?.uid)
+                                  .get();
                           await FirebaseFirestore.instance
                               .collection('posts')
                               .doc(widget.id)
@@ -222,6 +228,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                             'text': value,
                             'timestamp': DateTime.now(),
                             'user': user?.uid,
+                            'name': userDoc['username'],
                             // Add other fields as needed
                           });
                           _commentController.clear();
@@ -232,6 +239,11 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                       icon: Icon(Icons.send),
                       onPressed: () async {
                         // Add this
+                        final DocumentSnapshot userDoc = await FirebaseFirestore
+                            .instance
+                            .collection('users')
+                            .doc(user?.uid)
+                            .get();
                         await FirebaseFirestore.instance
                             .collection('posts')
                             .doc(widget.id)
@@ -240,6 +252,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                           'text': _commentController.text,
                           'timestamp': DateTime.now(),
                           'user': user?.uid,
+                          'name': userDoc['username'],
                           // Add other fields as needed
                         });
                         _commentController.clear();
