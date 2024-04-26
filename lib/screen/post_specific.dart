@@ -99,12 +99,30 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                             ),
                           ),
                           SizedBox(width: 5),
-                          Text(
-                            "5コメント",
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey,
-                            ),
+
+                          //  have to add comment lenght
+
+                          StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('posts')
+                                .doc(data['documentID'])
+                                .collection('comments')
+                                .snapshots(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                return Text(
+                                    '${snapshot.data!.docs.length.toString()} コメント',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey,
+                                    ));
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+                              // By default, show a loading spinner.
+                              return CircularProgressIndicator();
+                            },
                           ),
                         ],
                       ),

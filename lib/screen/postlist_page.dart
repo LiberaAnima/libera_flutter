@@ -337,6 +337,7 @@ class _PostListPagePageState extends State<PostListPage> {
                                                 : data["name"],
                                             style: const TextStyle(
                                               fontSize: 14,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           const SizedBox(width: 10),
@@ -375,6 +376,29 @@ class _PostListPagePageState extends State<PostListPage> {
                                               Icons.messenger_outline_rounded,
                                               size: 20,
                                             ),
+                                          ),
+                                          StreamBuilder<QuerySnapshot>(
+                                            stream: FirebaseFirestore.instance
+                                                .collection('posts')
+                                                .doc(data['documentID'])
+                                                .collection('comments')
+                                                .snapshots(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasData) {
+                                                return Text(
+                                                    '${snapshot.data!.docs.length.toString()} コメント',
+                                                    style: const TextStyle(
+                                                      fontSize: 10,
+                                                    ));
+                                              } else if (snapshot.hasError) {
+                                                return Text(
+                                                    'Error: ${snapshot.error}');
+                                              }
+                                              // By default, show a loading spinner.
+                                              return CircularProgressIndicator();
+                                            },
                                           ),
                                         ],
                                       ),
