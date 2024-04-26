@@ -35,6 +35,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('投稿詳細'),
+        backgroundColor: Colors.white,
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
@@ -46,7 +47,6 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
           if (snapshot.connectionState == ConnectionState.active) {
             Map<String, dynamic> data =
                 snapshot.data!.data() as Map<String, dynamic>;
-            print(data);
             return Column(
               children: <Widget>[
                 const SizedBox(width: 10),
@@ -68,7 +68,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                             : 'Unknown date',
                         style: TextStyle(fontSize: 13, color: Colors.grey),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
@@ -76,10 +76,9 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                             data['title'],
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                              fontSize: 25,
                             ),
                           ),
-                          SizedBox(height: 10),
                           Text(
                             data['post_message'],
                             style: TextStyle(fontSize: 15),
@@ -89,6 +88,10 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                       SizedBox(height: 10),
                       Row(
                         children: <Widget>[
+                          FavoriteButton(
+                            documentid: data['documentID'],
+                            collectionname: 'posts',
+                          ),
                           Text(
                             '${data['likes'].length.toString()} いいね',
                             style: TextStyle(
@@ -105,10 +108,6 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                             ),
                           ),
                         ],
-                      ),
-                      FavoriteButton(
-                        documentid: data['documentID'],
-                        collectionname: 'posts',
                       ),
                     ],
                   ),
@@ -169,8 +168,8 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
 
       // Add comment
       bottomSheet: Container(
-        padding:
-            const EdgeInsets.only(left: 2.0, right: 8.0, top: 8.0, bottom: 8.0),
+        padding: const EdgeInsets.only(
+            left: 2.0, right: 8.0, top: 8.0, bottom: 35.0),
         color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
