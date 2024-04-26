@@ -156,14 +156,18 @@ class _MainPagePageState extends State<MainPage> {
                                       var formatter = DateFormat('EEEE');
                                       String formattedDate =
                                           formatter.format(now);
-                                      var todayTimetable = data['timetable']
-                                          [formattedDate.toLowerCase()];
+                                      var timetable = data['timetable'];
+                                      if (timetable != null) {
+                                        var todayTimetable = timetable[
+                                            formattedDate.toLowerCase()];
+                                      } else {
+                                        print("タイムテーブルのデータが存在しません。");
+                                      }
                                       print(formattedDate);
 
-                                      if (todayTimetable != null) {
+                                      if (timetable != null) {
                                         Map<String, dynamic> todayClasses =
-                                            todayTimetable
-                                                as Map<String, dynamic>;
+                                            timetable as Map<String, dynamic>;
                                         return Column(
                                           children: todayClasses.entries
                                               .map((classInfo) {
