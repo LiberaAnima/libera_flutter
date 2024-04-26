@@ -137,8 +137,8 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                 as Map<String, dynamic>;
                             return ListTile(
                               title: Text(comment['text']),
-                              subtitle: Text(
-                                  comment['timestamp'].toDate().toString()),
+                              subtitle:
+                                  Text(timeAgo(comment['timestamp'].toDate())),
                               // Add other fields as needed
                             );
                           },
