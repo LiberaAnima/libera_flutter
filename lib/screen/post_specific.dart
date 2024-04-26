@@ -117,6 +117,41 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                 ),
+                StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('posts')
+                      .doc(widget.id)
+                      .collection('comments')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.active) {
+                      if (snapshot.data != null) {
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            var comment = snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+                            return ListTile(
+                              title: Text(comment['text']),
+                              subtitle: Text(
+                                  comment['timestamp'].toDate().toString()),
+                              // Add other fields as needed
+                            );
+                          },
+                        );
+                      } else {
+                        return const Text('No comments');
+                      }
+                    } else if (snapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    } else {
+                      return const Text('Error');
+                    }
+                  },
+                ),
               ],
             );
           } else if (snapshot.connectionState == ConnectionState.waiting) {
@@ -128,6 +163,8 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
       )
       // Add more fields as needed
       ,
+
+      // Add comment
       bottomSheet: Container(
         padding:
             const EdgeInsets.only(left: 2.0, right: 8.0, top: 8.0, bottom: 8.0),
