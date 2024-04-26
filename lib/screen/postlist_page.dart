@@ -332,7 +332,9 @@ class _PostListPagePageState extends State<PostListPage> {
                                         children: [
                                           const SizedBox(width: 10),
                                           Text(
-                                            data["name"],
+                                            data["isAnonymous"] == true
+                                                ? '匿名'
+                                                : data["name"],
                                             style: const TextStyle(
                                               fontSize: 14,
                                             ),
