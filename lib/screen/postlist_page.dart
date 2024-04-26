@@ -20,7 +20,46 @@ class PostListPage extends StatefulWidget {
 }
 
 class _PostListPagePageState extends State<PostListPage> {
-  TextEditingController searchController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
+  late Stream<QuerySnapshot> postlists;
+  @override
+  void initState() {
+    super.initState();
+    postlists = FirebaseFirestore.instance
+        .collection('posts')
+        .orderBy('date', descending: true)
+        .snapshots();
+    searchController.addListener(searchPosts);
+  }
+
+  @override
+  void dispose() {
+    searchController.removeListener(searchPosts);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void searchPosts() {
+    if (searchController.text.isEmpty) {
+      setState(() {
+        postlists = FirebaseFirestore.instance
+            .collection('posts')
+            .orderBy('date', descending: true)
+            .snapshots();
+      });
+    } else {
+      setState(() {
+        postlists = FirebaseFirestore.instance
+            .collection("posts")
+            .where("title", isGreaterThanOrEqualTo: searchController.text)
+            .where("title",
+                isLessThanOrEqualTo: searchController.text + '\uf8ff')
+            .orderBy('date', descending: true)
+            .snapshots();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Stream<QuerySnapshot> postlists;
@@ -41,7 +80,11 @@ class _PostListPagePageState extends State<PostListPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('掲示板'),
+        title: Row(
+          children: [
+            const Text('掲示板'),
+          ],
+        ),
       ),
       endDrawer: Drawer(
         child: Column(
@@ -127,7 +170,7 @@ class _PostListPagePageState extends State<PostListPage> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return Center(child: CircularProgressIndicator());
           }
           return Column(
             children: [
