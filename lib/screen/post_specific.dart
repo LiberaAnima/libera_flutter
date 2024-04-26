@@ -106,7 +106,6 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 10),
                       FavoriteButton(
                         documentid: data['documentID'],
                         collectionname: 'posts',
@@ -114,9 +113,13 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                const Divider(
+                  color: Color.fromRGBO(165, 165, 165, 1),
+                  thickness: .5,
+                  indent: 15,
+                  endIndent: 15,
                 ),
+                // comment box
                 StreamBuilder<QuerySnapshot>(
                   stream: FirebaseFirestore.instance
                       .collection('posts')
