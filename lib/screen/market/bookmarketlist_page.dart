@@ -37,7 +37,10 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('books').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('books')
+            .orderBy('postedAt', descending: true)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
