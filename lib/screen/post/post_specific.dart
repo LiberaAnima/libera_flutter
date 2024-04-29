@@ -54,12 +54,48 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        data['name'],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                        ),
+                      Row(
+                        children: [
+                          Text(
+                            data['name'],
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.more_vert),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      ListTile(
+                                        leading: Icon(Icons.edit),
+                                        title: Text('수정하기'),
+                                        onTap: () {
+                                          // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                          Navigator.pop(context); // 시트를 닫습니다.
+                                        },
+                                      ),
+                                      ListTile(
+                                        leading: Icon(Icons.delete),
+                                        title: Text('삭제하기'),
+                                        onTap: () {
+                                          // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                          Navigator.pop(context); // 시트를 닫습니다.
+                                        },
+                                      ),
+                                      SizedBox(height: 20),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ],
                       ),
                       Text(
                         data['date'] != null

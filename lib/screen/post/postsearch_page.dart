@@ -161,6 +161,7 @@ class _PostSearchPageState extends State<PostSearchPage> {
                                             '${data['title']}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              fontSize: 20,
                                             ),
                                           ),
                                         ],
