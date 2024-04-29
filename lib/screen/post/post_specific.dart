@@ -74,7 +74,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                     children: <Widget>[
                                       ListTile(
                                         leading: Icon(Icons.edit),
-                                        title: Text('수정하기'),
+                                        title: Text('修正'),
                                         onTap: () {
                                           // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
                                           Navigator.pop(context); // 시트를 닫습니다.
@@ -82,7 +82,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                       ),
                                       ListTile(
                                         leading: Icon(Icons.delete),
-                                        title: Text('삭제하기'),
+                                        title: Text('削除'),
                                         onTap: () {
                                           // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
                                           Navigator.pop(context); // 시트를 닫습니다.
