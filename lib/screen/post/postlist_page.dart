@@ -21,64 +21,13 @@ class PostListPage extends StatefulWidget {
 }
 
 class _PostListPagePageState extends State<PostListPage> {
-  final TextEditingController searchController = TextEditingController();
-  late Stream<QuerySnapshot> postlists;
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
+    Stream<QuerySnapshot> postlists;
     postlists = FirebaseFirestore.instance
         .collection('posts')
         .orderBy('date', descending: true)
         .snapshots();
-    searchController.addListener(searchPosts);
-  }
-
-  @override
-  void dispose() {
-    searchController.removeListener(searchPosts);
-    searchController.dispose();
-    super.dispose();
-  }
-
-  void searchPosts() {
-    if (searchController.text.isEmpty) {
-      setState(() {
-        postlists = FirebaseFirestore.instance
-            .collection('posts')
-            .orderBy('date', descending: true)
-            .snapshots();
-      });
-    } else {
-      setState(() {
-        postlists = FirebaseFirestore.instance
-            .collection("posts")
-            .where("title", isGreaterThanOrEqualTo: searchController.text)
-            .where("title",
-                isLessThanOrEqualTo: searchController.text + '\uf8ff')
-            .orderBy('date', descending: true)
-            .snapshots();
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Stream<QuerySnapshot> postlists;
-
-    if (searchController.text.isEmpty) {
-      postlists = FirebaseFirestore.instance
-          .collection('posts')
-          .orderBy('date', descending: true)
-          .snapshots();
-    } else {
-      postlists = FirebaseFirestore.instance
-          .collection("posts")
-          .where("title", isGreaterThanOrEqualTo: searchController.text)
-          .where("title", isLessThanOrEqualTo: searchController.text + '\uf8ff')
-          .orderBy('date', descending: true)
-          .snapshots();
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('掲示板'),
@@ -91,15 +40,9 @@ class _PostListPagePageState extends State<PostListPage> {
               // 検索画面に遷移
             },
           ),
-          IconButton(
-            icon: Icon(Icons.filter_list),
-            onPressed: () {
-              // フィルター画面に遷移
-            },
-          ),
         ],
       ),
-      endDrawer: Drawer(
+      drawer: Drawer(
         child: Column(
           children: [
             const SizedBox(height: 90),
