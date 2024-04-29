@@ -119,13 +119,12 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                               TextField(
                                                 controller: classController,
                                                 decoration: InputDecoration(
-                                                    hintText:
-                                                        "Enter new class"),
+                                                    hintText: "講義名"),
                                               ),
                                               TextField(
                                                 controller: roomController,
                                                 decoration: InputDecoration(
-                                                    hintText: "Enter new room"),
+                                                    hintText: "教室"),
                                               ),
                                             ],
                                           ),
@@ -244,7 +243,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                     ),
                                     actions: [
                                       TextButton(
-                                        child: Text('OK'),
+                                        child: Text('登録'),
                                         onPressed: () {
                                           if (className.isNotEmpty &&
                                               roomName.isNotEmpty) {
@@ -257,7 +256,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                                 .showSnackBar(
                                               SnackBar(
                                                 content:
-                                                    Text("講義名と教室名を入力してください。"),
+                                                    Text("講義名と教室を入力してください。"),
                                                 duration: Duration(seconds: 2),
                                               ),
                                             );
