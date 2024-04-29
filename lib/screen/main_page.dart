@@ -183,6 +183,16 @@ class _MainPagePageState extends State<MainPage> {
                                                 Map<String, dynamic> data =
                                                     snapshot.data!.data()
                                                         as Map<String, dynamic>;
+                                                if (data['timetable'] == null) {
+                                                  return Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text("  -  "),
+                                                    ],
+                                                  );
+                                                }
 
                                                 tz.initializeTimeZones();
                                                 tz.TZDateTime now =
@@ -240,7 +250,7 @@ class _MainPagePageState extends State<MainPage> {
                                                     }).toList(),
                                                   );
                                                 } else {
-                                                  return Text("今日の時間割はありません");
+                                                  return Text("hogehoge");
                                                 }
                                               }
                                               return CircularProgressIndicator();
