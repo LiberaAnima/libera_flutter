@@ -502,63 +502,69 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     ),
                   ),
                   InkWell(
-                    onTap: () async {
-                      final chatroomQuery = await FirebaseFirestore.instance
-                          .collection('chatroom')
-                          .where('who',
-                              arrayContainsAny: [book['uid'], user?.uid]).get();
+                    onTap: user?.uid == book['uid']
+                        ? null // 販売完了のシステムを作る
+                        : () async {
+                            final chatroomQuery = await FirebaseFirestore
+                                .instance
+                                .collection('chatroom')
+                                .where('who', arrayContainsAny: [
+                              book['uid'],
+                              user?.uid
+                            ]).get();
 
-                      final chatroomDocs = chatroomQuery.docs.where((doc) {
-                        List<String> who = List<String>.from(doc['who']);
-                        return who.contains(book['uid']) &&
-                            who.contains(user?.uid);
-                      });
+                            final chatroomDocs =
+                                chatroomQuery.docs.where((doc) {
+                              List<String> who = List<String>.from(doc['who']);
+                              return who.contains(book['uid']) &&
+                                  who.contains(user?.uid);
+                            });
 
-                      if (chatroomDocs.isNotEmpty) {
-                        // Chatroom already exists, navigate to it
-                        final chatroomid = chatroomDocs.first.id;
-                        print(chatroomid);
-                        print(user?.uid);
-                        print(book['uid']);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatRoom(
-                              otherId: book['uid'],
-                              userId: user!.uid,
-                              chatroomId: chatroomid,
-                            ),
-                          ),
-                        );
-                      } else {
-                        // Chatroom does not exist, create it
-                        final docRef = await FirebaseFirestore.instance
-                            .collection('chatroom')
-                            .add({
-                          'bookname': book['bookname'],
-                          'who': [book['uid'], user?.uid],
-                          'timestamp': DateTime.now(),
-                        });
-                        final chatroomid = docRef.id;
-                        FirebaseFirestore.instance
-                            .collection('chatroom')
-                            .doc(chatroomid)
-                            .update({
-                          'id': chatroomid,
-                        });
-                        print(" chatroom id : " + chatroomid);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatRoom(
-                              otherId: book['uid'],
-                              userId: user!.uid,
-                              chatroomId: chatroomid,
-                            ),
-                          ),
-                        );
-                      }
-                    },
+                            if (chatroomDocs.isNotEmpty) {
+                              // Chatroom already exists, navigate to it
+                              final chatroomid = chatroomDocs.first.id;
+                              print("chat ID " + chatroomid);
+                              print(user?.uid);
+                              print(book['uid']);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatRoom(
+                                    otherId: book['uid'],
+                                    userId: user!.uid,
+                                    chatroomId: chatroomid,
+                                  ),
+                                ),
+                              );
+                            } else {
+                              // Chatroom does not exist, create it
+                              final docRef = await FirebaseFirestore.instance
+                                  .collection('chatroom')
+                                  .add({
+                                'bookname': book['bookname'],
+                                'who': [book['uid'], user?.uid],
+                                'timestamp': DateTime.now(),
+                              });
+                              final chatroomid = docRef.id;
+                              FirebaseFirestore.instance
+                                  .collection('chatroom')
+                                  .doc(chatroomid)
+                                  .update({
+                                'id': chatroomid,
+                              });
+                              print(" chatroom id : " + chatroomid);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatRoom(
+                                    otherId: book['uid'],
+                                    userId: user!.uid,
+                                    chatroomId: chatroomid,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 20),
@@ -568,7 +574,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
-                      child: const Row(
+                      child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -579,16 +585,27 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                             size: 20,
                           ),
                           const SizedBox(width: 8),
-                          Text(
-                            "チャットする",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w700,
-                              height: 0.09,
-                            ),
-                          ),
+                          user?.uid == book['uid']
+                              ? Text(
+                                  "販売完了",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w700,
+                                    height: 0.09,
+                                  ),
+                                )
+                              : Text(
+                                  "チャットする",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w700,
+                                    height: 0.09,
+                                  ),
+                                ),
                         ],
                       ),
                     ),
