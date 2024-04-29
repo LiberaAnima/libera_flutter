@@ -234,7 +234,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                         ),
                                         TextField(
                                           decoration:
-                                              InputDecoration(hintText: '教室'),
+                                              InputDecoration(hintText: '教'),
                                           onChanged: (value) {
                                             roomName = value;
                                           },
