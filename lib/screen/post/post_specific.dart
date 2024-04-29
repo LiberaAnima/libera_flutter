@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/screen/post/post_edit.dart';
 import 'package:libera_flutter/services/likebutton.dart';
 import 'package:libera_flutter/services/timeago.dart';
 // import 'package:libera_flutter/services/likebutton.dart';
@@ -78,6 +79,14 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                         onTap: () {
                                           // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
                                           Navigator.pop(context); // 시트를 닫습니다.
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  PostEditPage(data: data),
+                                            ),
+                                          );
+                                          // print(data);
                                         },
                                       ),
                                       ListTile(
