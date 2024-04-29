@@ -508,7 +508,13 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                           .where('who',
                               arrayContainsAny: [book['uid'], user?.uid]).get();
 
-                      if (chatroomQuery.docs.isNotEmpty) {
+                      final chatroomDocs = chatroomQuery.docs.where((doc) {
+                        List<String> who = List<String>.from(doc['who']);
+                        return who.contains(book['uid']) &&
+                            who.contains(user?.uid);
+                      });
+
+                      if (chatroomDocs.isNotEmpty) {
                         // Chatroom already exists, navigate to it
                         final chatroomid = chatroomQuery.docs.first.id;
                         Navigator.push(

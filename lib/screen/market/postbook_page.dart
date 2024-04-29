@@ -39,15 +39,14 @@ class _PostBookPagePageState extends State<PostBookPage> {
     if (user == null) {
       throw Exception('No user logged in');
     }
-
     // Get user's username from Firestore
     DocumentSnapshot userDoc = await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .get();
+    print(user.uid);
     String username = userDoc.get('username');
     String faculty = userDoc.get('faculty');
-
     //firestoreにデータを追加
     CollectionReference books = FirebaseFirestore.instance.collection('books');
     await books.add({
