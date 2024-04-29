@@ -138,7 +138,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               SizedBox(width: 80), // アイコンとボタンの間のスペース
               ElevatedButton(
                 onPressed: _pickImage,
-                child: Text('テキストの画像を選択'),
+                child: Text('テキストの画像を選択*'),
               ),
             ],
           ),
@@ -201,7 +201,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('エラー'),
-                  content: Text('テキスト名、著者名、価格は必須事項です'),
+                  content: Text('テキスト名、著者名、商品画像、価格は必須事項です'),
                   actions: <Widget>[
                     TextButton(
                       child: Text('OK'),
