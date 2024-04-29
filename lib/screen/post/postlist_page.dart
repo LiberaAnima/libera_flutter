@@ -130,89 +130,91 @@ class _PostListPagePageState extends State<PostListPage> {
           }
           return Column(
             children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 10, bottom: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "雑談",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "Q&A",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "募集",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // TAG DISPLAY
+              // update later
+              // Container(
+              //   padding: const EdgeInsets.only(
+              //       left: 10, right: 10, top: 10, bottom: 4),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     mainAxisSize: MainAxisSize.max,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Container(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 10, vertical: 8),
+              //         margin: const EdgeInsets.only(right: 8),
+              //         decoration: ShapeDecoration(
+              //           shape: RoundedRectangleBorder(
+              //             side: BorderSide(
+              //               width: 1,
+              //               color: Colors.orange,
+              //             ),
+              //             borderRadius: BorderRadius.circular(5),
+              //           ),
+              //         ),
+              //         child: Text(
+              //           "雑談",
+              //           style: TextStyle(
+              //             color: Colors.black,
+              //             fontSize: 12,
+              //             fontFamily: "inter",
+              //             fontWeight: FontWeight.w400,
+              //             height: 0.11,
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 10, vertical: 8),
+              //         margin: const EdgeInsets.only(right: 8),
+              //         decoration: ShapeDecoration(
+              //           shape: RoundedRectangleBorder(
+              //             side: BorderSide(
+              //               width: 1,
+              //               color: Colors.orange,
+              //             ),
+              //             borderRadius: BorderRadius.circular(5),
+              //           ),
+              //         ),
+              //         child: Text(
+              //           "Q&A",
+              //           style: TextStyle(
+              //             color: Colors.black,
+              //             fontSize: 12,
+              //             fontFamily: "inter",
+              //             fontWeight: FontWeight.w400,
+              //             height: 0.11,
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 10, vertical: 8),
+              //         margin: const EdgeInsets.only(right: 8),
+              //         decoration: ShapeDecoration(
+              //           shape: RoundedRectangleBorder(
+              //             side: BorderSide(
+              //               width: 1,
+              //               color: Colors.orange,
+              //             ),
+              //             borderRadius: BorderRadius.circular(5),
+              //           ),
+              //         ),
+              //         child: Text(
+              //           "募集",
+              //           style: TextStyle(
+              //             color: Colors.black,
+              //             fontSize: 12,
+              //             fontFamily: "inter",
+              //             fontWeight: FontWeight.w400,
+              //             height: 0.11,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const Divider(
                 color: Colors.grey,
                 thickness: .5,
