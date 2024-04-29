@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:libera_flutter/screen/market/marketspecific_page.dart';
+import 'package:libera_flutter/screen/market/search_page.dart';
 import 'package:libera_flutter/screen/postbook_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
@@ -17,7 +18,23 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text("本のマーケット一覧画面"),
+        title: Text("キャンパスフリマ"),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchPage()));
+              // 検索画面に遷移
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.filter_list),
+            onPressed: () {
+              // フィルター画面に遷移
+            },
+          ),
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance.collection('books').snapshots(),
