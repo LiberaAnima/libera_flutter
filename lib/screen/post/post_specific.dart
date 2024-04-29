@@ -158,7 +158,9 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      comment?['name'] ?? '名無し',
+                                      comment["isAnonymous"] == true
+                                          ? '匿名'
+                                          : data["name"],
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 15,
