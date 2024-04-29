@@ -142,17 +142,16 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${post['bookmark']?.length?.toString() ?? '0'} ',
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                            Icon(Icons.bookmark_border),
-                                          ],
+                                        const SizedBox(
+                                          width: 15,
                                         ),
+                                        Text(
+                                          '${post['bookmark']?.length?.toString() ?? '0'} ',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        Icon(Icons.bookmark_border),
                                         const SizedBox(width: 10),
                                         // Text("${post["viewCount"]}閲覧",
                                         // style: TextStyle(
