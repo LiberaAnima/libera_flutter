@@ -255,9 +255,6 @@ class _MainPagePageState extends State<MainPage> {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 20,
-                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
