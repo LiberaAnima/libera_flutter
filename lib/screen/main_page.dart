@@ -118,11 +118,6 @@ class _MainPagePageState extends State<MainPage> {
                           SizedBox(
                             height: 20,
                           ),
-                          ElevatedButton(
-                            onPressed: () async => await _auth.signOut().then(
-                                (_) => Navigator.pushNamed(context, "/logIn")),
-                            child: const Text("Log Out"),
-                          ),
                           Container(
                             margin: const EdgeInsets.all(15),
                             padding: const EdgeInsets.all(10),
