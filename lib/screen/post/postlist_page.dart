@@ -296,6 +296,8 @@ class _PostListPagePageState extends State<PostListPage> {
                                             '${data['title']}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              fontSize:
+                                                  20, // ここでタイトルのフォントサイズを変更
                                             ),
                                           ),
                                         ],
