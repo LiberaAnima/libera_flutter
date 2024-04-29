@@ -262,6 +262,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                             'timestamp': DateTime.now(),
                             'user': user?.uid,
                             'name': userDoc['username'],
+                            'isAnonymous': _isAnonymous,
                             // Add other fields as needed
                           });
                           _commentController.clear();
@@ -286,6 +287,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                           'timestamp': DateTime.now(),
                           'user': user?.uid,
                           'name': userDoc['username'],
+                          'isAnonymous': _isAnonymous,
                           // Add other fields as needed
                         });
                         _commentController.clear();
