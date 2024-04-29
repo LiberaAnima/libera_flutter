@@ -516,7 +516,10 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
 
                       if (chatroomDocs.isNotEmpty) {
                         // Chatroom already exists, navigate to it
-                        final chatroomid = chatroomQuery.docs.first.id;
+                        final chatroomid = chatroomDocs.first.id;
+                        print(chatroomid);
+                        print(user?.uid);
+                        print(book['uid']);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
