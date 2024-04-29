@@ -195,23 +195,25 @@ class _PostBookPagePageState extends State<PostBookPage> {
           print(_booknameEditingController.text); // デバッグ用
           if (_booknameEditingController.text.isEmpty ||
               _bookauthorEditingController.text.isEmpty ||
-              _priceEditingController.text.isEmpty) {
+              _priceEditingController.text.isEmpty ||
+              _bookImage == null) {
             showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('エラー'),
-                    content: Text('テキスト名、著者名、価格は必須事項です'),
-                    actions: <Widget>[
-                      TextButton(
-                        child: Text('OK'),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                });
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('エラー'),
+                  content: Text('テキスト名、著者名、価格は必須事項です'),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
           } else {
             _onSubmitted(
                 _booknameEditingController.text,

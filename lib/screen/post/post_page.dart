@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:libera_flutter/screen/post/postlist_page.dart';
 
 class PostPage extends StatefulWidget {
   @override
@@ -15,6 +16,8 @@ class _PostPagePageState extends State<PostPage> {
   TextEditingController _titleEditingController = TextEditingController();
   bool _isAnonymous = false;
   File? _bookImage;
+  final _formKey1 = GlobalKey<FormState>();
+  final _formKey2 = GlobalKey<FormState>();
 
   _onSubmitted(String content) {
     /// 入力欄をクリアにする
@@ -44,17 +47,26 @@ class _PostPagePageState extends State<PostPage> {
           children: [
             Center(
               //タイトル作成
-              child: TextField(
-                controller: _titleEditingController,
-                onSubmitted: _onSubmitted,
-                enabled: true,
-                //maxLengthEnforced: false, // 入力上限になったときに、文字入力を抑制するか
-                style: TextStyle(color: Colors.black),
-                obscureText: false,
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  hintText: 'Titleを入力してください',
-                  labelText: 'Titleを入力してください ',
+              child: Form(
+                key: _formKey1,
+                child: TextFormField(
+                  controller: _titleEditingController,
+                  // onSubmitted: _onSubmitted,
+                  enabled: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'タイトルを入力してください';
+                    }
+                    return null;
+                  },
+                  //maxLengthEnforced: false, // 入力上限になったときに、文字入力を抑制するか
+                  style: TextStyle(color: Colors.black),
+                  obscureText: false,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                    hintText: 'Titleを入力してください',
+                    labelText: 'Titleを入力してください ',
+                  ),
                 ),
               ),
             ),
@@ -63,17 +75,25 @@ class _PostPagePageState extends State<PostPage> {
             ),
             Center(
               // 内容作成
-              child: TextField(
-                controller: _textEditingController,
-                onSubmitted: _onSubmitted,
-                enabled: true,
-                //maxLengthEnforced: false, // 入力上限になったときに、文字入力を抑制するか
-                style: TextStyle(color: Colors.black),
-                obscureText: false,
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  hintText: '投稿内容を記載します',
-                  labelText: '投稿内容を記載します ',
+              child: Form(
+                key: _formKey2,
+                child: TextFormField(
+                  controller: _textEditingController,
+                  enabled: true,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return '投稿内容を入力してください';
+                    }
+                    return null;
+                  },
+                  //maxLengthEnforced: false, // 入力上限になったときに、文字入力を抑制するか
+                  style: TextStyle(color: Colors.black),
+                  obscureText: false,
+                  maxLines: 7,
+                  decoration: const InputDecoration(
+                    hintText: '投稿内容を記載します',
+                    labelText: '投稿内容を記載します ',
+                  ),
                 ),
               ),
             ),
@@ -108,6 +128,11 @@ class _PostPagePageState extends State<PostPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final User? user = FirebaseAuth.instance.currentUser;
+
+          if (!_formKey1.currentState!.validate() ||
+              !_formKey2.currentState!.validate()) {
+            return;
+          }
           if (user != null) {
             final String uid = user.uid;
             final DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -128,7 +153,14 @@ class _PostPagePageState extends State<PostPage> {
               'imageUrl': _bookImage != null ? _bookImage!.path : null,
             });
             _onSubmitted(_textEditingController.text);
-            Navigator.pushNamed(context, '/postlist');
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return PostListPage();
+                },
+              ),
+            );
           }
         },
         child: Icon(Icons.send),
