@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:libera_flutter/screen/market/marketspecific_page.dart';
 import 'package:libera_flutter/screen/market/search_page.dart';
-import 'package:libera_flutter/screen/postbook_page.dart';
+import 'package:libera_flutter/screen/market/postbook_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 class BookMarketListPage extends StatefulWidget {
@@ -120,8 +120,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                     ),
                                     const SizedBox(height: 4),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
                                         Text(
                                           post['username'] ?? 'null',
@@ -143,12 +142,16 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          '${post['bookmark']?.length?.toString() ?? '0'} 保存',
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                          ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '${post['bookmark']?.length?.toString() ?? '0'} ',
+                                              style: const TextStyle(
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                            Icon(Icons.bookmark_border),
+                                          ],
                                         ),
                                         const SizedBox(width: 10),
                                         // Text("${post["viewCount"]}閲覧",

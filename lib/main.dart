@@ -9,9 +9,9 @@ import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
-import 'package:libera_flutter/screen/post_page.dart';
-import 'package:libera_flutter/screen/postbook_page.dart';
-import 'package:libera_flutter/screen/postlist_page.dart';
+import 'package:libera_flutter/screen/post/post_page.dart';
+import 'package:libera_flutter/screen/market/postbook_page.dart';
+import 'package:libera_flutter/screen/post/postlist_page.dart';
 import 'package:libera_flutter/screen/signup_page.dart';
 
 import 'firebase_options.dart';

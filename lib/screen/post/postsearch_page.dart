@@ -1,31 +1,24 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:libera_flutter/screen/post/post_specific.dart';
+import 'package:libera_flutter/services/likebutton.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
-//いいね機能
-import 'package:flutter/cupertino.dart';
-import 'package:libera_flutter/screen/post_page.dart';
-import 'package:libera_flutter/services/likebutton.dart';
-
-//返信機能
-import 'package:libera_flutter/screen/post_specific.dart';
-
-class PostListPage extends StatefulWidget {
-  const PostListPage({Key? key}) : super(key: key);
+class PostSearchPage extends StatefulWidget {
+  const PostSearchPage({Key? key}) : super(key: key);
 
   @override
-  _PostListPagePageState createState() => _PostListPagePageState();
+  _PostSearchPageState createState() => _PostSearchPageState();
 }
 
-class _PostListPagePageState extends State<PostListPage> {
+class _PostSearchPageState extends State<PostSearchPage> {
   final TextEditingController searchController = TextEditingController();
-  late Stream<QuerySnapshot> postlists;
+  late Stream<QuerySnapshot> postList;
+
   @override
   void initState() {
     super.initState();
-    postlists = FirebaseFirestore.instance
+    postList = FirebaseFirestore.instance
         .collection('posts')
         .orderBy('date', descending: true)
         .snapshots();
@@ -42,14 +35,14 @@ class _PostListPagePageState extends State<PostListPage> {
   void searchPosts() {
     if (searchController.text.isEmpty) {
       setState(() {
-        postlists = FirebaseFirestore.instance
+        postList = FirebaseFirestore.instance
             .collection('posts')
             .orderBy('date', descending: true)
             .snapshots();
       });
     } else {
       setState(() {
-        postlists = FirebaseFirestore.instance
+        postList = FirebaseFirestore.instance
             .collection("posts")
             .where("title", isGreaterThanOrEqualTo: searchController.text)
             .where("title",
@@ -62,214 +55,31 @@ class _PostListPagePageState extends State<PostListPage> {
 
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> postlists;
-
-    if (searchController.text.isEmpty) {
-      postlists = FirebaseFirestore.instance
-          .collection('posts')
-          .orderBy('date', descending: true)
-          .snapshots();
-    } else {
-      postlists = FirebaseFirestore.instance
-          .collection("posts")
-          .where("title", isGreaterThanOrEqualTo: searchController.text)
-          .where("title", isLessThanOrEqualTo: searchController.text + '\uf8ff')
-          .orderBy('date', descending: true)
-          .snapshots();
-    }
-
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            const Text('掲示板'),
-          ],
+        title: TextField(
+          controller: searchController,
+          decoration: InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.black),
+          ),
+          style: TextStyle(color: Colors.black),
         ),
       ),
-      endDrawer: Drawer(
-        child: Column(
-          children: [
-            const SizedBox(height: 90),
-            const Text(
-              "カテゴリー",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const Divider(
-              color: Colors.orange,
-              thickness: 1,
-              indent: 0,
-              endIndent: 0,
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey,
-                    width: .5,
-                  ),
-                ),
-              ),
-              child: const ListTile(
-                title: Text('講義・授業'),
-                onTap: null,
-              ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey,
-                    width: .5,
-                  ),
-                ),
-              ),
-              child: const ListTile(
-                title: Text('部活動・サークル'),
-                onTap: null,
-              ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey,
-                    width: .5,
-                  ),
-                ),
-              ),
-              child: const ListTile(
-                title: Text('アルバイト'),
-                onTap: null,
-              ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey,
-                    width: .5,
-                  ),
-                ),
-              ),
-              child: const ListTile(
-                title: Text('恋愛'),
-                onTap: null,
-              ),
-            ),
-          ],
-        ),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: postlists,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      body: StreamBuilder(
+        stream: postList,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return const Text('Something went wrong');
+            print(snapshot.error);
+            return Text('Error: ${snapshot.error}');
           }
-
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
           return Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: TextField(
-                  controller: searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Search...',
-                    prefixIcon: Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 10, bottom: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "雑談",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "Q&A",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "募集",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
               const Divider(
                 color: Colors.grey,
                 thickness: .5,
@@ -463,15 +273,6 @@ class _PostListPagePageState extends State<PostListPage> {
             ],
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PostPage()),
-          );
-        },
-        child: const Icon(Icons.add),
       ),
     );
   }
