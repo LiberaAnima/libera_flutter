@@ -140,17 +140,22 @@ class _MainPagePageState extends State<MainPage> {
                                 Row(
                                   children: [
                                     const SizedBox(width: 20),
-                                    Column(
-                                      children: [
-                                        for (var i = 1; i < 6; i++)
-                                          Text(
-                                            "$i限",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                                color: Colors.black),
-                                          ),
-                                      ],
+                                    Container(
+                                      color: Colors.white,
+                                      padding: EdgeInsets.all(10),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          for (var i = 1; i < 6; i++)
+                                            Text(
+                                              "$i限",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 15,
+                                                  color: Colors.black),
+                                            ),
+                                        ],
+                                      ),
                                     ),
                                     Expanded(
                                       child: Container(
@@ -183,6 +188,16 @@ class _MainPagePageState extends State<MainPage> {
                                                 Map<String, dynamic> data =
                                                     snapshot.data!.data()
                                                         as Map<String, dynamic>;
+                                                if (data['timetable'] == null) {
+                                                  return Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text("  -  "),
+                                                    ],
+                                                  );
+                                                }
 
                                                 tz.initializeTimeZones();
                                                 tz.TZDateTime now =
@@ -205,6 +220,8 @@ class _MainPagePageState extends State<MainPage> {
                                                       todayTimetable as Map<
                                                           String, dynamic>;
                                                   return Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
                                                     children: todayClasses
                                                         .entries
                                                         .map((classInfo) {
@@ -240,7 +257,7 @@ class _MainPagePageState extends State<MainPage> {
                                                     }).toList(),
                                                   );
                                                 } else {
-                                                  return Text("今日の時間割はありません");
+                                                  return Text("hogehoge");
                                                 }
                                               }
                                               return CircularProgressIndicator();
@@ -254,9 +271,6 @@ class _MainPagePageState extends State<MainPage> {
                                 ),
                               ],
                             ),
-                          ),
-                          SizedBox(
-                            height: 20,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

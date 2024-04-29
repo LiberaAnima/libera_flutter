@@ -119,19 +119,18 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                               TextField(
                                                 controller: classController,
                                                 decoration: InputDecoration(
-                                                    hintText:
-                                                        "Enter new class"),
+                                                    hintText: "講義名"),
                                               ),
                                               TextField(
                                                 controller: roomController,
                                                 decoration: InputDecoration(
-                                                    hintText: "Enter new room"),
+                                                    hintText: "教室"),
                                               ),
                                             ],
                                           ),
                                           actions: [
                                             TextButton(
-                                              child: Text('OK'),
+                                              child: Text('登録'),
                                               onPressed: () {
                                                 Navigator.of(context).pop({
                                                   'class': roomController.text,
@@ -227,15 +226,15 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         TextField(
-                                          decoration: InputDecoration(
-                                              hintText: 'Class name'),
+                                          decoration:
+                                              InputDecoration(hintText: '講義名'),
                                           onChanged: (value) {
                                             className = value;
                                           },
                                         ),
                                         TextField(
-                                          decoration: InputDecoration(
-                                              hintText: 'Room name'),
+                                          decoration:
+                                              InputDecoration(hintText: '教室'),
                                           onChanged: (value) {
                                             roomName = value;
                                           },
@@ -244,12 +243,24 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                     ),
                                     actions: [
                                       TextButton(
-                                        child: Text('OK'),
+                                        child: Text('登録'),
                                         onPressed: () {
-                                          Navigator.of(context).pop({
-                                            'class': className,
-                                            'room': roomName,
-                                          });
+                                          if (className.isNotEmpty &&
+                                              roomName.isNotEmpty) {
+                                            Navigator.of(context).pop({
+                                              'class': className,
+                                              'room': roomName,
+                                            });
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content:
+                                                    Text("講義名と教室を入力してください。"),
+                                                duration: Duration(seconds: 2),
+                                              ),
+                                            );
+                                          }
                                         },
                                       ),
                                     ],

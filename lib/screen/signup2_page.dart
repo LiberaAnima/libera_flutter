@@ -191,6 +191,20 @@ class _Signup2PageState extends State<Signup2Page> {
                     final user = FirebaseAuth.instance.currentUser;
                     print(user);
                     if (user != null) {
+                      Map<String, Map<String, List<String>>> timetableTemplate =
+                          {
+                        'monday': {},
+                        'tuesday': {},
+                        'wednesday': {},
+                        'thursday': {},
+                        'friday': {}
+                      };
+                      timetableTemplate.forEach((day, dayMap) {
+                        for (var period = 1; period <= 5; period++) {
+                          dayMap[period.toString()] = ["", ""];
+                        }
+                      });
+
                       await FirebaseFirestore.instance
                           .collection('users')
                           .doc(user.uid)
@@ -202,6 +216,7 @@ class _Signup2PageState extends State<Signup2Page> {
                         'year': yearDropdouwnValue,
                         'gender': genderDropdouwnValue,
                         'username': _usernameController.text,
+                        'timetable': timetableTemplate,
                       });
 
                       Navigator.pushNamed(context, '/');
