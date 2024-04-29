@@ -191,6 +191,43 @@ class _Signup2PageState extends State<Signup2Page> {
                     final user = FirebaseAuth.instance.currentUser;
                     print(user);
                     if (user != null) {
+                      Map<String, dynamic> timetableTemplate = {
+                        'monday': {
+                          "1": ["", ""],
+                          "2": ["", ""],
+                          "3": ["", ""],
+                          "4": ["", ""],
+                          "5": ["", ""]
+                        },
+                        'tuesday': {
+                          "1": ["", ""],
+                          "2": ["", ""],
+                          "3": ["", ""],
+                          "4": ["", ""],
+                          "5": ["", ""]
+                        },
+                        'wednesday': {
+                          "1": ["", ""],
+                          "2": ["", ""],
+                          "3": ["", ""],
+                          "4": ["", ""],
+                          "5": ["", ""]
+                        },
+                        'thursday': {
+                          "1": ["", ""],
+                          "2": ["", ""],
+                          "3": ["", ""],
+                          "4": ["", ""],
+                          "5": ["", ""]
+                        },
+                        'friday': {
+                          "1": ["", ""],
+                          "2": ["", ""],
+                          "3": ["", ""],
+                          "4": ["", ""],
+                          "5": ["", ""]
+                        },
+                      };
                       await FirebaseFirestore.instance
                           .collection('users')
                           .doc(user.uid)
