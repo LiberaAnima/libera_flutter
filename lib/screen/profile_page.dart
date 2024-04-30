@@ -100,14 +100,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             textAlign: TextAlign.center,
                           ),
                           Divider(height: 40, thickness: 2),
+                          profileInfo('大学', _user!.school),
                           profileInfo('学部', _user!.faculty),
-                          profileInfo('学校', _user!.school),
-                          profileInfo('性別', _user!.gender),
                           profileInfo('学年', _user!.year),
+                          profileInfo('性別', _user!.gender),
                           ElevatedButton(
                             onPressed: () async => await _auth.signOut().then(
                                 (_) => Navigator.pushNamed(context, "/logIn")),
-                            child: const Text("Log Out"),
+                            child: const Text("ログアウト"),
                           ),
                           Divider(height: 40, thickness: 2),
                           Text('自分の投稿',
