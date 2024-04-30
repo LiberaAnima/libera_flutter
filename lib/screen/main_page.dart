@@ -120,25 +120,24 @@ class _MainPagePageState extends State<MainPage> {
                             ),
                             child: Column(
                               children: [
-                                Text("今日の時間割",
+                                const Text("今日の時間割",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 20)),
+                                        fontSize: 18)),
                                 Row(
                                   children: [
-                                    const SizedBox(width: 20),
+                                    const SizedBox(width: 10),
                                     Container(
                                       color: Colors.white,
                                       padding: EdgeInsets.all(10),
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.max,
                                         children: [
                                           for (var i = 1; i < 6; i++)
                                             Text(
                                               "$i限",
                                               style: TextStyle(
                                                   fontWeight: FontWeight.w700,
-                                                  fontSize: 15,
+                                                  fontSize: 16,
                                                   color: Colors.black),
                                             ),
                                         ],
@@ -224,18 +223,27 @@ class _MainPagePageState extends State<MainPage> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w700,
-                                                                fontSize: 15,
+                                                                fontSize: 16,
                                                                 color: Colors
                                                                     .black),
                                                           ),
-                                                          Text("  -  "),
+                                                          Text(
+                                                            "  -  ",
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w700,
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
                                                           Text(
                                                             "${classInfo.value[1]}",
                                                             style: TextStyle(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w700,
-                                                                fontSize: 15,
+                                                                fontSize: 16,
                                                                 color: Colors
                                                                     .black),
                                                           ),
@@ -253,7 +261,7 @@ class _MainPagePageState extends State<MainPage> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 20),
+                                    const SizedBox(width: 10),
                                   ],
                                 ),
                               ],
