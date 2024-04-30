@@ -62,7 +62,7 @@ class _ChatListPageState extends State<ChatListPage> {
                 if (chatroomData['who'] != null &&
                     chatroomData['who'].contains(user!.uid)) {
                   return ListTile(
-                    tileColor: Colors.red,
+                    // tileColor: Colors.red,
                     dense: true,
                     contentPadding: EdgeInsets.symmetric(horizontal: 5),
                     title:
