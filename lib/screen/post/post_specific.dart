@@ -1,5 +1,6 @@
 // import 'dart:html';
 
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,206 +46,216 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
-            Map<String, dynamic> data =
-                snapshot.data!.data() as Map<String, dynamic>;
-            return Column(
-              children: <Widget>[
-                const SizedBox(width: 10),
-                Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Text(
-                            data['name'],
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
+            Map<String, dynamic>? data =
+                snapshot.data!.data() as Map<String, dynamic>?;
+            if (data != null) {
+              return Column(
+                children: <Widget>[
+                  const SizedBox(width: 10),
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          children: [
+                            Text(
+                              data['name'],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.more_vert),
-                            onPressed: () {
-                              showModalBottomSheet(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      ListTile(
-                                        leading: Icon(Icons.edit),
-                                        title: Text('修正'),
-                                        onTap: () {
-                                          // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                          Navigator.pop(context); // 시트를 닫습니다.
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PostEditPage(data: data),
-                                            ),
-                                          );
-                                          // print(data);
-                                        },
-                                      ),
-                                      ListTile(
-                                        leading: Icon(Icons.delete),
-                                        title: Text('削除'),
-                                        onTap: () {
-                                          // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                          Navigator.pop(context); // 시트를 닫습니다.
-                                        },
-                                      ),
-                                      SizedBox(height: 20),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Text(
-                        data['date'] != null
-                            ? timeAgo(data['date'].toDate())
-                            : 'Unknown date',
-                        style: TextStyle(fontSize: 13, color: Colors.grey),
-                      ),
-                      SizedBox(height: 5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            data['title'],
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25,
-                            ),
-                          ),
-                          Text(
-                            data['post_message'],
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: <Widget>[
-                          FavoriteButton(
-                            documentid: data['documentID'],
-                            collectionname: 'posts',
-                          ),
-                          Text(
-                            '${data['likes'].length.toString()} いいね',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          SizedBox(width: 5),
+                            IconButton(
+                              icon: Icon(Icons.more_vert),
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        ListTile(
+                                          leading: Icon(Icons.edit),
+                                          title: Text('修正'),
+                                          onTap: () {
+                                            // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                            Navigator.pop(context); // 시트를 닫습니다.
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PostEditPage(data: data),
+                                              ),
+                                            );
+                                            // print(data);
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: Icon(Icons.delete),
+                                          title: Text('削除'),
+                                          onTap: () async {
+                                            // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                            await FirebaseFirestore.instance
+                                                .collection('posts')
+                                                .doc(data[
+                                                    'documentID']) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
+                                                .delete();
 
-                          //  have to add comment lenght
-
-                          StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('posts')
-                                .doc(data['documentID'])
-                                .collection('comments')
-                                .snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshot) {
-                              if (snapshot.hasData) {
-                                return Text(
-                                    '${snapshot.data!.docs.length.toString()} コメント',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.grey,
-                                    ));
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              }
-                              // By default, show a loading spinner.
-                              return CircularProgressIndicator();
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const Divider(
-                  color: Color.fromRGBO(165, 165, 165, 1),
-                  thickness: .5,
-                  indent: 15,
-                  endIndent: 15,
-                ),
-                // comment box
-                StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance
-                      .collection('posts')
-                      .doc(widget.id)
-                      .collection('comments')
-                      .orderBy('timestamp', descending: true)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.active) {
-                      if (snapshot.data != null) {
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.docs.length,
-                          itemBuilder: (context, index) {
-                            var comment = snapshot.data!.docs[index].data()
-                                as Map<String, dynamic>;
-                            return ListTile(
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      comment["isAnonymous"] == true
-                                          ? '匿名'
-                                          : data["name"],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 15,
-                                      ),
-                                    ),
-                                    Text(comment['text']),
-                                  ],
-                                ),
-                                subtitle: Text(
-                                  timeAgo(comment['timestamp'].toDate()),
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.grey),
-                                )
-                                // Add other fields as needed
+                                            Navigator.pop(context); // 시트를 닫습니다.
+                                            Navigator.pop(context); // 시트를 닫습니다.
+                                          },
+                                        ),
+                                        SizedBox(height: 20),
+                                      ],
+                                    );
+                                  },
                                 );
-                          },
-                        );
+                              },
+                            ),
+                          ],
+                        ),
+                        Text(
+                          data['date'] != null
+                              ? timeAgo(data['date'].toDate())
+                              : 'Unknown date',
+                          style: TextStyle(fontSize: 13, color: Colors.grey),
+                        ),
+                        SizedBox(height: 5),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              data['title'],
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                            ),
+                            Text(
+                              data['post_message'],
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: <Widget>[
+                            FavoriteButton(
+                              documentid: data['documentID'],
+                              collectionname: 'posts',
+                            ),
+                            Text(
+                              '${data['likes'].length.toString()} いいね',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+
+                            //  have to add comment lenght
+
+                            StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('posts')
+                                  .doc(data['documentID'])
+                                  .collection('comments')
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(
+                                      '${snapshot.data!.docs.length.toString()} コメント',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.grey,
+                                      ));
+                                } else if (snapshot.hasError) {
+                                  return Text('Error: ${snapshot.error}');
+                                }
+                                // By default, show a loading spinner.
+                                return CircularProgressIndicator();
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const Divider(
+                    color: Color.fromRGBO(165, 165, 165, 1),
+                    thickness: .5,
+                    indent: 15,
+                    endIndent: 15,
+                  ),
+                  // comment box
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('posts')
+                        .doc(widget.id)
+                        .collection('comments')
+                        .orderBy('timestamp', descending: true)
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        if (snapshot.data != null) {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              var comment = snapshot.data!.docs[index].data()
+                                  as Map<String, dynamic>;
+                              return ListTile(
+                                  title: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        comment["isAnonymous"] == true
+                                            ? '匿名'
+                                            : data["name"],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      Text(comment['text']),
+                                    ],
+                                  ),
+                                  subtitle: Text(
+                                    timeAgo(comment['timestamp'].toDate()),
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey),
+                                  )
+                                  // Add other fields as needed
+                                  );
+                            },
+                          );
+                        } else {
+                          return const Text('No comments');
+                        }
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return CircularProgressIndicator();
                       } else {
-                        return const Text('No comments');
+                        return const Text('Error');
                       }
-                    } else if (snapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return CircularProgressIndicator();
-                    } else {
-                      return const Text('Error');
-                    }
-                  },
-                ),
-              ],
-            );
+                    },
+                  ),
+                ],
+              );
+            } else {
+              return const Text('No data');
+            }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
           } else {
             return const Text('Error');
           }
         },
-      )
-      // Add more fields as needed
-      ,
+      ),
 
       // Add comment
       bottomSheet: Container(
