@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   TextButton(
                     onPressed: () {},
-                    child: const Text("Forgot Password?"),
+                    child: const Text("パスワードを忘れた場合"),
                   ),
                 ],
               ),
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                       backgroundColor: Colors.white,
                     ),
                     onPressed: () => Navigator.pushNamed(context, '/signUp'),
-                    child: Text("Create Account")),
+                    child: Text("アカウントを作成する")),
               ),
               SizedBox(
                 height: 80,
@@ -121,12 +121,12 @@ class _LoginPageState extends State<LoginPage> {
             }
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text("Login Failed"),
+                content: Text("ログインに失敗しました。もう一度お試しください。"),
               ),
             );
           }
         },
-        child: const Text("Login"),
+        child: const Text("ログイン"),
       ),
     );
   }
