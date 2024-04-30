@@ -30,8 +30,7 @@ class _BottomNavState extends State<BottomNav> {
       selectedIndex: currentPageIndex,
       destinations: const <Widget>[
         NavigationDestination(
-          selectedIcon: Icon(Icons.home),
-          icon: Icon(Icons.home_outlined),
+          icon: Icon(Icons.home),
           label: 'ホーム',
         ),
         NavigationDestination(
