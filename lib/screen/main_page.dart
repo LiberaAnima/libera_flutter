@@ -108,11 +108,11 @@ class _MainPagePageState extends State<MainPage> {
                             },
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Container(
                             margin: const EdgeInsets.all(15),
-                            padding: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(5),
                             width: double.infinity,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.grey),
@@ -126,7 +126,7 @@ class _MainPagePageState extends State<MainPage> {
                                         fontSize: 18)),
                                 Row(
                                   children: [
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 5),
                                     Container(
                                       color: Colors.white,
                                       padding: EdgeInsets.all(10),
@@ -261,7 +261,7 @@ class _MainPagePageState extends State<MainPage> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 10),
+                                    const SizedBox(width: 5),
                                   ],
                                 ),
                               ],
