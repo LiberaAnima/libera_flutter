@@ -250,45 +250,11 @@ class _PostListPagePageState extends State<PostListPage> {
                                   const EdgeInsets.only(top: 0, bottom: 0),
                               title: Column(
                                 children: [
-                                  const SizedBox(height: 5),
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: ShapeDecoration(
-                                              color: const Color(0xFFE0E0E0),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3)),
-                                            ),
-                                            child: const Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Q&A",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 0.18,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           const SizedBox(width: 10),
@@ -412,13 +378,14 @@ class _PostListPagePageState extends State<PostListPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PostPage()),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
