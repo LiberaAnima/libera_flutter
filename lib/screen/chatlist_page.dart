@@ -61,81 +61,69 @@ class _ChatListPageState extends State<ChatListPage> {
                 // print(chatroomData);
                 if (chatroomData['who'] != null &&
                     chatroomData['who'].contains(user!.uid)) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(color: Colors.grey),
-                        bottom: BorderSide(color: Colors.grey),
-                      ),
-                    ),
-                    padding: EdgeInsets.all(0),
-                    child: Column(children: [
-                      ListTile(
-                        title: FutureBuilder<
-                            DocumentSnapshot<Map<String, dynamic>>>(
-                          future: db
-                              .collection('users')
-                              .doc(chatroomData['who']
-                                  .firstWhere((id) => id != user!.uid))
-                              .get(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Text('Loading...');
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else {
-                              if (snapshot.data!.data() == null) {
-                                return Text('User not found');
-                              }
-                              var userData =
-                                  snapshot.data!.data() as Map<String, dynamic>;
-                              var nickname = userData['username'];
-                              print("chatroom :" + chatroomData['id']);
-                              return Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    nickname,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  FutureBuilder<String>(
-                                    future: getLastMessage(chatroomData['id']),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.waiting) {
-                                        return Text('Loading last message...');
-                                      } else if (snapshot.hasError) {
-                                        return Text('Error: ${snapshot.error}');
-                                      } else {
-                                        return Text(
-                                            'Last message: ${snapshot.data}');
-                                      }
-                                    },
-                                  ),
-                                ],
-                              );
-                            }
-                          },
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatRoom(
-                                chatroomId: chatroomData['id'],
-                                otherId: chatroomData['who']
-                                    .firstWhere((id) => id != user!.uid),
-                                userId: user!.uid,
+                  return ListTile(
+                    title:
+                        FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                      future: db
+                          .collection('users')
+                          .doc(chatroomData['who']
+                              .firstWhere((id) => id != user!.uid))
+                          .get(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text('Loading...');
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          if (snapshot.data!.data() == null) {
+                            return Text('User not found');
+                          }
+                          var userData =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          var nickname = userData['username'];
+                          print("chatroom :" + chatroomData['id']);
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                nickname,
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                            ),
+                              FutureBuilder<String>(
+                                future: getLastMessage(chatroomData['id']),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text('Loading last message...');
+                                  } else if (snapshot.hasError) {
+                                    return Text('Error: ${snapshot.error}');
+                                  } else {
+                                    return Text(
+                                        'Last message: ${snapshot.data}');
+                                  }
+                                },
+                              ),
+                            ],
                           );
-                        },
-                      ),
-                    ]),
+                        }
+                      },
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatRoom(
+                            chatroomId: chatroomData['id'],
+                            otherId: chatroomData['who']
+                                .firstWhere((id) => id != user!.uid),
+                            userId: user!.uid,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 } else {
                   return Text('');
