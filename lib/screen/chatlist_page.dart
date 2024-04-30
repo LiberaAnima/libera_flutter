@@ -50,7 +50,7 @@ class _ChatListPageState extends State<ChatListPage> {
           // Process the snapshot data and return the desired widget
           return Scaffold(
             appBar: AppBar(
-              title: Text('Chat List'),
+              title: Text('チャット一覧'),
             ),
             body: (ListView.builder(
               itemCount: snapshot.data!.docs.length,
