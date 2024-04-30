@@ -50,9 +50,9 @@ class _ChatListPageState extends State<ChatListPage> {
           // Process the snapshot data and return the desired widget
           return Scaffold(
             appBar: AppBar(
-              title: Text('Chat List'),
+              title: Text('チャット一覧'),
             ),
-            body: (ListView.builder(
+            body: ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 var chatroomData =
@@ -61,84 +61,83 @@ class _ChatListPageState extends State<ChatListPage> {
                 // print(chatroomData);
                 if (chatroomData['who'] != null &&
                     chatroomData['who'].contains(user!.uid)) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(color: Colors.grey),
-                      ),
-                    ),
-                    padding: EdgeInsets.all(10),
-                    child: Column(children: [
-                      ListTile(
-                        title: FutureBuilder<
-                            DocumentSnapshot<Map<String, dynamic>>>(
-                          future: db
-                              .collection('users')
-                              .doc(chatroomData['who']
-                                  .firstWhere((id) => id != user!.uid))
-                              .get(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Text('Loading...');
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else {
-                              if (snapshot.data!.data() == null) {
-                                return Text('User not found');
-                              }
-                              var userData =
-                                  snapshot.data!.data() as Map<String, dynamic>;
-                              var nickname = userData['username'];
-                              print("chatroom :" + chatroomData['id']);
-                              return Container(
-                                child: Column(
-                                  children: [
-                                    Text(nickname),
-                                    FutureBuilder<String>(
-                                      future:
-                                          getLastMessage(chatroomData['id']),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return Text(
-                                              'Loading last message...');
-                                        } else if (snapshot.hasError) {
-                                          return Text(
-                                              'Error: ${snapshot.error}');
-                                        } else {
-                                          return Text(
-                                              'Last message: ${snapshot.data}');
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatRoom(
-                                chatroomId: chatroomData['id'],
-                                otherId: chatroomData['who']
-                                    .firstWhere((id) => id != user!.uid),
-                                userId: user!.uid,
+                  return ListTile(
+                    tileColor: Colors.red,
+                    dense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                    title:
+                        FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                      future: db
+                          .collection('users')
+                          .doc(chatroomData['who']
+                              .firstWhere((id) => id != user!.uid))
+                          .get(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text('Loading...');
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          if (snapshot.data!.data() == null) {
+                            return Text('User not found');
+                          }
+                          var userData =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          var nickname = userData['username'];
+                          print("chatroom :" + chatroomData['id']);
+                          return Row(
+                            children: [
+                              Text(
+                                nickname,
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
                               ),
-                            ),
+                              const SizedBox(width: 20),
+                              Text(
+                                "何月何日何時何分",
+                                style:
+                                    TextStyle(fontSize: 10, color: Colors.grey),
+                              )
+                            ],
                           );
-                        },
-                      ),
-                    ]),
+                        }
+                      },
+                    ),
+                    subtitle: FutureBuilder<String>(
+                      future: getLastMessage(chatroomData['id']),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text('Loading last message...');
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          return Text(
+                              '関西大学　理工学部\nLast message: ${snapshot.data}');
+                        }
+                      },
+                    ),
+                    isThreeLine: true,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatRoom(
+                            chatroomId: chatroomData['id'],
+                            otherId: chatroomData['who']
+                                .firstWhere((id) => id != user!.uid),
+                            userId: user!.uid,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 } else {
                   return Text('');
                 }
               },
-            )),
+            ),
           );
         }
       },
