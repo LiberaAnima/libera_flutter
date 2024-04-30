@@ -62,6 +62,9 @@ class _ChatListPageState extends State<ChatListPage> {
                 if (chatroomData['who'] != null &&
                     chatroomData['who'].contains(user!.uid)) {
                   return ListTile(
+                    tileColor: Colors.red,
+                    dense: true,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
                     title:
                         FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                       future: db
@@ -83,10 +86,20 @@ class _ChatListPageState extends State<ChatListPage> {
                               snapshot.data!.data() as Map<String, dynamic>;
                           var nickname = userData['username'];
                           print("chatroom :" + chatroomData['id']);
-                          return Text(
-                            nickname,
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                          return Row(
+                            children: [
+                              Text(
+                                nickname,
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(width: 20),
+                              Text(
+                                "何月何日何時何分",
+                                style:
+                                    TextStyle(fontSize: 10, color: Colors.grey),
+                              )
+                            ],
                           );
                         }
                       },
@@ -100,10 +113,12 @@ class _ChatListPageState extends State<ChatListPage> {
                         } else if (snapshot.hasError) {
                           return Text('Error: ${snapshot.error}');
                         } else {
-                          return Text('Last message: ${snapshot.data}');
+                          return Text(
+                              '関西大学　理工学部\nLast message: ${snapshot.data}');
                         }
                       },
                     ),
+                    isThreeLine: true,
                     onTap: () {
                       Navigator.push(
                         context,
