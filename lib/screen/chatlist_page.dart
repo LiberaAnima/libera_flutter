@@ -64,10 +64,11 @@ class _ChatListPageState extends State<ChatListPage> {
                   return Container(
                     decoration: BoxDecoration(
                       border: Border(
+                        top: BorderSide(color: Colors.grey),
                         bottom: BorderSide(color: Colors.grey),
                       ),
                     ),
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.all(0),
                     child: Column(children: [
                       ListTile(
                         title: FutureBuilder<
@@ -91,29 +92,31 @@ class _ChatListPageState extends State<ChatListPage> {
                                   snapshot.data!.data() as Map<String, dynamic>;
                               var nickname = userData['username'];
                               print("chatroom :" + chatroomData['id']);
-                              return Container(
-                                child: Column(
-                                  children: [
-                                    Text(nickname),
-                                    FutureBuilder<String>(
-                                      future:
-                                          getLastMessage(chatroomData['id']),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.connectionState ==
-                                            ConnectionState.waiting) {
-                                          return Text(
-                                              'Loading last message...');
-                                        } else if (snapshot.hasError) {
-                                          return Text(
-                                              'Error: ${snapshot.error}');
-                                        } else {
-                                          return Text(
-                                              'Last message: ${snapshot.data}');
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    nickname,
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  FutureBuilder<String>(
+                                    future: getLastMessage(chatroomData['id']),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState ==
+                                          ConnectionState.waiting) {
+                                        return Text('Loading last message...');
+                                      } else if (snapshot.hasError) {
+                                        return Text('Error: ${snapshot.error}');
+                                      } else {
+                                        return Text(
+                                            'Last message: ${snapshot.data}');
+                                      }
+                                    },
+                                  ),
+                                ],
                               );
                             }
                           },
