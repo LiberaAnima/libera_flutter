@@ -64,8 +64,8 @@ class _PostPagePageState extends State<PostPage> {
                   obscureText: false,
                   maxLines: 1,
                   decoration: const InputDecoration(
-                    hintText: 'Titleを入力してください',
-                    labelText: 'Titleを入力してください ',
+                    hintText: '投稿タイトルを入力してください',
+                    labelText: 'タイトル',
                   ),
                 ),
               ),
@@ -92,7 +92,7 @@ class _PostPagePageState extends State<PostPage> {
                   maxLines: 7,
                   decoration: const InputDecoration(
                     hintText: '投稿内容を記載します',
-                    labelText: '投稿内容を記載します ',
+                    labelText: '投稿内容',
                   ),
                 ),
               ),
@@ -126,6 +126,7 @@ class _PostPagePageState extends State<PostPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
         onPressed: () async {
           final User? user = FirebaseAuth.instance.currentUser;
 
@@ -163,7 +164,7 @@ class _PostPagePageState extends State<PostPage> {
             );
           }
         },
-        child: Icon(Icons.send),
+        child: Icon(Icons.send, color: Colors.white),
       ),
     );
   }
