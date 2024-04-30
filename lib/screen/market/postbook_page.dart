@@ -85,111 +85,97 @@ class _PostBookPagePageState extends State<PostBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("テキスト投稿画面"),
+        title: Text("商品投稿画面"),
       ),
-      body: Column(
-        children: <Widget>[
-          TextField(
-            controller: _booknameEditingController,
-            enabled: true,
-            maxLength: 50, // 入力数
-            style: TextStyle(color: Colors.black),
-            obscureText: false,
-            maxLines: 1,
-            decoration: const InputDecoration(
-              icon: Icon(
-                Icons.speaker_notes,
-                color: Colors.black,
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: <Widget>[
+            const SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text(
+                '商品画像を選択*',
+                style: TextStyle(color: Colors.white),
               ),
-              hintText: '例)微分積分入門 第二版',
-              labelText: 'テキスト名*',
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(500, 40),
+                backgroundColor: Colors.grey,
+              ),
             ),
-          ),
-          TextField(
-            controller: _bookauthorEditingController,
-            enabled: true,
-            maxLength: 30,
-            style: TextStyle(color: Colors.black),
-            obscureText: false,
-            maxLines: 1,
-            decoration: const InputDecoration(
-              icon: Icon(
-                Icons.person,
-                color: Colors.black,
+            const SizedBox(height: 12),
+            TextField(
+              controller: _booknameEditingController,
+              enabled: true,
+              maxLength: 50, // 入力数
+              style: TextStyle(color: Colors.black),
+              obscureText: false,
+              maxLines: 1,
+              decoration: const InputDecoration(
+                hintText: '例)微分積分入門 第二版',
+                labelText: '商品名*',
               ),
-              hintText: '例)田中太郎',
-              labelText: '著者名*',
             ),
-          ),
-          if (_bookImage != null)
-            Image.file(
-              _bookImage!,
-              width: 200,
-              height: 200,
+            TextField(
+              controller: _bookauthorEditingController,
+              enabled: true,
+              maxLength: 30,
+              style: TextStyle(color: Colors.black),
+              obscureText: false,
+              maxLines: 1,
+              decoration: const InputDecoration(
+                hintText: '例)田中太郎',
+                labelText: '著者名*',
+              ),
             ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start, // 要素を中央に配置
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 8.0, bottom: 8.0), // アイコンの位置を下に調整
-                child: Icon(Icons.image, color: Colors.black),
+            if (_bookImage != null)
+              Image.file(
+                _bookImage!,
+                width: 200,
+                height: 200,
               ),
-              SizedBox(width: 80), // アイコンとボタンの間のスペース
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: Text('テキストの画像を選択*'),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _priceEditingController,
-                  enabled: true,
-                  maxLength: 5,
-                  maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                  style: TextStyle(color: Colors.black),
-                  obscureText: false,
-                  maxLines: 1,
-                  decoration: const InputDecoration(
-                    icon: Icon(
-                      Icons.currency_yen,
-                      color: Colors.black,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _priceEditingController,
+                    enabled: true,
+                    maxLength: 5,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    style: TextStyle(color: Colors.black),
+                    obscureText: false,
+                    maxLines: 1,
+                    decoration: const InputDecoration(
+                      hintText: '例) 1500',
+                      labelText: '価格(円)*',
                     ),
-                    hintText: '例) 1500',
-                    labelText: '価格(円)*',
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text('円', style: TextStyle(fontSize: 16)),
-              ),
-            ],
-          ),
-          TextField(
-            controller: _detailsEditingController,
-            enabled: true,
-            maxLength: 200, // 入力数
-            style: TextStyle(color: Colors.black),
-            obscureText: false,
-            maxLines: 5,
-            decoration: const InputDecoration(
-              icon: Icon(
-                Icons.subject,
-                color: Colors.black,
-              ),
-              hintText: 'テキストの詳細、テキストの状態、取引場所など',
-              labelText: '詳細 ',
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text('円', style: TextStyle(fontSize: 16)),
+                ),
+              ],
             ),
-          ),
-        ],
+            TextField(
+              controller: _detailsEditingController,
+              enabled: true,
+              maxLength: 200, // 入力数
+              style: TextStyle(color: Colors.black),
+              obscureText: false,
+              maxLines: 5,
+              decoration: const InputDecoration(
+                hintText: '商品詳細、状態、取引場所などを記入してください',
+                labelText: '詳細 ',
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
         onPressed: () {
           print(_booknameEditingController.text); // デバッグ用
           if (_booknameEditingController.text.isEmpty ||
@@ -223,7 +209,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
             Navigator.pushNamed(context, '/bookmarketlist');
           }
         },
-        child: Icon(Icons.send),
+        child:
+            Icon(Icons.send, color: Colors.white), // 送信ボタン、押すと_onSubmittedが呼ばれる
       ),
     );
   }

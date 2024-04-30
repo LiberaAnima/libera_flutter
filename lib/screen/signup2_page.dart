@@ -39,7 +39,7 @@ class _Signup2PageState extends State<Signup2Page> {
                 child: TextFormField(
                   controller: _usernameController,
                   decoration: const InputDecoration(
-                    labelText: 'Nickname',
+                    labelText: 'ニックネーム',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
@@ -51,7 +51,7 @@ class _Signup2PageState extends State<Signup2Page> {
                 height: 20,
               ),
 
-              const Text("学校",
+              const Text("大学",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               CupertinoButton(
                 onPressed: () {
@@ -222,7 +222,7 @@ class _Signup2PageState extends State<Signup2Page> {
                       Navigator.pushNamed(context, '/');
                     }
                   },
-                  child: const Text('Submit'),
+                  child: const Text('アカウントを作成'),
                 ),
               ),
             ],
