@@ -111,7 +111,7 @@ class _SignupPageState extends State<SignupPage> {
             }
           }
         },
-        child: const Text("アカウントを作成する"),
+        child: const Text("次へ"),
       ),
     );
   }
