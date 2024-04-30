@@ -49,14 +49,6 @@ class _MainPagePageState extends State<MainPage> {
                 // title: Text("メイン画面"),
                 actions: [
                   IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.search),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.notifications_none),
-                  ),
-                  IconButton(
                     onPressed: () {
                       final String? uid = _auth.currentUser?.uid;
                       print(uid);
