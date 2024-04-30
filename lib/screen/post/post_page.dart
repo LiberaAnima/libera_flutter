@@ -154,14 +154,7 @@ class _PostPagePageState extends State<PostPage> {
               'imageUrl': _bookImage != null ? _bookImage!.path : null,
             });
             _onSubmitted(_textEditingController.text);
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return PostListPage();
-                },
-              ),
-            );
+            Navigator.pop(context);
           }
         },
         child: Icon(Icons.send, color: Colors.white),
