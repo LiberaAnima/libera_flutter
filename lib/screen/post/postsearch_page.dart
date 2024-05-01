@@ -60,7 +60,7 @@ class _PostSearchPageState extends State<PostSearchPage> {
         title: TextField(
           controller: searchController,
           decoration: InputDecoration(
-            hintText: 'Search...',
+            hintText: '投稿を検索',
             hintStyle: TextStyle(color: Colors.black),
           ),
           style: TextStyle(color: Colors.black),

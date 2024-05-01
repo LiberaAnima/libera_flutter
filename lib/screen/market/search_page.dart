@@ -59,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
         title: TextField(
           controller: searchController,
           decoration: InputDecoration(
-            hintText: "Search books...",
+            hintText: "商品を検索",
             hintStyle: TextStyle(color: Colors.black),
             border: InputBorder.none,
             prefixIcon: Icon(Icons.search, color: Colors.black),
