@@ -58,12 +58,6 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
 
           return Scaffold(
             appBar: AppBar(
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
               title: const Text("商品詳細画面"),
             ),
             body: SingleChildScrollView(
@@ -90,55 +84,60 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                IconButton(
-                                  icon: const Icon(Icons.more_vert),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            ListTile(
-                                              leading: const Icon(Icons.edit),
-                                              title: const Text('修正'),
-                                              onTap: () {
-                                                // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                                print(book);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        MarketEditPage(
-                                                            data: book),
+                                user?.uid == book['uid']
+                                    ? IconButton(
+                                        icon: const Icon(Icons.more_vert),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        const Icon(Icons.edit),
+                                                    title: const Text('修正'),
+                                                    onTap: () {
+                                                      // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                                      print(book);
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              MarketEditPage(
+                                                                  data: book),
+                                                        ),
+                                                      );
+                                                      // print(data);
+                                                    },
                                                   ),
-                                                );
-                                                // print(data);
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: Icon(Icons.delete),
-                                              title: Text('削除'),
-                                              onTap: () async {
-                                                await FirebaseFirestore.instance
-                                                    .collection('books')
-                                                    .doc(widget
-                                                        .uid) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
-                                                    .delete();
+                                                  ListTile(
+                                                    leading: const Icon(
+                                                        Icons.delete),
+                                                    title: const Text('削除'),
+                                                    onTap: () async {
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('books')
+                                                          .doc(widget
+                                                              .uid) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
+                                                          .delete();
 
-                                                Navigator.pop(
-                                                    context); // 시트를 닫습니다.
-                                                Navigator.pop(
-                                                    context); // 시트를 닫습니다.
-                                              },
-                                            ),
-                                            const SizedBox(height: 20),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
-                                )
+                                                      Navigator.pop(
+                                                          context); // 시트를 닫습니다.
+                                                      Navigator.pop(
+                                                          context); // 시트를 닫습니다.
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 20),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                      )
+                                    : Text("")
                               ],
                             ),
                             Row(
@@ -651,14 +650,14 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.chat,
                             color: Colors.white,
                             size: 20,
                           ),
                           const SizedBox(width: 8),
                           user?.uid == book['uid']
-                              ? Text(
+                              ? const Text(
                                   "販売完了",
                                   style: TextStyle(
                                     color: Colors.white,
@@ -668,7 +667,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                     height: 0.09,
                                   ),
                                 )
-                              : Text(
+                              : const Text(
                                   "チャットする",
                                   style: TextStyle(
                                     color: Colors.white,
