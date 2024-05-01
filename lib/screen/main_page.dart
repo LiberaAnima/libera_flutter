@@ -110,6 +110,12 @@ class _MainPagePageState extends State<MainPage> {
                           SizedBox(
                             height: 10,
                           ),
+                          TextButton(
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut();
+                            },
+                            child: Text("logout"),
+                          ),
                           Container(
                             margin: const EdgeInsets.all(15),
                             padding: const EdgeInsets.all(5),

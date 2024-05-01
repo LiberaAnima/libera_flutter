@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
-import 'package:libera_flutter/screen/chatroom_page.dart';
+import 'package:libera_flutter/screen/chat/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 Uri url = Uri.parse(

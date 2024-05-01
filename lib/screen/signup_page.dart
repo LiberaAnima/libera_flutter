@@ -86,10 +86,12 @@ class _SignupPageState extends State<SignupPage> {
               //   },
               // );
 
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                  builder: (context) => Signup2Page(userCredential: credential),
+                PageRouteBuilder(
+                  pageBuilder: (context, animation1, animation2) =>
+                      Signup2Page(userCredential: credential),
+                  transitionDuration: Duration(seconds: 0),
                 ),
               );
 
