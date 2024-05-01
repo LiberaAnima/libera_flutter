@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:libera_flutter/screen/market/marketedit_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 import 'package:libera_flutter/screen/chat/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
@@ -56,12 +57,12 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
           return Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
-              title: Text("商品詳細画面"),
+              title: const Text("商品詳細画面"),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -69,7 +70,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   Image.network(book['imageUrl'],
                       height: 300, width: double.infinity, fit: BoxFit.cover),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
                     child: Row(
                       children: <Widget>[
@@ -97,11 +98,19 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                           mainAxisSize: MainAxisSize.min,
                                           children: <Widget>[
                                             ListTile(
-                                              leading: Icon(Icons.edit),
-                                              title: Text('修正'),
+                                              leading: const Icon(Icons.edit),
+                                              title: const Text('修正'),
                                               onTap: () {
                                                 // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-
+                                                print(book);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MarketEditPage(
+                                                            data: book),
+                                                  ),
+                                                );
                                                 // print(data);
                                               },
                                             ),
@@ -121,7 +130,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                                     context); // 시트를 닫습니다.
                                               },
                                             ),
-                                            SizedBox(height: 20),
+                                            const SizedBox(height: 20),
                                           ],
                                         );
                                       },
