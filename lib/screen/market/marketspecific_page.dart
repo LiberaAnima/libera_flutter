@@ -75,7 +75,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Row(
-                              verticalDirection: VerticalDirection.down,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   '出品者 : ${book['username']}',
@@ -137,7 +137,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                           );
                                         },
                                       )
-                                    : Text("")
+                                    : const Text("")
                               ],
                             ),
                             Row(

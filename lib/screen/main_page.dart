@@ -97,8 +97,8 @@ class _MainPagePageState extends State<MainPage> {
                                       child: Text(
                                         userData?['school'] ?? "null",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 25,
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 30,
                                             color: Colors.black),
                                       ),
                                     ),
@@ -126,25 +126,32 @@ class _MainPagePageState extends State<MainPage> {
                             ),
                             child: Column(
                               children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 const Text("今日の時間割",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 18)),
+                                        fontSize: 20)),
                                 Row(
                                   children: [
                                     const SizedBox(width: 5),
                                     Container(
                                       color: Colors.white,
-                                      padding: EdgeInsets.all(10),
+                                      padding: EdgeInsets.all(30),
                                       child: Column(
                                         children: [
                                           for (var i = 1; i < 6; i++)
-                                            Text(
-                                              "$i限",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w700,
-                                                  fontSize: 16,
-                                                  color: Colors.black),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Text(
+                                                "$i限",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 16,
+                                                    color: Colors.black),
+                                              ),
                                             ),
                                         ],
                                       ),
@@ -181,13 +188,18 @@ class _MainPagePageState extends State<MainPage> {
                                                     snapshot.data!.data()
                                                         as Map<String, dynamic>;
                                                 if (data['timetable'] == null) {
-                                                  return Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text("  -  "),
-                                                    ],
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            5.0),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text("  -  "),
+                                                      ],
+                                                    ),
                                                   );
                                                 }
 
@@ -218,42 +230,47 @@ class _MainPagePageState extends State<MainPage> {
                                                         .entries
                                                         .map((classInfo) {
                                                       print(classInfo);
-                                                      return Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            "${classInfo.value[0]}",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                fontSize: 16,
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
-                                                          Text(
-                                                            "  -  ",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                fontSize: 16,
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
-                                                          Text(
-                                                            "${classInfo.value[1]}",
-                                                            style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                fontSize: 16,
-                                                                color: Colors
-                                                                    .black),
-                                                          ),
-                                                        ],
+                                                      return Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(4.0),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Text(
+                                                              "${classInfo.value[0]}",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                            Text(
+                                                              "  -  ",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                            Text(
+                                                              "${classInfo.value[1]}",
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  fontSize: 16,
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       );
                                                     }).toList(),
                                                   );
@@ -261,7 +278,9 @@ class _MainPagePageState extends State<MainPage> {
                                                   return Text("hogehoge");
                                                 }
                                               }
-                                              return CircularProgressIndicator();
+                                              return const Center(
+                                                  child:
+                                                      CircularProgressIndicator());
                                             },
                                           ),
                                         ),
