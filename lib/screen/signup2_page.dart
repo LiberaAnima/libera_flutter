@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/screen/home_page.dart';
 
 const List<String> list_sex = <String>['男性', '女性', 'その他'];
 const List<String> list_year = <String>['B1', 'B2', 'B3', 'B4', 'M1', 'M2'];
@@ -219,7 +220,10 @@ class _Signup2PageState extends State<Signup2Page> {
                         'timetable': timetableTemplate,
                       });
 
-                      Navigator.pushNamed(context, '/');
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
                     }
                   },
                   child: const Text('アカウントを作成'),
