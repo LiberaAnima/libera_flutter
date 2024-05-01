@@ -58,6 +58,14 @@ class _MarketEditPageState extends State<MarketEditPage> {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          // 텍스트 필드에서 텍스트를 가져옵니다.
+
+          // 수정된 데이터를 이전 화면으로 전달합니다.
+        },
+        child: Icon(Icons.save),
+      ),
     );
   }
 }
