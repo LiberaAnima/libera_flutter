@@ -107,7 +107,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               ),
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(500, 40),
-                backgroundColor: Colors.grey,
+                backgroundColor: Colors.orange,
               ),
             ),
             const SizedBox(height: 12),
@@ -182,7 +182,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.orange,
         onPressed: () {
           print(_booknameEditingController.text); // デバッグ用
           if (_booknameEditingController.text.isEmpty ||
