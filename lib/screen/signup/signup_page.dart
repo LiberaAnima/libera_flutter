@@ -75,16 +75,6 @@ class _SignupPageState extends State<SignupPage> {
 
               final user = credential.user;
               print(user?.uid);
-              // await FirebaseFirestore.instance
-              //     .collection('users')
-              //     .doc(user?.uid)
-              //     .set(
-              //   {
-              //     'email': _emailController.text,
-              //     'uid': user?.uid,
-              //     // 다른 필드를 추가하세요.
-              //   },
-              // );
 
               Navigator.pushReplacement(
                 context,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/components/button.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 
 const List<String> list_sex = <String>['男性', '女性', 'その他'];
@@ -178,57 +179,46 @@ class _Signup2PageState extends State<Signup2Page> {
                 height: 20,
               ),
 
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    foregroundColor: Colors.black,
-                    backgroundColor: Colors.orange,
-                  ),
-                  onPressed: () async {
-                    final user = FirebaseAuth.instance.currentUser;
-                    print(user);
-                    if (user != null) {
-                      Map<String, Map<String, List<String>>> timetableTemplate =
-                          {
-                        'monday': {},
-                        'tuesday': {},
-                        'wednesday': {},
-                        'thursday': {},
-                        'friday': {}
-                      };
-                      timetableTemplate.forEach((day, dayMap) {
-                        for (var period = 1; period <= 5; period++) {
-                          dayMap[period.toString()] = ["", ""];
-                        }
-                      });
+              SendButton(
+                text: "アカウントを作成",
+                onPressed: () async {
+                  final user = FirebaseAuth.instance.currentUser;
+                  // print(user);
+                  if (user != null) {
+                    Map<String, Map<String, List<String>>> timetableTemplate = {
+                      'monday': {},
+                      'tuesday': {},
+                      'wednesday': {},
+                      'thursday': {},
+                      'friday': {}
+                    };
+                    timetableTemplate.forEach((day, dayMap) {
+                      for (var period = 1; period <= 5; period++) {
+                        dayMap[period.toString()] = ["", ""];
+                      }
+                    });
 
-                      await FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(user.uid)
-                          .set({
-                        'email': user.email,
-                        'uid': user.uid,
-                        'school': schoolDropdouwnValue,
-                        'faculty': facultyDropdouwnValue,
-                        'year': yearDropdouwnValue,
-                        'gender': genderDropdouwnValue,
-                        'username': _usernameController.text,
-                        'timetable': timetableTemplate,
-                      });
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user.uid)
+                        .set({
+                      'email': user.email,
+                      'uid': user.uid,
+                      'school': schoolDropdouwnValue,
+                      'faculty': facultyDropdouwnValue,
+                      'year': yearDropdouwnValue,
+                      'gender': genderDropdouwnValue,
+                      'username': _usernameController.text,
+                      'timetable': timetableTemplate,
+                    });
 
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
-                      );
-                    }
-                  },
-                  child: const Text('アカウントを作成'),
-                ),
-              ),
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  }
+                },
+              )
             ],
           ),
         ),

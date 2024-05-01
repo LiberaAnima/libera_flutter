@@ -38,7 +38,7 @@ class FindPasswordPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-              Button(
+              SendButton(
                 text: '送信',
                 onPressed: () {},
               ),
