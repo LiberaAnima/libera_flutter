@@ -190,13 +190,14 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PostBookPage()),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
