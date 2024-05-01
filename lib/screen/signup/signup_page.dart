@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:libera_flutter/components/input_box.dart';
-import 'package:libera_flutter/screen/signup2_page.dart';
+import 'package:libera_flutter/screen/signup/signup2_page.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
