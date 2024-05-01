@@ -21,7 +21,7 @@ class MarketSpecificPage extends StatefulWidget {
 }
 
 class _MarketSpecificPageState extends State<MarketSpecificPage> {
-  late Future<DocumentSnapshot> _future;
+  late Stream<DocumentSnapshot> _stream;
 
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -30,14 +30,16 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
   @override
   void initState() {
     super.initState();
-    _future =
-        FirebaseFirestore.instance.collection('books').doc(widget.uid).get();
+    _stream = FirebaseFirestore.instance
+        .collection('books')
+        .doc(widget.uid)
+        .snapshots();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
-      future: _future,
+    return StreamBuilder<DocumentSnapshot>(
+      stream: _stream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
