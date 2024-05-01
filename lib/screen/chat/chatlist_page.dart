@@ -92,6 +92,7 @@ class _ChatListPageState extends State<ChatListPage> {
                             var nickname = userData['username'];
                             // print("chatroom :" + chatroomData['id']);
                             return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   nickname,
@@ -103,7 +104,7 @@ class _ChatListPageState extends State<ChatListPage> {
                                 Text(
                                   timeAgo(chatroomData['timestamp'].toDate()),
                                   style: const TextStyle(
-                                      fontSize: 10, color: Colors.grey),
+                                      fontSize: 12, color: Colors.grey),
                                 )
                               ],
                             );
