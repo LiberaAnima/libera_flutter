@@ -63,7 +63,7 @@ class _MainPagePageState extends State<MainPage> {
                         );
                       }
                     },
-                    icon: Icon(Icons.account_circle),
+                    icon: const Icon(Icons.account_circle),
                   ),
                 ],
               ),
@@ -75,7 +75,7 @@ class _MainPagePageState extends State<MainPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -107,15 +107,15 @@ class _MainPagePageState extends State<MainPage> {
                               }
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
-                          TextButton(
-                            onPressed: () async {
-                              await FirebaseAuth.instance.signOut();
-                            },
-                            child: Text("logout"),
-                          ),
+                          // TextButton(
+                          //   onPressed: () async {
+                          //     await FirebaseAuth.instance.signOut();
+                          //   },
+                          //   child: Text("logout"),
+                          // ),
                           Container(
                             margin: const EdgeInsets.all(15),
                             padding: const EdgeInsets.all(5),
