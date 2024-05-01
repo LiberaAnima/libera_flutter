@@ -142,7 +142,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
                     enabled: true,
                     maxLength: 5,
                     maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                     obscureText: false,
                     maxLines: 1,
                     decoration: const InputDecoration(

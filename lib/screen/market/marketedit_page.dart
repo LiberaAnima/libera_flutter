@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MarketEditPage extends StatefulWidget {
   final Map<String, dynamic> data;
@@ -12,12 +13,16 @@ class MarketEditPage extends StatefulWidget {
 class _MarketEditPageState extends State<MarketEditPage> {
   late TextEditingController _titleController;
   late TextEditingController _descriptionController;
+  late TextEditingController _priceController;
+  late TextEditingController _authorController;
   @override
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.data['bookname']);
     _descriptionController =
         TextEditingController(text: widget.data['details'] ?? '');
+    _priceController = TextEditingController(text: widget.data['price']);
+    _authorController = TextEditingController(text: widget.data['bookauthor']);
   }
 
   @override
@@ -39,11 +44,26 @@ class _MarketEditPageState extends State<MarketEditPage> {
                       child: TextFormField(
                         controller: _titleController,
                         decoration: const InputDecoration(
-                          labelText: 'Title',
+                          labelText: '商品名',
                         ),
                       ),
                     ),
                   ],
+                ),
+                TextFormField(
+                  controller: _authorController,
+                  decoration: const InputDecoration(
+                    labelText: '著者名',
+                  ),
+                ),
+                TextFormField(
+                  controller: _priceController,
+                  decoration: const InputDecoration(
+                    labelText: '価格(円)',
+                    hintText: '例) 1500',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 ),
                 TextFormField(
                   controller: _descriptionController,
@@ -64,7 +84,7 @@ class _MarketEditPageState extends State<MarketEditPage> {
 
           // 수정된 데이터를 이전 화면으로 전달합니다.
         },
-        child: Icon(Icons.save),
+        child: const Icon(Icons.save),
       ),
     );
   }
