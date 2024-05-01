@@ -73,19 +73,67 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
                     child: Row(
                       children: <Widget>[
-                        CircleAvatar(
-                            // backgroundImage:
-                            //     NetworkImage('https://example.com/user-icon.jpg'),
-                            ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('出品者: ${book['username']}'),
+                            Row(
+                              verticalDirection: VerticalDirection.down,
+                              children: [
+                                Text(
+                                  '出品者 : ${book['username']}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.more_vert),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            ListTile(
+                                              leading: Icon(Icons.edit),
+                                              title: Text('修正'),
+                                              onTap: () {
+                                                // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+
+                                                // print(data);
+                                              },
+                                            ),
+                                            ListTile(
+                                              leading: Icon(Icons.delete),
+                                              title: Text('削除'),
+                                              onTap: () async {
+                                                await FirebaseFirestore.instance
+                                                    .collection('books')
+                                                    .doc(widget
+                                                        .uid) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
+                                                    .delete();
+
+                                                Navigator.pop(
+                                                    context); // 시트를 닫습니다.
+                                                Navigator.pop(
+                                                    context); // 시트를 닫습니다.
+                                              },
+                                            ),
+                                            SizedBox(height: 20),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
                             Row(
                               children: [
                                 Text(book['faculty']),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                               ],
                             )
                           ],
