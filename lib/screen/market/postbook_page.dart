@@ -132,7 +132,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               maxLines: 1,
               decoration: const InputDecoration(
                 hintText: '例)田中太郎',
-                labelText: '著者名*',
+                labelText: '著者名（書籍を出品する場合）',
               ),
             ),
             if (_bookImage != null)
@@ -186,7 +186,6 @@ class _PostBookPagePageState extends State<PostBookPage> {
         onPressed: () {
           print(_booknameEditingController.text); // デバッグ用
           if (_booknameEditingController.text.isEmpty ||
-              _bookauthorEditingController.text.isEmpty ||
               _priceEditingController.text.isEmpty ||
               _bookImage == null) {
             showDialog(
@@ -194,7 +193,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('エラー'),
-                  content: Text('テキスト名、著者名、商品画像、価格は必須事項です'),
+                  content: Text('商品画像、商品名、価格は必須事項です'),
                   actions: <Widget>[
                     TextButton(
                       child: Text('OK'),
