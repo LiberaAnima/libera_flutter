@@ -49,26 +49,33 @@ class _PostBookPagePageState extends State<PostBookPage> {
     String faculty = userDoc.get('faculty');
     //firestoreにデータを追加
     CollectionReference books = FirebaseFirestore.instance.collection('books');
-    await books.add({
-      'bookname': bookname,
-      'bookauthor': bookauthor,
-      'price': price,
-      'details': details,
-      'imageUrl': imageUrl,
-      'uid': user.uid,
-      'username': username,
-      'faculty': faculty,
-      'postedAt': FieldValue.serverTimestamp(),
-    });
+    print(books);
+    final post = FirebaseFirestore.instance.collection('books').doc();
+    await post.set(
+      {
+        'bookname': bookname,
+        'bookauthor': bookauthor,
+        'price': price,
+        'details': details,
+        'imageUrl': imageUrl,
+        'uid': user.uid,
+        'documentId': post.id,
+        'username': username,
+        'faculty': faculty,
+        'postedAt': FieldValue.serverTimestamp(),
+      },
+    );
 
     /// 入力欄をクリアにする
     _booknameEditingController.clear();
     _bookauthorEditingController.clear();
     _priceEditingController.clear();
     _detailsEditingController.clear();
-    setState(() {
-      _bookImage = null;
-    });
+    if (mounted) {
+      setState(() {
+        _bookImage = null;
+      });
+    }
   }
 
   Future<void> _pickImage() async {
@@ -85,7 +92,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("商品投稿画面"),
+        title: const Text("商品投稿画面"),
       ),
       body: Container(
         padding: EdgeInsets.all(20),
