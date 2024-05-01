@@ -162,24 +162,37 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
-                        child: Text(
-                          book['bookname'],
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              book['bookname'],
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(" - "),
+                            Text(
+                              book['bookauthor'],
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
                         child: Text(
                           '¥${book['price']}',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 23,
                             fontWeight: FontWeight.bold,
+                            color: Colors.orange[700],
                           ),
                         ),
                       ),
@@ -192,12 +205,12 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                             EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
                         child: Text(
                           book['faculty'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: Text(
                           '・',
@@ -207,10 +220,10 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: Text(
                           timeAgo(postedAt),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
@@ -222,7 +235,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     child: Text(
                       book['details'],
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
