@@ -59,7 +59,7 @@ class _SearchPageState extends State<SearchPage> {
         title: TextField(
           controller: searchController,
           decoration: InputDecoration(
-            hintText: "Search books...",
+            hintText: "商品を検索",
             hintStyle: TextStyle(color: Colors.black),
             border: InputBorder.none,
             prefixIcon: Icon(Icons.search, color: Colors.black),
@@ -117,7 +117,7 @@ class _SearchPageState extends State<SearchPage> {
                     contentPadding: EdgeInsets.zero,
                     title: Column(
                       children: [
-                        Divider(
+                        const Divider(
                           color: Colors.black,
                           thickness: 1,
                           indent: 0.0,
@@ -155,36 +155,38 @@ class _SearchPageState extends State<SearchPage> {
                                     ),
                                     const SizedBox(height: 4),
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.end,
                                       children: <Widget>[
                                         Text(
                                           post['username'] ?? 'null',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
                                           post['faculty'] ?? 'null',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
                                           timeAgo(postedAt),
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          '${post['bookmark']?.length?.toString() ?? '0'} 保存',
                                           style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         ),
+                                        const SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          '${post['bookmark']?.length?.toString() ?? '0'} ',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                        const Icon(Icons.bookmark_border),
                                         const SizedBox(width: 10),
                                         // Text("${post["viewCount"]}閲覧",
                                         // style: TextStyle(

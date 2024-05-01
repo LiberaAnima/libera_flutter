@@ -60,7 +60,7 @@ class _PostSearchPageState extends State<PostSearchPage> {
         title: TextField(
           controller: searchController,
           decoration: InputDecoration(
-            hintText: 'Search...',
+            hintText: '投稿を検索',
             hintStyle: TextStyle(color: Colors.black),
           ),
           style: TextStyle(color: Colors.black),
@@ -115,45 +115,11 @@ class _PostSearchPageState extends State<PostSearchPage> {
                                   const EdgeInsets.only(top: 0, bottom: 0),
                               title: Column(
                                 children: [
-                                  const SizedBox(height: 5),
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: ShapeDecoration(
-                                              color: const Color(0xFFE0E0E0),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3)),
-                                            ),
-                                            child: const Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Q&A",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 0.18,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
                                       Row(
                                         children: <Widget>[
                                           const SizedBox(width: 10),
@@ -161,7 +127,8 @@ class _PostSearchPageState extends State<PostSearchPage> {
                                             '${data['title']}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 20,
+                                              fontSize:
+                                                  20, // ここでタイトルのフォントサイズを変更
                                             ),
                                           ),
                                         ],

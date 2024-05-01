@@ -126,7 +126,7 @@ class _PostPagePageState extends State<PostPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.orange,
         onPressed: () async {
           final User? user = FirebaseAuth.instance.currentUser;
 

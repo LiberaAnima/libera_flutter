@@ -69,7 +69,6 @@ class _ProfilePageState extends State<ProfilePage> {
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: Text('プロフィール', style: TextStyle(color: Colors.black)),
-              iconTheme: IconThemeData(color: Colors.blue),
               elevation: 0,
             ),
             body: _user == null
