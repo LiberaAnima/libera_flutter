@@ -116,7 +116,7 @@ class _ChatListPageState extends State<ChatListPage> {
                           // print(snapshot.data);
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return Text('Loading last message...');
+                            return const Text('Loading last message...');
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else {

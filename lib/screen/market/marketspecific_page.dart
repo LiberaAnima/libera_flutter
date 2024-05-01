@@ -475,7 +475,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
                               '¥${book['price']}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
                                 fontFamily: 'Inter',
@@ -488,7 +488,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: Text(
                               book['bookname'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 12,
                                 fontFamily: 'Inter',

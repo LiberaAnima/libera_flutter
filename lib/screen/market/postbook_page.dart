@@ -94,9 +94,9 @@ class _PostBookPagePageState extends State<PostBookPage> {
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: _pickImage,
-              child: Text(
+              child: const Text(
                 '商品画像を選択*',
-                style: TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(500, 40),
@@ -108,7 +108,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               controller: _booknameEditingController,
               enabled: true,
               maxLength: 50, // 入力数
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               obscureText: false,
               maxLines: 1,
               decoration: const InputDecoration(
@@ -120,7 +120,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               controller: _bookauthorEditingController,
               enabled: true,
               maxLength: 30,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               obscureText: false,
               maxLines: 1,
               decoration: const InputDecoration(
@@ -153,8 +153,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text('円', style: TextStyle(fontSize: 16)),
                 ),
               ],
@@ -163,7 +163,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
               controller: _detailsEditingController,
               enabled: true,
               maxLength: 200, // 入力数
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
               obscureText: false,
               maxLines: 5,
               decoration: const InputDecoration(
@@ -209,8 +209,8 @@ class _PostBookPagePageState extends State<PostBookPage> {
             Navigator.pop(context);
           }
         },
-        child:
-            Icon(Icons.send, color: Colors.white), // 送信ボタン、押すと_onSubmittedが呼ばれる
+        child: const Icon(Icons.send,
+            color: Colors.white), // 送信ボタン、押すと_onSubmittedが呼ばれる
       ),
     );
   }

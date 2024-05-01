@@ -18,7 +18,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text("キャンパスフリマ"),
+        title: const Text("キャンパスフリマ"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
@@ -29,7 +29,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.filter_list),
+            icon: const Icon(Icons.filter_list),
             onPressed: () {
               // フィルター画面に遷移
             },
@@ -85,7 +85,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                     contentPadding: EdgeInsets.zero,
                     title: Column(
                       children: [
-                        Divider(
+                        const Divider(
                           color: Colors.black,
                           thickness: 1,
                           indent: 0.0,
@@ -127,21 +127,21 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                       children: <Widget>[
                                         Text(
                                           post['username'] ?? 'null',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
                                           post['faculty'] ?? 'null',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
                                           timeAgo(postedAt),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         ),
@@ -154,7 +154,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        Icon(Icons.bookmark_border),
+                                        const Icon(Icons.bookmark_border),
                                         const SizedBox(width: 10),
                                         // Text("${post["viewCount"]}閲覧",
                                         // style: TextStyle(
@@ -196,7 +196,7 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
             MaterialPageRoute(builder: (context) => PostBookPage()),
           );
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

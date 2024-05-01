@@ -51,7 +51,9 @@ class FavoriteButton extends HookWidget {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
 
           final List likelists = snapshot.data?['likes'] as List;
