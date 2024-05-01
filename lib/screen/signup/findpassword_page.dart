@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:libera_flutter/components/button.dart';
+import 'package:libera_flutter/services/auth/resetPassword.dart';
 
 class FindPasswordPage extends StatelessWidget {
-  const FindPasswordPage({Key? key}) : super(key: key);
+  FindPasswordPage({Key? key}) : super(key: key);
+
+  final TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,6 @@ class FindPasswordPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
                 'パスワードを忘れた場合',
@@ -31,8 +33,9 @@ class FindPasswordPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: _emailController,
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'メールアドレス',
                 ),
@@ -40,7 +43,12 @@ class FindPasswordPage extends StatelessWidget {
               const SizedBox(height: 15),
               SendButton(
                 text: '送信',
-                onPressed: () {},
+                onPressed: () {
+                  if (_emailController.text.isNotEmpty) {
+                    resetPassword(_emailController.text);
+                    Navigator.pop(context);
+                  }
+                },
               ),
             ],
           ),

@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         '/postbook': (context) => const PostBookPage(),
         '/chatlist': (context) => const ChatListPage(),
         '/discount': (context) => const DiscountPage(),
-        '/findpassword': (context) => const FindPasswordPage(),
+        '/findpassword': (context) => FindPasswordPage(),
       },
     );
   }

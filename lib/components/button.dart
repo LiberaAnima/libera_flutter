@@ -23,7 +23,7 @@ class SendButton extends StatelessWidget {
           backgroundColor: Colors.orange,
         ),
         onPressed: onPressed,
-        child: const Text("次へ"),
+        child: Text(text),
       ),
     );
   }
