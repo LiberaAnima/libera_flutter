@@ -75,6 +75,11 @@ class ChatroomPage extends StatelessWidget {
         if (snapshot.hasData) {
           final messages = _firebaseMessagesToChatMessages(snapshot.data!.docs);
           return Chat(
+            theme: const DefaultChatTheme(
+              inputBackgroundColor: Color.fromARGB(255, 254, 185, 80),
+              inputTextColor: Colors.white,
+              primaryColor: Color.fromARGB(255, 254, 185, 80),
+            ),
             messages: messages,
             onSendPressed: (types.PartialText message) async {
               final docRef = FirebaseFirestore.instance
