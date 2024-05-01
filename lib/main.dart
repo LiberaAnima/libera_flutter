@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:libera_flutter/screen/market/bookmarketlist_page.dart';
-import 'package:libera_flutter/screen/chatlist_page.dart';
+import 'package:libera_flutter/screen/chat/chatlist_page.dart';
 import 'package:libera_flutter/screen/class_page.dart';
 import 'package:libera_flutter/screen/discout_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
