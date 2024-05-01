@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:libera_flutter/screen/market/marketedit_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 import 'package:libera_flutter/screen/chat/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
@@ -20,7 +21,7 @@ class MarketSpecificPage extends StatefulWidget {
 }
 
 class _MarketSpecificPageState extends State<MarketSpecificPage> {
-  late Future<DocumentSnapshot> _future;
+  late Stream<DocumentSnapshot> _stream;
 
   final User? user = FirebaseAuth.instance.currentUser;
 
@@ -29,14 +30,16 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
   @override
   void initState() {
     super.initState();
-    _future =
-        FirebaseFirestore.instance.collection('books').doc(widget.uid).get();
+    _stream = FirebaseFirestore.instance
+        .collection('books')
+        .doc(widget.uid)
+        .snapshots();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot>(
-      future: _future,
+    return StreamBuilder<DocumentSnapshot>(
+      stream: _stream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
@@ -56,12 +59,12 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
           return Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.pop(context);
                 },
               ),
-              title: Text("商品詳細画面"),
+              title: const Text("商品詳細画面"),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -69,23 +72,79 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   Image.network(book['imageUrl'],
                       height: 300, width: double.infinity, fit: BoxFit.cover),
                   Padding(
-                    padding: EdgeInsets.only(
+                    padding: const EdgeInsets.only(
                         right: 8.0, left: 8.0, top: 8.0, bottom: 2.0),
                     child: Row(
                       children: <Widget>[
-                        CircleAvatar(
-                            // backgroundImage:
-                            //     NetworkImage('https://example.com/user-icon.jpg'),
-                            ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text('出品者: ${book['username']}'),
+                            Row(
+                              verticalDirection: VerticalDirection.down,
+                              children: [
+                                Text(
+                                  '出品者 : ${book['username']}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.more_vert),
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            ListTile(
+                                              leading: const Icon(Icons.edit),
+                                              title: const Text('修正'),
+                                              onTap: () {
+                                                // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                                print(book);
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        MarketEditPage(
+                                                            data: book),
+                                                  ),
+                                                );
+                                                // print(data);
+                                              },
+                                            ),
+                                            ListTile(
+                                              leading: Icon(Icons.delete),
+                                              title: Text('削除'),
+                                              onTap: () async {
+                                                await FirebaseFirestore.instance
+                                                    .collection('books')
+                                                    .doc(widget
+                                                        .uid) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
+                                                    .delete();
+
+                                                Navigator.pop(
+                                                    context); // 시트를 닫습니다.
+                                                Navigator.pop(
+                                                    context); // 시트를 닫습니다.
+                                              },
+                                            ),
+                                            const SizedBox(height: 20),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
                             Row(
                               children: [
                                 Text(book['faculty']),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                               ],
                             )
                           ],
@@ -103,24 +162,37 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
-                        child: Text(
-                          book['bookname'],
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        child: Row(
+                          children: [
+                            Text(
+                              book['bookname'],
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const Text(" - "),
+                            Text(
+                              book['bookauthor'],
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                             top: 2.0, left: 8.0, right: 8.0, bottom: 2.0),
                         child: Text(
                           '¥${book['price']}',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 23,
                             fontWeight: FontWeight.bold,
+                            color: Colors.orange[700],
                           ),
                         ),
                       ),
@@ -133,12 +205,12 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                             EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
                         child: Text(
                           book['faculty'],
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: Text(
                           '・',
@@ -148,10 +220,10 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: Text(
                           timeAgo(postedAt),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
@@ -163,7 +235,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     child: Text(
                       book['details'],
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),

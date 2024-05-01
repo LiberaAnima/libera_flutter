@@ -53,7 +53,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                 children: <Widget>[
                   const SizedBox(width: 10),
                   Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -61,13 +61,13 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                           children: [
                             Text(
                               data['name'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
                               ),
                             ),
                             IconButton(
-                              icon: Icon(Icons.more_vert),
+                              icon: const Icon(Icons.more_vert),
                               onPressed: () {
                                 showModalBottomSheet(
                                   context: context,
