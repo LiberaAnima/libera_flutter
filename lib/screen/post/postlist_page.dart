@@ -378,7 +378,7 @@ class _PostListPagePageState extends State<PostListPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.orange,
         onPressed: () {
           Navigator.push(
             context,
