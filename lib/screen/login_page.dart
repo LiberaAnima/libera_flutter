@@ -43,7 +43,9 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/findpassword');
+                    },
                     child: const Text("パスワードを忘れた場合"),
                   ),
                 ],

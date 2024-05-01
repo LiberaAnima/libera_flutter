@@ -12,7 +12,8 @@ import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/post/post_page.dart';
 import 'package:libera_flutter/screen/market/postbook_page.dart';
 import 'package:libera_flutter/screen/post/postlist_page.dart';
-import 'package:libera_flutter/screen/signup_page.dart';
+import 'package:libera_flutter/screen/signup/findpassword_page.dart';
+import 'package:libera_flutter/screen/signup/signup_page.dart';
 
 import 'firebase_options.dart';
 
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/postbook': (context) => const PostBookPage(),
         '/chatlist': (context) => const ChatListPage(),
         '/discount': (context) => const DiscountPage(),
+        '/findpassword': (context) => FindPasswordPage(),
       },
     );
   }
