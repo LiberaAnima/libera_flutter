@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _fetchPosts() async {
     var postsSnapshot = await FirebaseFirestore.instance
-        .collection('post')
+        .collection('posts')
         .where('uid', isEqualTo: widget.uid)
         .get();
 
@@ -116,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 (_) => Navigator.pushNamed(context, "/logIn")),
                             child: const Text("ログアウト"),
                           ),
-                          Divider(height: 40, thickness: 2),
+                          const Divider(height: 40, thickness: 2),
                           const Text('自分の投稿',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
@@ -140,7 +140,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           _books.isEmpty
-                              ? Padding(
+                              ? const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
                                   child: Text('フリマ投稿がありません',
                                       textAlign: TextAlign.center),
