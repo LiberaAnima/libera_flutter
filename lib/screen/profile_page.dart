@@ -149,7 +149,13 @@ class _ProfilePageState extends State<ProfilePage> {
                                               );
                                             },
                                             child: ListTile(
-                                              title: Text(post['post_message']),
+                                              title: Text(
+                                                post['title'],
+                                                style: const TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                               subtitle: Text(
                                                   'Likes: ${post['likes'].length}'),
                                             ),
@@ -191,13 +197,23 @@ class _ProfilePageState extends State<ProfilePage> {
                                               );
                                             },
                                             child: ListTile(
-                                              title: Text(book['bookname']),
+                                              title: Text(
+                                                book['bookname'],
+                                                style: const TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
                                               subtitle:
                                                   Text('${book['price']}円'),
                                             ),
                                           ))
                                       .toList(),
                                 ),
+                          const Divider(height: 40, thickness: 2),
+                          const Text('お気に入り商品',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
