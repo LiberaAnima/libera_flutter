@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:libera_flutter/models/user_model.dart';
+import 'package:libera_flutter/screen/market/marketspecific_page.dart';
 import 'package:libera_flutter/services/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -82,38 +83,45 @@ class _ProfilePageState extends State<ProfilePage> {
                           SizedBox(height: 24),
                           Text(
                             _user!.username,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             _user!.email,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          Divider(height: 40, thickness: 2),
+                          const Divider(height: 40, thickness: 2),
                           profileInfo('大学', _user!.school),
                           profileInfo('学部', _user!.faculty),
                           profileInfo('学年', _user!.year),
                           profileInfo('性別', _user!.gender),
+                          ElevatedButton(
+                            onPressed: () => {},
+                            child: const Text("修正"),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           ElevatedButton(
                             onPressed: () async => await _auth.signOut().then(
                                 (_) => Navigator.pushNamed(context, "/logIn")),
                             child: const Text("ログアウト"),
                           ),
                           Divider(height: 40, thickness: 2),
-                          Text('自分の投稿',
+                          const Text('自分の投稿',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           _posts.isEmpty
-                              ? Padding(
+                              ? const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
                                   child: Text('投稿がありません',
                                       textAlign: TextAlign.center),
@@ -127,8 +135,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ))
                                       .toList(),
                                 ),
-                          Divider(height: 40, thickness: 2),
-                          Text('フリマ投稿',
+                          const Divider(height: 40, thickness: 2),
+                          const Text('フリマ投稿',
                               style: TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           _books.isEmpty
@@ -139,9 +147,33 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Column(
                                   children: _books
-                                      .map((book) => ListTile(
-                                            title: Text(book['bookname']),
-                                            subtitle: Text('${book['price']}円'),
+                                      .map((book) => GestureDetector(
+                                            onTap: () {
+                                              DocumentReference docRef =
+                                                  FirebaseFirestore.instance
+                                                      .collection('books')
+                                                      .doc(book['documentId']);
+
+                                              // Increment the viewCount field
+                                              docRef.update({
+                                                'viewCount':
+                                                    FieldValue.increment(1)
+                                              });
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MarketSpecificPage(
+                                                          uid: book[
+                                                              'documentId']),
+                                                ),
+                                              );
+                                            },
+                                            child: ListTile(
+                                              title: Text(book['bookname']),
+                                              subtitle:
+                                                  Text('${book['price']}円'),
+                                            ),
                                           ))
                                       .toList(),
                                 ),
