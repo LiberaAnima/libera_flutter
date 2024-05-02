@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/market/marketspecific_page.dart';
+import 'package:libera_flutter/screen/post/post_specific.dart';
 import 'package:libera_flutter/services/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -128,10 +129,30 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Column(
                                   children: _posts
-                                      .map((post) => ListTile(
-                                            title: Text(post['post_message']),
-                                            subtitle: Text(
-                                                'Likes: ${post['likes'].length}'),
+                                      .map((post) => GestureDetector(
+                                            onTap: () {
+                                              DocumentReference docRef =
+                                                  FirebaseFirestore.instance
+                                                      .collection('posts')
+                                                      .doc(post['documentID']);
+
+                                              // Increment the viewCount field
+
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PostSpecificPage(
+                                                          id: post[
+                                                              'documentID']),
+                                                ),
+                                              );
+                                            },
+                                            child: ListTile(
+                                              title: Text(post['post_message']),
+                                              subtitle: Text(
+                                                  'Likes: ${post['likes'].length}'),
+                                            ),
                                           ))
                                       .toList(),
                                 ),
