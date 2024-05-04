@@ -107,7 +107,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           profileInfo('学年', _user!.year),
                           profileInfo('性別', _user!.gender),
                           ElevatedButton(
-                            onPressed: () => {},
+                            onPressed: () =>
+                                {Navigator.pushNamed(context, "/editprofile")},
                             child: const Text("修正"),
                           ),
                           const SizedBox(
