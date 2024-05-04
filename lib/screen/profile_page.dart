@@ -9,13 +9,13 @@ import 'package:libera_flutter/services/user_service.dart';
 class ProfilePage extends StatefulWidget {
   final String uid;
 
-  const ProfilePage({Key? key, required this.uid}) : super(key: key);
+  const ProfilePage({super.key, required this.uid});
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  UserService _userService = UserService();
+  final UserService _userService = UserService();
   UserModel? _user;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<dynamic> _posts = [];
@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
       future: _userService.getUserData(widget.uid),
       builder: (BuildContext context, AsyncSnapshot<UserModel> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -70,18 +70,19 @@ class _ProfilePageState extends State<ProfilePage> {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Colors.white,
-              title: Text('プロフィール', style: TextStyle(color: Colors.black)),
+              title:
+                  const Text('プロフィール', style: TextStyle(color: Colors.black)),
               elevation: 0,
             ),
             body: _user == null
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : Container(
                     color: Colors.white,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: ListView(
                         children: <Widget>[
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Text(
                             _user!.username,
                             style: const TextStyle(
@@ -232,7 +233,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Expanded(
             child: Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 16,
               ),
@@ -240,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 16,
               fontWeight: FontWeight.bold,
