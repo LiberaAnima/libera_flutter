@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/screen/post/postsearch_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 //いいね機能
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:libera_flutter/screen/post_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:libera_flutter/screen/post/post_page.dart';
 import 'package:libera_flutter/services/likebutton.dart';
 
 //返信機能
-import 'package:libera_flutter/screen/post_specific.dart';
-import 'package:provider/provider.dart';
+import 'package:libera_flutter/screen/post/post_specific.dart';
 
 class PostListPage extends StatefulWidget {
   const PostListPage({Key? key}) : super(key: key);
@@ -25,22 +23,29 @@ class PostListPage extends StatefulWidget {
 class _PostListPagePageState extends State<PostListPage> {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> postlists = FirebaseFirestore.instance
+    Stream<QuerySnapshot> postlists;
+    postlists = FirebaseFirestore.instance
         .collection('posts')
         .orderBy('date', descending: true)
         .snapshots();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('掲示板'),
-        shape: const Border(
-          bottom: BorderSide(color: Colors.orange, width: 2),
-        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => PostSearchPage()));
+              // 検索画面に遷移
+            },
+          ),
+        ],
       ),
-      endDrawer: Drawer(
+      drawer: Drawer(
         child: Column(
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 90),
             const Text(
               "カテゴリー",
               style: TextStyle(
@@ -121,93 +126,95 @@ class _PostListPagePageState extends State<PostListPage> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Text("Loading");
+            return Center(child: CircularProgressIndicator());
           }
           return Column(
             children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 10, bottom: 4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "雑談",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "Q&A",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
-                      margin: const EdgeInsets.only(right: 8),
-                      decoration: ShapeDecoration(
-                        shape: RoundedRectangleBorder(
-                          side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          ),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      child: Text(
-                        "募集",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 12,
-                          fontFamily: "inter",
-                          fontWeight: FontWeight.w400,
-                          height: 0.11,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // TAG DISPLAY
+              // update later
+              // Container(
+              //   padding: const EdgeInsets.only(
+              //       left: 10, right: 10, top: 10, bottom: 4),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     mainAxisSize: MainAxisSize.max,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       Container(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 10, vertical: 8),
+              //         margin: const EdgeInsets.only(right: 8),
+              //         decoration: ShapeDecoration(
+              //           shape: RoundedRectangleBorder(
+              //             side: BorderSide(
+              //               width: 1,
+              //               color: Colors.orange,
+              //             ),
+              //             borderRadius: BorderRadius.circular(5),
+              //           ),
+              //         ),
+              //         child: Text(
+              //           "雑談",
+              //           style: TextStyle(
+              //             color: Colors.black,
+              //             fontSize: 12,
+              //             fontFamily: "inter",
+              //             fontWeight: FontWeight.w400,
+              //             height: 0.11,
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 10, vertical: 8),
+              //         margin: const EdgeInsets.only(right: 8),
+              //         decoration: ShapeDecoration(
+              //           shape: RoundedRectangleBorder(
+              //             side: BorderSide(
+              //               width: 1,
+              //               color: Colors.orange,
+              //             ),
+              //             borderRadius: BorderRadius.circular(5),
+              //           ),
+              //         ),
+              //         child: Text(
+              //           "Q&A",
+              //           style: TextStyle(
+              //             color: Colors.black,
+              //             fontSize: 12,
+              //             fontFamily: "inter",
+              //             fontWeight: FontWeight.w400,
+              //             height: 0.11,
+              //           ),
+              //         ),
+              //       ),
+              //       Container(
+              //         padding: const EdgeInsets.symmetric(
+              //             horizontal: 10, vertical: 8),
+              //         margin: const EdgeInsets.only(right: 8),
+              //         decoration: ShapeDecoration(
+              //           shape: RoundedRectangleBorder(
+              //             side: BorderSide(
+              //               width: 1,
+              //               color: Colors.orange,
+              //             ),
+              //             borderRadius: BorderRadius.circular(5),
+              //           ),
+              //         ),
+              //         child: Text(
+              //           "募集",
+              //           style: TextStyle(
+              //             color: Colors.black,
+              //             fontSize: 12,
+              //             fontFamily: "inter",
+              //             fontWeight: FontWeight.w400,
+              //             height: 0.11,
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               const Divider(
                 color: Colors.grey,
                 thickness: .5,
@@ -243,52 +250,20 @@ class _PostListPagePageState extends State<PostListPage> {
                                   const EdgeInsets.only(top: 0, bottom: 0),
                               title: Column(
                                 children: [
-                                  const SizedBox(height: 5),
                                   Column(
                                     mainAxisSize: MainAxisSize.min,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          Container(
-                                            padding: const EdgeInsets.all(8),
-                                            decoration: ShapeDecoration(
-                                              color: const Color(0xFFE0E0E0),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(3)),
-                                            ),
-                                            child: const Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Q&A",
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontFamily: 'Inter',
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 0.18,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Row(
                                         children: <Widget>[
                                           const SizedBox(width: 10),
                                           Text(
-                                            '${data['name']}',
+                                            '${data['title']}',
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              fontSize:
+                                                  20, // ここでタイトルのフォントサイズを変更
                                             ),
                                           ),
                                         ],
@@ -316,6 +291,16 @@ class _PostListPagePageState extends State<PostListPage> {
                                         children: [
                                           const SizedBox(width: 10),
                                           Text(
+                                            data["isAnonymous"] == true
+                                                ? '匿名'
+                                                : data["name"],
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Text(
                                             data['date'] != null
                                                 ? timeAgo(data['date'].toDate())
                                                 : 'Unknown date',
@@ -336,20 +321,43 @@ class _PostListPagePageState extends State<PostListPage> {
                                           const SizedBox(width: 10),
                                           IconButton(
                                             onPressed: () {
-                                              // Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //     builder: (context) =>
-                                              //         postSpecificPage(
-                                              //       id: data['documentID'],
-                                              //     ),
-                                              //   ),
-                                              // );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PostSpecificPage(
+                                                    id: data['documentID'],
+                                                  ),
+                                                ),
+                                              );
                                             },
                                             icon: const Icon(
                                               Icons.messenger_outline_rounded,
                                               size: 20,
                                             ),
+                                          ),
+                                          StreamBuilder<QuerySnapshot>(
+                                            stream: FirebaseFirestore.instance
+                                                .collection('posts')
+                                                .doc(data['documentID'])
+                                                .collection('comments')
+                                                .snapshots(),
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<QuerySnapshot>
+                                                    snapshot) {
+                                              if (snapshot.hasData) {
+                                                return Text(
+                                                    '${snapshot.data!.docs.length.toString()} コメント',
+                                                    style: const TextStyle(
+                                                      fontSize: 10,
+                                                    ));
+                                              } else if (snapshot.hasError) {
+                                                return Text(
+                                                    'Error: ${snapshot.error}');
+                                              }
+                                              // By default, show a loading spinner.
+                                              return CircularProgressIndicator();
+                                            },
                                           ),
                                         ],
                                       ),
@@ -370,13 +378,14 @@ class _PostListPagePageState extends State<PostListPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.orange,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PostPage()),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

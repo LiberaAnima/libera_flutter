@@ -17,6 +17,7 @@ class _BottomNavState extends State<BottomNav> {
   @override
   Widget build(BuildContext context) {
     return NavigationBar(
+      backgroundColor: const Color.fromARGB(60, 255, 255, 255),
       onDestinationSelected: (int index) {
         setState(
           () {
@@ -29,8 +30,7 @@ class _BottomNavState extends State<BottomNav> {
       selectedIndex: currentPageIndex,
       destinations: const <Widget>[
         NavigationDestination(
-          selectedIcon: Icon(Icons.home),
-          icon: Icon(Icons.home_outlined),
+          icon: Icon(Icons.home),
           label: 'ホーム',
         ),
         NavigationDestination(
@@ -47,7 +47,7 @@ class _BottomNavState extends State<BottomNav> {
         NavigationDestination(
           icon: Badge(
             // label: Text('3'),
-            child: Icon(Icons.chat_bubble_outline),
+            child: Icon(Icons.chat),
           ),
           label: 'チャット',
         ),

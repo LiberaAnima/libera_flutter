@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:libera_flutter/screen/bookmarketlist_page.dart';
-import 'package:libera_flutter/screen/chatlist_page.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:libera_flutter/screen/market/bookmarketlist_page.dart';
+import 'package:libera_flutter/screen/chat/chatlist_page.dart';
 import 'package:libera_flutter/screen/class_page.dart';
+import 'package:libera_flutter/screen/discout_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
-import 'package:libera_flutter/screen/post_page.dart';
-import 'package:libera_flutter/screen/postbook_page.dart';
-import 'package:libera_flutter/screen/postlist_page.dart';
-import 'package:libera_flutter/screen/profile_page.dart';
-import 'package:libera_flutter/screen/signup_page.dart';
+import 'package:libera_flutter/screen/post/post_page.dart';
+import 'package:libera_flutter/screen/market/postbook_page.dart';
+import 'package:libera_flutter/screen/post/postlist_page.dart';
+import 'package:libera_flutter/screen/profileEdit_page.dart';
+import 'package:libera_flutter/screen/signup/findpassword_page.dart';
+import 'package:libera_flutter/screen/signup/signup_page.dart';
 
 import 'firebase_options.dart';
 
 Future<void> main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle().copyWith(
+      statusBarColor: Colors.white,
+      systemNavigationBarColor: Colors.white,
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -34,9 +45,9 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       localizationsDelegates: [],
       theme: ThemeData(
-        primaryColor: Colors.white,
+        primarySwatch: Colors.blue,
         // colorScheme:
-        //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 255, 255, 255)),
+        //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 242, 183, 7)),
         useMaterial3: true,
       ),
       routes: {
@@ -52,6 +63,9 @@ class MyApp extends StatelessWidget {
         '/post': (context) => PostPage(),
         '/postbook': (context) => const PostBookPage(),
         '/chatlist': (context) => const ChatListPage(),
+        '/discount': (context) => const DiscountPage(),
+        '/findpassword': (context) => FindPasswordPage(),
+        '/editprofile': (context) => const ProfileEditPage(),
       },
     );
   }

@@ -15,7 +15,24 @@ class ChatRoom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat App'),
+        title: FutureBuilder<DocumentSnapshot>(
+          future:
+              FirebaseFirestore.instance.collection('users').doc(otherId).get(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Text("Loading...");
+            } else {
+              if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              } else {
+                Map<String, dynamic> data =
+                    snapshot.data!.data() as Map<String, dynamic>;
+                return Text(data['username']);
+              }
+            }
+          },
+        ),
       ),
       body: ChatroomPage(
         otherId: otherId,
@@ -48,7 +65,7 @@ class ChatroomPage extends StatelessWidget {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (snapshot.hasError) {
@@ -58,6 +75,11 @@ class ChatroomPage extends StatelessWidget {
         if (snapshot.hasData) {
           final messages = _firebaseMessagesToChatMessages(snapshot.data!.docs);
           return Chat(
+            theme: const DefaultChatTheme(
+              inputBackgroundColor: Color.fromARGB(255, 254, 185, 80),
+              inputTextColor: Colors.white,
+              primaryColor: Color.fromARGB(255, 254, 185, 80),
+            ),
             messages: messages,
             onSendPressed: (types.PartialText message) async {
               final docRef = FirebaseFirestore.instance
