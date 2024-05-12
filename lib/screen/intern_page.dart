@@ -4,27 +4,27 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DiscountPage extends StatefulWidget {
-  const DiscountPage({Key? key}) : super(key: key);
+class InternPage extends StatefulWidget {
+  const InternPage({Key? key}) : super(key: key);
 
   @override
-  _DiscountPageState createState() => _DiscountPageState();
+  _InternPageState createState() => _InternPageState();
 }
 
-class _DiscountPageState extends State<DiscountPage> {
+class _InternPageState extends State<InternPage> {
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> internlists;
-    internlists = FirebaseFirestore.instance
+    Stream<QuerySnapshot> discountlists;
+    discountlists = FirebaseFirestore.instance
         .collection('discounts')
         .orderBy('name', descending: true)
         .snapshots();
     return Scaffold(
       appBar: AppBar(
-        title: Text("割引画面"),
+        title: Text("インターンシップ情報"),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: internlists,
+        stream: discountlists,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');

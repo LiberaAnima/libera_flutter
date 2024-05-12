@@ -307,6 +307,7 @@ class _MainPagePageState extends State<MainPage> {
                                   ],
                                 ),
                               ),
+                              /*
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -321,7 +322,7 @@ class _MainPagePageState extends State<MainPage> {
                                   menuIcon(
                                       Icons.discount, "/discount", "課外イベント"),
                                 ],
-                              ),
+                              ),*/
                               Card.outlined(
                                 child: Column(
                                   children: [
