@@ -17,6 +17,7 @@ import 'package:libera_flutter/screen/signup/findpassword_page.dart';
 import 'package:libera_flutter/screen/signup/signup_page.dart';
 
 import 'firebase_options.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
