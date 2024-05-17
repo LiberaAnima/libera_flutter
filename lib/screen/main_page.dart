@@ -316,8 +316,8 @@ class _MainPagePageState extends State<MainPage> {
                                       "https://kwic.kwansei.ac.jp/login",
                                       "大学ホーム"),
                                   menuIcon(Icons.discount, "/discount", "学割情報"),
-                                  menuIcon(Icons.discount, "/discount",
-                                      "インターン\n　バイト"),
+                                  menuIcon(
+                                      Icons.discount, "/intern", "インターン\n　バイト"),
                                   menuIcon(
                                       Icons.discount, "/discount", "課外イベント"),
                                 ],

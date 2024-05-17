@@ -4,27 +4,24 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DiscountPage extends StatefulWidget {
-  const DiscountPage({Key? key}) : super(key: key);
+class InternPage extends StatefulWidget {
+  const InternPage({Key? key}) : super(key: key);
 
   @override
-  _DiscountPageState createState() => _DiscountPageState();
+  _InternPageState createState() => _InternPageState();
 }
 
-class _DiscountPageState extends State<DiscountPage> {
+class _InternPageState extends State<InternPage> {
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> discountlists;
-    discountlists = FirebaseFirestore.instance
-        .collection('discounts')
-        .orderBy('name', descending: true)
-        .snapshots();
+    Stream<QuerySnapshot> internlists;
+    internlists = FirebaseFirestore.instance.collection('intern').snapshots();
     return Scaffold(
       appBar: AppBar(
-        title: Text("割引画面"),
+        title: Text("インターン・バイト情報"),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: discountlists,
+        stream: internlists,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');
@@ -66,7 +63,7 @@ class _DiscountPageState extends State<DiscountPage> {
                                       children: <Widget>[
                                         const SizedBox(width: 10),
                                         Text(
-                                          '${data['name']}',
+                                          '${data['company']}',
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20, // ここでタイトルのフォントサイズを変更
@@ -81,8 +78,29 @@ class _DiscountPageState extends State<DiscountPage> {
                                       children: [
                                         const SizedBox(width: 10),
                                         Text(
-                                          data['contents'],
+                                          data['course'],
                                         ),
+                                      ],
+                                    ),
+                                    const Divider(
+                                      color: Color.fromRGBO(165, 165, 165, 1),
+                                      thickness: .5,
+                                      indent: 15,
+                                      endIndent: 15,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        for (int i = 0;
+                                            i < data['pattern'].length;
+                                            i++) ...{
+                                          Flexible(
+                                            child: Text(
+                                              data['pattern'][i] + "\n",
+                                            ),
+                                          )
+                                        }
                                       ],
                                     ),
                                     const Divider(
