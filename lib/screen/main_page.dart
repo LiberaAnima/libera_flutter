@@ -317,13 +317,13 @@ class _MainPagePageState extends State<MainPage> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  // TODO: Implement logout functionality
-                                  _auth.signOut();
-                                },
-                                child: Text('로그아웃'),
-                              ),
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     // TODO: Implement logout functionality
+                              //     _auth.signOut();
+                              //   },
+                              //   child: Text('로그아웃'),
+                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

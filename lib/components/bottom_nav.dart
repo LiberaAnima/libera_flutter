@@ -34,28 +34,26 @@ class _BottomNavState extends State<BottomNav> {
           label: 'ホーム',
         ),
         NavigationDestination(
-          icon: Badge(child: Icon(Icons.book)),
+          icon: Icon(Icons.book),
           label: 'フリマ',
         ),
         NavigationDestination(
-          icon: Badge(
-            label: Text('2'),
-            child: Icon(Icons.article),
-          ),
+          icon:
+              // label: Text('2'),
+              Icon(Icons.article),
           label: '掲示板',
         ),
         NavigationDestination(
-          icon: Badge(
-            // label: Text('3'),
-            child: Icon(Icons.chat),
-          ),
+          icon:
+              // label: Text('3'),
+              Icon(Icons.chat),
           label: 'チャット',
         ),
         NavigationDestination(
-            icon: Badge(
-              label: Text('4'),
-              child: Icon(Icons.school),
-            ),
+            icon:
+                // label: Text('4'),
+                // Badge count追加予定
+                Icon(Icons.school),
             label: '授業'),
       ],
     );
