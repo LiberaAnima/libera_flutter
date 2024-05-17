@@ -5,12 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/screen/school_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:intl/intl.dart';
+import 'package:libera_flutter/services/user_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -24,11 +26,26 @@ class MainPage extends StatefulWidget {
 class _MainPagePageState extends State<MainPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  final UserService _userService = UserService();
+  UserModel? _user;
 
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
-    return await db.collection('users').doc(userId).get();
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  void _fetchUserData() async {
+    try {
+      UserModel userData = await _userService.getUserData(userId);
+      setState(() {
+        _user = userData;
+      });
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
   }
 
   @override
@@ -81,48 +98,25 @@ class _MainPagePageState extends State<MainPage> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              FutureBuilder<
-                                  DocumentSnapshot<Map<String, dynamic>>>(
-                                // get user data
-                                future: getUserData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
-                                  } else {
-                                    final userData = snapshot.data!.data();
-                                    return Row(
-                                      children: [
-                                        Padding(
-                                          // 学校名
-                                          padding:
-                                              const EdgeInsets.only(left: 20),
-                                          child: Text(
-                                            userData?['school'] ?? "null",
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: 30,
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                },
+                              Row(
+                                children: [
+                                  Padding(
+                                    // 学校名
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Text(
+                                      _user!.school,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 30,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              // TextButton(
-                              //   onPressed: () async {
-                              //     await FirebaseAuth.instance.signOut();
-                              //   },
-                              //   child: Text("logout"),
-                              // ),
                               Container(
-                                margin: const EdgeInsets.all(15),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
@@ -320,7 +314,6 @@ class _MainPagePageState extends State<MainPage> {
                                   ],
                                 ),
                               ),
-
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
