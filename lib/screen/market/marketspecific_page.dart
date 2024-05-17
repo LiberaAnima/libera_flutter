@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/market/marketedit_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 import 'package:libera_flutter/screen/chat/chatroom_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
+import 'package:libera_flutter/services/user_service.dart';
 
 Uri url = Uri.parse(
     'https://docs.google.com/forms/d/e/1FAIpQLSfmAKkMXTtKehTmJtA2mJq1vIr3KNgD1MLc-x9egUUo82P2WQ/viewform');
@@ -22,18 +24,30 @@ class MarketSpecificPage extends StatefulWidget {
 
 class _MarketSpecificPageState extends State<MarketSpecificPage> {
   late Stream<DocumentSnapshot> _stream;
-
+  UserModel? _user;
+  final UserService _userService = UserService();
   final User? user = FirebaseAuth.instance.currentUser;
-
   bool isBookmarked = false;
 
   @override
   void initState() {
     super.initState();
+    _fetchUserData();
     _stream = FirebaseFirestore.instance
         .collection('books')
         .doc(widget.uid)
         .snapshots();
+  }
+
+  void _fetchUserData() async {
+    try {
+      UserModel userData = await _userService.getUserData(user!.uid);
+      setState(() {
+        _user = userData;
+      });
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
   }
 
   @override
@@ -52,9 +66,6 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
           DateTime postedAt = book['postedAt'] != null
               ? book['postedAt'].toDate()
               : DateTime.now();
-
-          print(book);
-          print(user?.uid);
 
           return Scaffold(
             appBar: AppBar(
@@ -597,6 +608,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                               print("chat ID " + chatroomid);
                               print(user?.uid);
                               print(book['uid']);
+                              print(_user!.username);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -609,6 +621,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                               );
                             } else {
                               // Chatroom does not exist, create it
+                              print(_user!.username);
                               final docRef = await FirebaseFirestore.instance
                                   .collection('chatroom')
                                   .add({
