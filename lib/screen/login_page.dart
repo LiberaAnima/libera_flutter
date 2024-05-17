@@ -19,77 +19,81 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        key: _key,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Image(
-                image: AssetImage('assets/images/icon.png'),
-                width: 200,
-                height: 200,
-              ),
-              SizedBox(height: 30),
-              EmailInput(
-                controller: _emailController,
-              ),
-              const SizedBox(height: 15),
-              PasswordInput(
-                controller: _passwordController,
-              ),
-              Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/findpassword');
-                    },
-                    child: const Text("パスワードを忘れた場合"),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10),
-              loginButton(),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      backgroundColor: Colors.white,
+    return GestureDetector(
+      onTap: () => {FocusScope.of(context).unfocus()},
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Center(
+          key: _key,
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Image(
+                  image: AssetImage('assets/images/icon.png'),
+                  width: 200,
+                  height: 200,
+                ),
+                const SizedBox(height: 30),
+                EmailInput(
+                  controller: _emailController,
+                ),
+                const SizedBox(height: 15),
+                PasswordInput(
+                  controller: _passwordController,
+                ),
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/findpassword');
+                      },
+                      child: const Text("パスワードを忘れた場合"),
                     ),
-                    onPressed: () => Navigator.pushNamed(context, '/signUp'),
-                    child: Text("アカウントを作成する")),
-              ),
-              SizedBox(
-                height: 80,
-              ),
-              Row(
-                // 利用契約、プライバシーポリシー、Q&A　リンク
+                  ],
+                ),
+                SizedBox(height: 10),
+                loginButton(),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        backgroundColor: Colors.white,
+                      ),
+                      onPressed: () => Navigator.pushNamed(context, '/signUp'),
+                      child: Text("アカウントを作成する")),
+                ),
+                SizedBox(
+                  height: 80,
+                ),
+                Row(
+                  // 利用契約、プライバシーポリシー、Q&A　リンク
 
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/'),
-                    child: const Text("利用契約"),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/'),
-                    child: const Text("プライバシーポリシー"),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(context, '/'),
-                    child: const Text("Q&A"),
-                  ),
-                ],
-              )
-            ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(context, '/'),
+                      child: const Text("利用契約"),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(context, '/'),
+                      child: const Text("プライバシーポリシー"),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pushNamed(context, '/'),
+                      child: const Text("Q&A"),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
