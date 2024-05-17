@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/components/button.dart';
+import 'package:libera_flutter/components/school_select.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 
 const List<String> list_sex = <String>['男性', '女性', 'その他'];
@@ -21,11 +22,16 @@ class Signup2Page extends StatefulWidget {
 }
 
 class _Signup2PageState extends State<Signup2Page> {
-  String genderDropdouwnValue = 'Sex';
+  String genderDropdouwnValue = '性別';
   String yearDropdouwnValue = 'Year';
   String schoolDropdouwnValue = 'School';
   String facultyDropdouwnValue = 'Faculty';
+  String fieldDropdouwnValue = 'Field';
   final _usernameController = TextEditingController();
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getSchools() {
+    return FirebaseFirestore.instance.collection('school').get();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,70 +54,59 @@ class _Signup2PageState extends State<Signup2Page> {
                   ),
                 ),
               ),
-
               const SizedBox(
                 height: 20,
               ),
-
               const Text("大学",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              CupertinoButton(
-                onPressed: () {
-                  showCupertinoModalPopup(
-                    context: context,
-                    barrierDismissible: true, // Add this line
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: 200, // You can change this value
-                        color: Colors.white,
-                        child: CupertinoPicker(
-                          itemExtent: 32,
-                          onSelectedItemChanged: (int index) {
-                            setState(() {
-                              schoolDropdouwnValue = list_school[index];
-                            });
-                          },
-                          children: list_school.map((String value) {
-                            return Text(value);
-                          }).toList(),
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: Text(schoolDropdouwnValue),
+              const SizedBox(
+                height: 10,
               ),
-              // faculty
-              const Text("学部",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-
-              CupertinoButton(
-                onPressed: () {
-                  showCupertinoModalPopup(
-                    context: context,
-                    barrierDismissible: true, // Add this line
-                    builder: (BuildContext context) {
-                      return Container(
-                        height: 200, // You can change this value
-                        color: Colors.white,
-                        child: CupertinoPicker(
-                          itemExtent: 32,
-                          onSelectedItemChanged: (int index) {
-                            setState(() {
-                              facultyDropdouwnValue = list_faculty[index];
-                            });
-                          },
-                          children: list_faculty.map((String value) {
-                            return Text(value);
-                          }).toList(),
-                        ),
-                      );
-                    },
-                  );
+              SchoolDropdown(
+                futureSchools: getSchools(),
+                onSchoolSelected: (String? school) {
+                  schoolDropdouwnValue = school!;
                 },
-                child: Text(facultyDropdouwnValue),
+                onFacultySelected: (String? faculty) {
+                  facultyDropdouwnValue = faculty!;
+                },
+                onFieldSelected: (String? field) {
+                  fieldDropdouwnValue = field!;
+                },
               ),
 
+              // const Text("学部",
+              //     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+
+              // CupertinoButton(
+              //   onPressed: () {
+              //     showCupertinoModalPopup(
+              //       context: context,
+              //       barrierDismissible: true, // Add this line
+              //       builder: (BuildContext context) {
+              //         return Container(
+              //           height: 200, // You can change this value
+              //           color: Colors.white,
+              //           child: CupertinoPicker(
+              //             itemExtent: 32,
+              //             onSelectedItemChanged: (int index) {
+              //               setState(() {
+              //                 facultyDropdouwnValue = list_faculty[index];
+              //               });
+              //             },
+              //             children: list_faculty.map((String value) {
+              //               return Text(value);
+              //             }).toList(),
+              //           ),
+              //         );
+              //       },
+              //     );
+              //   },
+              //   child: Text(facultyDropdouwnValue),
+              // ),
+              const SizedBox(
+                height: 20,
+              ),
               // year
               const Text("学年",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
@@ -206,6 +201,7 @@ class _Signup2PageState extends State<Signup2Page> {
                       'uid': user.uid,
                       'school': schoolDropdouwnValue,
                       'faculty': facultyDropdouwnValue,
+                      'field': fieldDropdouwnValue,
                       'year': yearDropdouwnValue,
                       'gender': genderDropdouwnValue,
                       'username': _usernameController.text,

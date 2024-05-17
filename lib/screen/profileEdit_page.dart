@@ -27,10 +27,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
         title: const Text("プロフィール編集"),
       ),
       body: Center(
-        child: SchoolDropdown(
-          futureSchools: getSchools(),
-        ),
-      ),
+          // child: SchoolDropdown(
+          //   futureSchools: getSchools(),
+          // ),
+          ),
     );
   }
 }

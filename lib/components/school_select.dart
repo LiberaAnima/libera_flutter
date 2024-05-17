@@ -3,8 +3,16 @@ import 'package:flutter/material.dart';
 
 class SchoolDropdown extends StatefulWidget {
   final Future<QuerySnapshot<Map<String, dynamic>>> futureSchools;
+  final ValueChanged<String?> onSchoolSelected;
+  final ValueChanged<String?> onFacultySelected;
+  final ValueChanged<String?> onFieldSelected;
 
-  SchoolDropdown({required this.futureSchools});
+  SchoolDropdown({
+    required this.futureSchools,
+    required this.onSchoolSelected,
+    required this.onFacultySelected,
+    required this.onFieldSelected,
+  });
 
   @override
   _SchoolDropdownState createState() => _SchoolDropdownState();
@@ -38,6 +46,7 @@ class _SchoolDropdownState extends State<SchoolDropdown> {
                     _selectedField = null;
                     _selectedValue = null;
                   });
+                  widget.onSchoolSelected(_selectedSchool);
                 },
                 items: schoolDocs.map<DropdownMenuItem<String>>((doc) {
                   return DropdownMenuItem<String>(
@@ -46,26 +55,30 @@ class _SchoolDropdownState extends State<SchoolDropdown> {
                   );
                 }).toList(),
               ),
-              if (_selectedSchool != null)
-                DropdownButton<String>(
-                  value: _selectedField,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedField = newValue;
-                      _selectedValue = null;
-                    });
-                  },
-                  items: (schoolDocs
-                          .firstWhere((doc) => doc.id == _selectedSchool)
-                          .data()!
-                          .keys)
-                      .map<DropdownMenuItem<String>>((key) {
-                    return DropdownMenuItem<String>(
-                      value: key,
-                      child: Text(key),
-                    );
-                  }).toList(),
-                ),
+              DropdownButton<String>(
+                value: _selectedField,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedField = newValue;
+                    _selectedValue = null;
+                  });
+                  widget.onFacultySelected(_selectedField);
+                  // print(_selectedSchool);
+                },
+                items: (_selectedSchool != null &&
+                            schoolDocs.any((doc) => doc.id == _selectedSchool)
+                        ? schoolDocs
+                            .firstWhere((doc) => doc.id == _selectedSchool)
+                            .data()!
+                            .keys
+                        : <String>[])
+                    .map<DropdownMenuItem<String>>((key) {
+                  return DropdownMenuItem<String>(
+                    value: key,
+                    child: Text(key),
+                  );
+                }).toList(),
+              ),
               if (_selectedField != null)
                 DropdownButton<String>(
                   value: _selectedValue,
@@ -73,6 +86,7 @@ class _SchoolDropdownState extends State<SchoolDropdown> {
                     setState(() {
                       _selectedValue = newValue;
                     });
+                    widget.onFieldSelected(_selectedValue);
                   },
                   items: (schoolDocs
                           .firstWhere((doc) => doc.id == _selectedSchool)
