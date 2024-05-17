@@ -314,23 +314,36 @@ class _MainPagePageState extends State<MainPage> {
                                   ],
                                 ),
                               ),
+                              const SizedBox(
+                                height: 20,
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  menuIcon(
+                                  Flexible(
+                                    child: menuIcon(
                                       Icons.home,
                                       "https://kwic.kwansei.ac.jp/login",
-                                      "大学ホーム"),
-                                  menuIcon(Icons.discount, "/discount", "学割情報"),
-                                  menuIcon(Icons.discount, "/discount",
-                                      "インターン\n　バイト"),
-                                  menuIcon(
-                                      Icons.discount, "/discount", "課外イベント"),
+                                      "大学ホーム",
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: menuIcon(
+                                        Icons.discount, "/discount", "学割情報"),
+                                  ),
+                                  Flexible(
+                                    child: menuIcon(Icons.discount, "/discount",
+                                        "インターン\n　バイト"),
+                                  ),
+                                  Flexible(
+                                    child: menuIcon(
+                                        Icons.discount, "/discount", "課外イベント"),
+                                  ),
                                 ],
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
                               const Card.outlined(
                                 child: Column(
