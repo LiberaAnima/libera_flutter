@@ -18,37 +18,41 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Form(
-              key: _key,
-              child: Column(
-                children: [
-                  const Image(
-                    image: AssetImage('assets/images/icon.png'),
-                    width: 200,
-                    height: 200,
-                  ),
-                  const SizedBox(height: 30),
-                  EmailInput(
-                    controller: _emailController,
-                  ),
-                  const SizedBox(height: 15),
-                  PasswordInput(
-                    controller: _passwordController,
-                  ),
-                  const SizedBox(height: 10),
-                  signUpButton(),
-                  const SizedBox(
-                    height: 80,
-                  ),
-                ],
+    return GestureDetector(
+      onTap: () => {FocusScope.of(context).unfocus()},
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Form(
+                key: _key,
+                child: Column(
+                  children: [
+                    const Image(
+                      image: AssetImage('assets/images/icon.png'),
+                      width: 200,
+                      height: 200,
+                    ),
+                    const SizedBox(height: 30),
+                    EmailInput(
+                      controller: _emailController,
+                    ),
+                    const SizedBox(height: 15),
+                    PasswordInput(
+                      controller: _passwordController,
+                    ),
+                    const SizedBox(height: 10),
+                    signUpButton(),
+                    const SizedBox(
+                      height: 80,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
       ),
     );
