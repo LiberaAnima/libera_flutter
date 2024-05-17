@@ -34,7 +34,7 @@ class _ChatRoomState extends State<ChatRoom> {
 
     fcm.subscribeToTopic('chat');
     final token = await fcm.getToken();
-    print(token);
+    // print(token);
   }
 
   @override
