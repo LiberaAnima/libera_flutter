@@ -13,6 +13,7 @@ import 'package:libera_flutter/screen/post/post_page.dart';
 import 'package:libera_flutter/screen/market/postbook_page.dart';
 import 'package:libera_flutter/screen/post/postlist_page.dart';
 import 'package:libera_flutter/screen/profileEdit_page.dart';
+import 'package:libera_flutter/screen/signup/checkPolicy_page.dart';
 import 'package:libera_flutter/screen/signup/findpassword_page.dart';
 import 'package:libera_flutter/screen/signup/signup_page.dart';
 
@@ -67,6 +68,7 @@ class MyApp extends StatelessWidget {
         '/discount': (context) => const DiscountPage(),
         '/findpassword': (context) => FindPasswordPage(),
         '/editprofile': (context) => const ProfileEditPage(),
+        '/checkpolicy': (context) => const TermsOfServiceAgreement(),
       },
     );
   }

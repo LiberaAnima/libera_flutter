@@ -33,11 +33,11 @@ class _SignupPageState extends State<SignupPage> {
                   key: _key,
                   child: Column(
                     children: [
-                      const Image(
-                        image: AssetImage('assets/images/icon.png'),
-                        width: 200,
-                        height: 200,
-                      ),
+                      // const Image(
+                      //   image: AssetImage('assets/images/icon.png'),
+                      //   width: 200,
+                      //   height: 200,
+                      // ),
                       const SizedBox(height: 30),
                       EmailInput(
                         controller: _emailController,

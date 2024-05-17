@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: Colors.white,
                         ),
                         onPressed: () =>
-                            Navigator.pushNamed(context, '/signUp'),
+                            Navigator.pushNamed(context, '/checkpolicy'),
                         child: Text("アカウントを作成する")),
                   ),
                   SizedBox(

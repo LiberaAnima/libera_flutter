@@ -104,7 +104,7 @@ class _MainPagePageState extends State<MainPage> {
                                     // 学校名
                                     padding: const EdgeInsets.only(left: 20),
                                     child: Text(
-                                      _user!.school,
+                                      _user?.school ?? '',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w900,
                                           fontSize: 30,
@@ -329,12 +329,12 @@ class _MainPagePageState extends State<MainPage> {
                                     ),
                                   ),
                                   Flexible(
-                                    child: menuIcon(
-                                        Icons.discount, "/discount", "学割情報"),
+                                    child: menuIcon(Icons.shopping_bag,
+                                        "/discount", "学割情報"),
                                   ),
                                   Flexible(
-                                    child: menuIcon(Icons.discount, "/discount",
-                                        "インターン\n　バイト"),
+                                    child: menuIcon(Icons.business_center,
+                                        "/discount", "インターン\n　バイト"),
                                   ),
                                   Flexible(
                                     child: menuIcon(
