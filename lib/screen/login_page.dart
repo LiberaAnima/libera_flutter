@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/components/input_box.dart';
+import 'package:libera_flutter/screen/policy/privacypolicy_page.dart';
+import 'package:libera_flutter/screen/policy/terms_of_service_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -81,11 +83,19 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(context, '/'),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TermsOfServicePage()),
+                        ),
                         child: const Text("利用契約"),
                       ),
                       TextButton(
-                        onPressed: () => Navigator.pushNamed(context, '/'),
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PrivacyPolicyPage()),
+                        ),
                         child: const Text("プライバシーポリシー"),
                       ),
                       TextButton(
