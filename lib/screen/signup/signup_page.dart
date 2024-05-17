@@ -22,6 +22,9 @@ class _SignupPageState extends State<SignupPage> {
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          leading: const BackButton(),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.all(20),
