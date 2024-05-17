@@ -1,9 +1,10 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class ChatRoom extends StatelessWidget {
+class ChatRoom extends StatefulWidget {
   final String otherId;
   final String userId;
   final String chatroomId;
@@ -12,12 +13,36 @@ class ChatRoom extends StatelessWidget {
       {required this.otherId, required this.userId, required this.chatroomId});
 
   @override
+  State<ChatRoom> createState() => _ChatRoomState();
+}
+
+class _ChatRoomState extends State<ChatRoom> {
+  void setupPushNotifications() async {
+    final fcm = FirebaseMessaging.instance;
+
+    await fcm.requestPermission();
+
+    fcm.subscribeToTopic('chat');
+    final token = await fcm.getToken();
+    print(token);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    setupPushNotifications();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: FutureBuilder<DocumentSnapshot>(
-          future:
-              FirebaseFirestore.instance.collection('users').doc(otherId).get(),
+          future: FirebaseFirestore.instance
+              .collection('users')
+              .doc(widget.otherId)
+              .get(),
           builder:
               (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -35,9 +60,9 @@ class ChatRoom extends StatelessWidget {
         ),
       ),
       body: ChatroomPage(
-        otherId: otherId,
-        userId: userId,
-        chatroomId: chatroomId,
+        otherId: widget.otherId,
+        userId: widget.userId,
+        chatroomId: widget.chatroomId,
       ),
     );
   }
