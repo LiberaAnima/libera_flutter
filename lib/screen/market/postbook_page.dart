@@ -93,95 +93,99 @@ class _PostBookPagePageState extends State<PostBookPage> {
     return GestureDetector(
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text("商品投稿画面"),
         ),
-        body: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: <Widget>[
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text(
-                  '商品画像を選択*',
-                  style: TextStyle(color: Colors.white),
+        body: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: _pickImage,
+                  child: const Text(
+                    '商品画像を選択*',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    fixedSize: Size(500, 40),
+                    backgroundColor: Colors.orange,
+                  ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  fixedSize: Size(500, 40),
-                  backgroundColor: Colors.orange,
+                const SizedBox(height: 12),
+                TextField(
+                  controller: _booknameEditingController,
+                  enabled: true,
+                  maxLength: 50, // 入力数
+                  style: const TextStyle(color: Colors.black),
+                  obscureText: false,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                    hintText: '例)微分積分入門 第二版',
+                    labelText: '商品名*',
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              TextField(
-                controller: _booknameEditingController,
-                enabled: true,
-                maxLength: 50, // 入力数
-                style: const TextStyle(color: Colors.black),
-                obscureText: false,
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  hintText: '例)微分積分入門 第二版',
-                  labelText: '商品名*',
+                TextField(
+                  controller: _bookauthorEditingController,
+                  enabled: true,
+                  maxLength: 30,
+                  style: const TextStyle(color: Colors.black),
+                  obscureText: false,
+                  maxLines: 1,
+                  decoration: const InputDecoration(
+                    hintText: '例)田中太郎',
+                    labelText: '著者名（書籍を出品する場合）',
+                  ),
                 ),
-              ),
-              TextField(
-                controller: _bookauthorEditingController,
-                enabled: true,
-                maxLength: 30,
-                style: const TextStyle(color: Colors.black),
-                obscureText: false,
-                maxLines: 1,
-                decoration: const InputDecoration(
-                  hintText: '例)田中太郎',
-                  labelText: '著者名（書籍を出品する場合）',
-                ),
-              ),
-              if (_bookImage != null)
-                Image.file(
-                  _bookImage!,
-                  width: 200,
-                  height: 200,
-                ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: _priceEditingController,
-                      enabled: true,
-                      maxLength: 5,
-                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                      style: const TextStyle(color: Colors.black),
-                      obscureText: false,
-                      maxLines: 1,
-                      decoration: const InputDecoration(
-                        hintText: '例) 1500',
-                        labelText: '価格(円)*',
+                if (_bookImage != null)
+                  Image.file(
+                    _bookImage!,
+                    width: 200,
+                    height: 200,
+                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _priceEditingController,
+                        enabled: true,
+                        maxLength: 5,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        style: const TextStyle(color: Colors.black),
+                        obscureText: false,
+                        maxLines: 1,
+                        decoration: const InputDecoration(
+                          hintText: '例) 1500',
+                          labelText: '価格(円)*',
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                       ),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text('円', style: TextStyle(fontSize: 16)),
-                  ),
-                ],
-              ),
-              TextField(
-                controller: _detailsEditingController,
-                enabled: true,
-                maxLength: 200, // 入力数
-                style: const TextStyle(color: Colors.black),
-                obscureText: false,
-                maxLines: 5,
-                decoration: const InputDecoration(
-                  hintText: '商品詳細、状態、取引場所などを記入してください',
-                  labelText: '詳細 ',
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Text('円', style: TextStyle(fontSize: 16)),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                TextField(
+                  controller: _detailsEditingController,
+                  enabled: true,
+                  maxLength: 200, // 入力数
+                  style: const TextStyle(color: Colors.black),
+                  obscureText: false,
+                  maxLines: 5,
+                  decoration: const InputDecoration(
+                    hintText: '商品詳細、状態、取引場所などを記入してください',
+                    labelText: '詳細 ',
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

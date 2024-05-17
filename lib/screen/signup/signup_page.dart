@@ -21,40 +21,41 @@ class _SignupPageState extends State<SignupPage> {
     return GestureDetector(
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           leading: const BackButton(),
         ),
         body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Form(
-                key: _key,
-                child: Column(
-                  children: [
-                    const Image(
-                      image: AssetImage('assets/images/icon.png'),
-                      width: 200,
-                      height: 200,
-                    ),
-                    const SizedBox(height: 30),
-                    EmailInput(
-                      controller: _emailController,
-                    ),
-                    const SizedBox(height: 15),
-                    PasswordInput(
-                      controller: _passwordController,
-                    ),
-                    const SizedBox(height: 10),
-                    signUpButton(),
-                    const SizedBox(
-                      height: 80,
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Form(
+                  key: _key,
+                  child: Column(
+                    children: [
+                      const Image(
+                        image: AssetImage('assets/images/icon.png'),
+                        width: 200,
+                        height: 200,
+                      ),
+                      const SizedBox(height: 30),
+                      EmailInput(
+                        controller: _emailController,
+                      ),
+                      const SizedBox(height: 15),
+                      PasswordInput(
+                        controller: _passwordController,
+                      ),
+                      const SizedBox(height: 10),
+                      signUpButton(),
+                      const SizedBox(
+                        height: 80,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ]),
+              ]),
+            ),
           ),
         ),
       ),

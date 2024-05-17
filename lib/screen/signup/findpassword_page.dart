@@ -13,7 +13,7 @@ class FindPasswordPage extends StatelessWidget {
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
         appBar: AppBar(
-          leading: BackButton(),
+          leading: const BackButton(),
         ),
         body: Center(
           child: Padding(
