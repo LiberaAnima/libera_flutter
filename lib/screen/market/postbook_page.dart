@@ -99,7 +99,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
         body: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: Column(
               children: <Widget>[
                 const SizedBox(height: 40),
@@ -110,7 +110,7 @@ class _PostBookPagePageState extends State<PostBookPage> {
                     style: TextStyle(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    fixedSize: Size(500, 40),
+                    fixedSize: const Size(500, 40),
                     backgroundColor: Colors.orange,
                   ),
                 ),
@@ -199,11 +199,11 @@ class _PostBookPagePageState extends State<PostBookPage> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('エラー'),
-                    content: Text('商品画像、商品名、価格は必須事項です'),
+                    title: const Text('エラー'),
+                    content: const Text('商品画像、商品名、価格は必須事項です'),
                     actions: <Widget>[
                       TextButton(
-                        child: Text('OK'),
+                        child: const Text('OK'),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },

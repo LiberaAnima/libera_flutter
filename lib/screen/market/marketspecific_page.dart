@@ -111,7 +111,6 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                                     title: const Text('修正'),
                                                     onTap: () {
                                                       // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                                      print(book);
                                                       Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
