@@ -10,9 +10,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/post/post_edit.dart';
 import 'package:libera_flutter/services/likebutton.dart';
 import 'package:libera_flutter/services/timeago.dart';
+import 'package:libera_flutter/services/user_service.dart';
 // import 'package:libera_flutter/services/likebutton.dart';
 
 class PostSpecificPage extends StatefulWidget {
@@ -29,10 +31,29 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
   final TextEditingController _commentController = TextEditingController();
 
   final User? user = FirebaseAuth.instance.currentUser;
+  final UserService _userService = UserService();
+  UserModel? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  void _fetchUserData() async {
+    try {
+      UserModel userData = await _userService.getUserData(user!.uid);
+      setState(() {
+        _user = userData;
+      });
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    print(user?.uid);
+    print(_user?.uid);
     return GestureDetector(
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
@@ -71,58 +92,59 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                       fontSize: 15,
                                     ),
                                   ),
-                                  IconButton(
-                                    icon: const Icon(Icons.more_vert),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: <Widget>[
-                                              ListTile(
-                                                leading: Icon(Icons.edit),
-                                                title: Text('修正'),
-                                                onTap: () {
-                                                  // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                                  Navigator.pop(
-                                                      context); // 시트를 닫습니다.
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          PostEditPage(
-                                                              data: data),
-                                                    ),
-                                                  );
-                                                  // print(data);
-                                                },
-                                              ),
-                                              ListTile(
-                                                leading: Icon(Icons.delete),
-                                                title: Text('削除'),
-                                                onTap: () async {
-                                                  // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                                  await FirebaseFirestore
-                                                      .instance
-                                                      .collection('posts')
-                                                      .doc(data[
-                                                          'documentID']) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
-                                                      .delete();
+                                  if (data['uid'] == user?.uid)
+                                    IconButton(
+                                      icon: const Icon(Icons.more_vert),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                ListTile(
+                                                  leading: Icon(Icons.edit),
+                                                  title: Text('修正'),
+                                                  onTap: () {
+                                                    // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                                    Navigator.pop(
+                                                        context); // 시트를 닫습니다.
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            PostEditPage(
+                                                                data: data),
+                                                      ),
+                                                    );
+                                                    // print(data);
+                                                  },
+                                                ),
+                                                ListTile(
+                                                  leading: Icon(Icons.delete),
+                                                  title: Text('削除'),
+                                                  onTap: () async {
+                                                    // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                                    await FirebaseFirestore
+                                                        .instance
+                                                        .collection('posts')
+                                                        .doc(data[
+                                                            'documentID']) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
+                                                        .delete();
 
-                                                  Navigator.pop(
-                                                      context); // 시트를 닫습니다.
-                                                  Navigator.pop(
-                                                      context); // 시트를 닫습니다.
-                                                },
-                                              ),
-                                              SizedBox(height: 20),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
+                                                    Navigator.pop(
+                                                        context); // 시트를 닫습니다.
+                                                    Navigator.pop(
+                                                        context); // 시트를 닫습니다.
+                                                  },
+                                                ),
+                                                SizedBox(height: 20),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
                                 ],
                               ),
                               Text(
