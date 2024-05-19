@@ -8,7 +8,6 @@ import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
-import 'package:libera_flutter/screen/school_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:intl/intl.dart';
@@ -317,13 +316,13 @@ class _MainPagePageState extends State<MainPage> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              // ElevatedButton(
-                              //   onPressed: () {
-                              //     // TODO: Implement logout functionality
-                              //     _auth.signOut();
-                              //   },
-                              //   child: Text('로그아웃'),
-                              // ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  // TODO: Implement logout functionality
+                                  _auth.signOut();
+                                },
+                                child: Text('logout'),
+                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
