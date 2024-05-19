@@ -8,7 +8,6 @@ import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
-import 'package:libera_flutter/screen/school_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:intl/intl.dart';
