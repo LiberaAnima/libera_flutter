@@ -249,8 +249,8 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                             Text(
                                               comment["isAnonymous"] == true
                                                   ? '匿名'
-                                                  : data["name"],
-                                              style: TextStyle(
+                                                  : comment["name"],
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 15,
                                               ),
@@ -261,7 +261,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                         subtitle: Text(
                                           timeAgo(
                                               comment['timestamp'].toDate()),
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 12, color: Colors.grey),
                                         )
                                         // Add other fields as needed
@@ -273,7 +273,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                               }
                             } else if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return CircularProgressIndicator();
+                              return const CircularProgressIndicator();
                             } else {
                               return const Text('Error');
                             }
@@ -287,7 +287,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                 return const Text('No data');
               }
             } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else {
               return const Text('Error');
             }
