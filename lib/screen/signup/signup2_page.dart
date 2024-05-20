@@ -9,8 +9,6 @@ import 'package:libera_flutter/screen/home_page.dart';
 
 const List<String> list_sex = <String>['男性', '女性', 'その他'];
 const List<String> list_year = <String>['B1', 'B2', 'B3', 'B4', 'M1', 'M2'];
-const List<String> list_school = <String>['関西学院大学', '神戸大学'];
-const List<String> list_faculty = <String>['法学部', '経営学部', '理工学部'];
 
 class Signup2Page extends StatefulWidget {
   final UserCredential userCredential;
