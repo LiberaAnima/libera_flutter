@@ -13,7 +13,7 @@ const List<String> list_year = <String>['B1', 'B2', 'B3', 'B4', 'M1', 'M2'];
 class Signup2Page extends StatefulWidget {
   final UserCredential userCredential;
 
-  const Signup2Page({Key? key, required this.userCredential}) : super(key: key);
+  const Signup2Page({super.key, required this.userCredential});
 
   @override
   _Signup2PageState createState() => _Signup2PageState();
