@@ -44,6 +44,14 @@ class _MainPagePageState extends State<MainPage> {
       });
     } catch (e) {
       print('Error fetching user data: $e');
+      if (e.toString() == 'Exception: User not found') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginPage(), // Replace with your login page
+          ),
+        );
+      }
     }
   }
 
