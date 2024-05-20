@@ -57,9 +57,6 @@ class _Signup2PageState extends State<Signup2Page> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text("大学",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(
                   height: 10,
                 ),
