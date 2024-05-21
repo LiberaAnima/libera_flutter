@@ -17,11 +17,12 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // Add this line
         backgroundColor: Colors.transparent,
         title: const Text("キャンパスフリマ"),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SearchPage()));

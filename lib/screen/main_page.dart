@@ -44,6 +44,14 @@ class _MainPagePageState extends State<MainPage> {
       });
     } catch (e) {
       print('Error fetching user data: $e');
+      if (e.toString() == 'Exception: User not found') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginPage(), // Replace with your login page
+          ),
+        );
+      }
     }
   }
 
@@ -295,8 +303,7 @@ class _MainPagePageState extends State<MainPage> {
                                                         }).toList(),
                                                       );
                                                     } else {
-                                                      return const Text(
-                                                          "hogehoge");
+                                                      return const Text("");
                                                     }
                                                   }
                                                   return const Center(
@@ -316,13 +323,13 @@ class _MainPagePageState extends State<MainPage> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  // TODO: Implement logout functionality
-                                  _auth.signOut();
-                                },
-                                child: Text('logout'),
-                              ),
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     // TODO: Implement logout functionality
+                              //     _auth.signOut();
+                              //   },
+                              //   child: Text('logout'),
+                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

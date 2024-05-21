@@ -9,13 +9,11 @@ import 'package:libera_flutter/screen/home_page.dart';
 
 const List<String> list_sex = <String>['男性', '女性', 'その他'];
 const List<String> list_year = <String>['B1', 'B2', 'B3', 'B4', 'M1', 'M2'];
-const List<String> list_school = <String>['関西学院大学', '神戸大学'];
-const List<String> list_faculty = <String>['法学部', '経営学部', '理工学部'];
 
 class Signup2Page extends StatefulWidget {
   final UserCredential userCredential;
 
-  const Signup2Page({Key? key, required this.userCredential}) : super(key: key);
+  const Signup2Page({super.key, required this.userCredential});
 
   @override
   _Signup2PageState createState() => _Signup2PageState();
@@ -59,9 +57,6 @@ class _Signup2PageState extends State<Signup2Page> {
                 const SizedBox(
                   height: 20,
                 ),
-                const Text("大学",
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 const SizedBox(
                   height: 10,
                 ),
