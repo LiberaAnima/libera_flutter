@@ -4,27 +4,24 @@ import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DiscountPage extends StatefulWidget {
-  const DiscountPage({Key? key}) : super(key: key);
+class InternPage extends StatefulWidget {
+  const InternPage({Key? key}) : super(key: key);
 
   @override
-  _DiscountPageState createState() => _DiscountPageState();
+  _InternPageState createState() => _InternPageState();
 }
 
-class _DiscountPageState extends State<DiscountPage> {
+class _InternPageState extends State<InternPage> {
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> discountlists;
-    discountlists = FirebaseFirestore.instance
-        .collection('discounts')
-        .orderBy('name', descending: true)
-        .snapshots();
+    Stream<QuerySnapshot> internlists;
+    internlists = FirebaseFirestore.instance.collection('intern').snapshots();
     return Scaffold(
       appBar: AppBar(
-        title: Text("割引画面"),
+        title: Text("インターン・バイト情報"),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: discountlists,
+        stream: internlists,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');
@@ -66,23 +63,23 @@ class _DiscountPageState extends State<DiscountPage> {
                                       children: <Widget>[
                                         const SizedBox(width: 10),
                                         Text(
-                                          '${data['name']}',
+                                          '${data['company']}',
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 20, // ここでタイトルのフォントサイズを変更
                                           ),
                                         ),
-                                        const SizedBox(height: 10),
                                       ],
                                     ),
-                                    const SizedBox(height: 5),
+                                    const SizedBox(height: 10),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
                                         const SizedBox(width: 10),
+                                        Text("コース: "),
                                         Text(
-                                          data['contents'],
+                                          data['course'],
                                         ),
                                       ],
                                     ),
@@ -92,11 +89,35 @@ class _DiscountPageState extends State<DiscountPage> {
                                       indent: 15,
                                       endIndent: 15,
                                     ),
+                                    for (final pattern in data['pattern'])
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(width: 10),
+                                          Flexible(
+                                            child: Text(
+                                              pattern,
+                                              style: const TextStyle(
+                                                fontSize:
+                                                    15, // ここでタイトルのフォントサイズを変更
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 10),
+                                        ],
+                                      ),
+                                    const Divider(
+                                      color: Color.fromRGBO(165, 165, 165, 1),
+                                      thickness: .5,
+                                      indent: 15,
+                                      endIndent: 15,
+                                    ),
                                     Flexible(
                                       child: menuIcon(
-                                        Icons.shopping_cart,
+                                        Icons.apartment,
                                         data['URL'],
-                                        "学割情報は" + "\n" + "こちら",
+                                        "インターン情報は" + "\n" + "こちら",
                                       ),
                                     ),
                                   ],
