@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -71,12 +71,13 @@ class _InternPageState extends State<InternPage> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 5),
+                                    const SizedBox(height: 10),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
                                         const SizedBox(width: 10),
+                                        Text("コース: "),
                                         Text(
                                           data['course'],
                                         ),
@@ -88,44 +89,37 @@ class _InternPageState extends State<InternPage> {
                                       indent: 15,
                                       endIndent: 15,
                                     ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        for (int i = 0;
-                                            i < data['pattern'].length;
-                                            i++) ...{
+                                    for (final pattern in data['pattern'])
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(width: 10),
                                           Flexible(
                                             child: Text(
-                                              data['pattern'][i] + "\n",
+                                              pattern,
+                                              style: const TextStyle(
+                                                fontSize:
+                                                    15, // ここでタイトルのフォントサイズを変更
+                                              ),
                                             ),
-                                          )
-                                        }
-                                      ],
-                                    ),
+                                          ),
+                                          SizedBox(width: 10),
+                                        ],
+                                      ),
                                     const Divider(
                                       color: Color.fromRGBO(165, 165, 165, 1),
                                       thickness: .5,
                                       indent: 15,
                                       endIndent: 15,
                                     ),
-                                    IconButton(
-                                        onPressed: () async {
-                                          final url = Uri.parse(
-                                            data['URL'],
-                                          );
-                                          if (await canLaunchUrl(url)) {
-                                            launchUrl(url);
-                                          } else {
-                                            // ignore: avoid_print
-                                            print("Can't launch $url");
-                                          }
-                                        },
-                                        icon: const Icon(
-                                          Icons.shopping_cart,
-                                          color: Colors.black54,
-                                          size: 30.0,
-                                        )),
+                                    Flexible(
+                                      child: menuIcon(
+                                        Icons.apartment,
+                                        data['URL'],
+                                        "インターン情報は" + "\n" + "こちら",
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -141,6 +135,35 @@ class _InternPageState extends State<InternPage> {
           ]);
         },
       ),
+    );
+  }
+
+  Container menuIcon(IconData icon, String path, String title) {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+      ),
+      child: Column(children: [
+        IconButton(
+          onPressed: () {
+            if (path.startsWith('http')) {
+              launchURL(Uri.parse(path));
+            } else {
+              Navigator.pushNamed(context, path);
+              // Navigate to a named route
+            }
+          },
+          icon: Icon(icon),
+        ),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 10, // ここでタイトルのフォントサイズを変更
+          ),
+        )
+      ]),
     );
   }
 }

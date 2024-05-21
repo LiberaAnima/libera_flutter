@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:flutter/widgets.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -72,6 +72,7 @@ class _DiscountPageState extends State<DiscountPage> {
                                             fontSize: 20, // ここでタイトルのフォントサイズを変更
                                           ),
                                         ),
+                                        const SizedBox(height: 10),
                                       ],
                                     ),
                                     const SizedBox(height: 5),
@@ -91,23 +92,13 @@ class _DiscountPageState extends State<DiscountPage> {
                                       indent: 15,
                                       endIndent: 15,
                                     ),
-                                    IconButton(
-                                        onPressed: () async {
-                                          final url = Uri.parse(
-                                            data['URL'],
-                                          );
-                                          if (await canLaunchUrl(url)) {
-                                            launchUrl(url);
-                                          } else {
-                                            // ignore: avoid_print
-                                            print("Can't launch $url");
-                                          }
-                                        },
-                                        icon: const Icon(
-                                          Icons.shopping_cart,
-                                          color: Colors.black54,
-                                          size: 30.0,
-                                        )),
+                                    Flexible(
+                                      child: menuIcon(
+                                        Icons.shopping_cart,
+                                        data['URL'],
+                                        "学割情報は" + "\n" + "こちら",
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
@@ -123,6 +114,35 @@ class _DiscountPageState extends State<DiscountPage> {
           ]);
         },
       ),
+    );
+  }
+
+  Container menuIcon(IconData icon, String path, String title) {
+    return Container(
+      width: 100,
+      height: 100,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+      ),
+      child: Column(children: [
+        IconButton(
+          onPressed: () {
+            if (path.startsWith('http')) {
+              launchURL(Uri.parse(path));
+            } else {
+              Navigator.pushNamed(context, path);
+              // Navigate to a named route
+            }
+          },
+          icon: Icon(icon),
+        ),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 10, // ここでタイトルのフォントサイズを変更
+          ),
+        )
+      ]),
     );
   }
 }
