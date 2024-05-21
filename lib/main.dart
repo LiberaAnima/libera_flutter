@@ -14,10 +14,12 @@ import 'package:libera_flutter/screen/post/post_page.dart';
 import 'package:libera_flutter/screen/market/postbook_page.dart';
 import 'package:libera_flutter/screen/post/postlist_page.dart';
 import 'package:libera_flutter/screen/profileEdit_page.dart';
+import 'package:libera_flutter/screen/signup/checkPolicy_page.dart';
 import 'package:libera_flutter/screen/signup/findpassword_page.dart';
 import 'package:libera_flutter/screen/signup/signup_page.dart';
 
 import 'firebase_options.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -68,6 +70,7 @@ class MyApp extends StatelessWidget {
         '/intern': (context) => const InternPage(),
         '/findpassword': (context) => FindPasswordPage(),
         '/editprofile': (context) => const ProfileEditPage(),
+        '/checkpolicy': (context) => const TermsOfServiceAgreement(),
       },
     );
   }

@@ -50,6 +50,8 @@ dependencies:
     timezone: ^0.7.0
 
     currency_text_input_formatter: ^2.1.7
+    flutter_native_splash: ^2.4.0
+    firebase_messaging: ^14.9.2
 
 dev_dependencies:
     flutter_test:
@@ -65,6 +67,10 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+# この位置にスプラッシュ画面の設定を追加
+flutter_native_splash: # 追加
+    image: "assets/images/icon.png" # 追加
+    color: "#FDF5E6" # 追加
 # The following section is specific to Flutter packages.
 flutter:
     # The following line ensures that the Material Icons font is

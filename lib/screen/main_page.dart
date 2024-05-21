@@ -5,12 +5,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
-import 'package:libera_flutter/screen/school_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
 import 'package:intl/intl.dart';
+import 'package:libera_flutter/services/user_service.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -24,11 +25,34 @@ class MainPage extends StatefulWidget {
 class _MainPagePageState extends State<MainPage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  final UserService _userService = UserService();
+  UserModel? _user;
 
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
-  Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
-    return await db.collection('users').doc(userId).get();
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  void _fetchUserData() async {
+    try {
+      UserModel userData = await _userService.getUserData(userId);
+      setState(() {
+        _user = userData;
+      });
+    } catch (e) {
+      print('Error fetching user data: $e');
+      if (e.toString() == 'Exception: User not found') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginPage(), // Replace with your login page
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -39,7 +63,7 @@ class _MainPagePageState extends State<MainPage> {
         if (snapshot.connectionState == ConnectionState.active) {
           final User? user = snapshot.data;
           if (user == null) {
-            return LoginPage(); // Redirect to LoginPage if not logged in
+            return const LoginPage(); // Redirect to LoginPage if not logged in
           } else {
             return Scaffold(
               appBar: AppBar(
@@ -81,49 +105,25 @@ class _MainPagePageState extends State<MainPage> {
                               const SizedBox(
                                 height: 20,
                               ),
-                              FutureBuilder<
-                                  DocumentSnapshot<Map<String, dynamic>>>(
-                                // get user data
-                                future: getUserData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const CircularProgressIndicator();
-                                  } else if (snapshot.hasError) {
-                                    return Text('Error: ${snapshot.error}');
-                                  } else {
-                                    final userData = snapshot.data!.data();
-                                    return Row(
-                                      children: [
-                                        Padding(
-                                          // 学校名
-                                          padding:
-                                              const EdgeInsets.only(left: 20),
-                                          child: Text(
-                                            userData?['school'] ?? "null",
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w900,
-                                                fontSize: 30,
-                                                color: Colors.black),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }
-                                },
+                              Row(
+                                children: [
+                                  Padding(
+                                    // 学校名
+                                    padding: const EdgeInsets.only(left: 20),
+                                    child: Text(
+                                      _user?.school ?? '',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: 30,
+                                          color: Colors.black),
+                                    ),
+                                  ),
+                                ],
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
-                              // TextButton(
-                              //   onPressed: () async {
-                              //     await FirebaseAuth.instance.signOut();
-                              //   },
-                              //   child: Text("logout"),
-                              // ),
                               Container(
-                                margin: const EdgeInsets.all(15),
-                                padding: const EdgeInsets.all(5),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
@@ -131,7 +131,7 @@ class _MainPagePageState extends State<MainPage> {
                                 ),
                                 child: Column(
                                   children: [
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     const Text("今日の時間割",
@@ -143,7 +143,7 @@ class _MainPagePageState extends State<MainPage> {
                                         const SizedBox(width: 5),
                                         Container(
                                           color: Colors.white,
-                                          padding: EdgeInsets.all(30),
+                                          padding: const EdgeInsets.all(30),
                                           child: Column(
                                             children: [
                                               for (var i = 1; i < 6; i++)
@@ -152,7 +152,7 @@ class _MainPagePageState extends State<MainPage> {
                                                       const EdgeInsets.all(4.0),
                                                   child: Text(
                                                     "$i限",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.w700,
                                                         fontSize: 16,
@@ -165,7 +165,7 @@ class _MainPagePageState extends State<MainPage> {
                                         Expanded(
                                           child: Container(
                                             color: Colors.white,
-                                            padding: EdgeInsets.all(3),
+                                            padding: const EdgeInsets.all(3),
                                             child: GestureDetector(
                                               onTap: () {},
                                               child: FutureBuilder<
@@ -180,13 +180,13 @@ class _MainPagePageState extends State<MainPage> {
                                                             DocumentSnapshot>
                                                         snapshot) {
                                                   if (snapshot.hasError) {
-                                                    return Text(
+                                                    return const Text(
                                                         "Something went wrong");
                                                   }
 
                                                   if (snapshot.hasData &&
                                                       !snapshot.data!.exists) {
-                                                    return Text(
+                                                    return const Text(
                                                         "Document does not exist");
                                                   }
 
@@ -199,10 +199,9 @@ class _MainPagePageState extends State<MainPage> {
                                                                 dynamic>;
                                                     if (data['timetable'] ==
                                                         null) {
-                                                      return Padding(
+                                                      return const Padding(
                                                         padding:
-                                                            const EdgeInsets
-                                                                .all(5.0),
+                                                            EdgeInsets.all(5.0),
                                                         child: Row(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -235,13 +234,21 @@ class _MainPagePageState extends State<MainPage> {
                                                           todayClasses =
                                                           todayTimetable as Map<
                                                               String, dynamic>;
+
+                                                      var sortedEntries =
+                                                          todayClasses.entries
+                                                              .toList()
+                                                            ..sort((a, b) =>
+                                                                a.key.compareTo(
+                                                                    b.key));
+
                                                       return Column(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
-                                                        children: todayClasses
-                                                            .entries
+                                                        children: sortedEntries
                                                             .map((classInfo) {
-                                                          print(classInfo);
+                                                          // print(todayClasses);
+                                                          // print(classInfo);
                                                           return Padding(
                                                             padding:
                                                                 const EdgeInsets
@@ -253,7 +260,7 @@ class _MainPagePageState extends State<MainPage> {
                                                               children: [
                                                                 Text(
                                                                   "${classInfo.value[0]}",
-                                                                  style: TextStyle(
+                                                                  style: const TextStyle(
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .w700,
@@ -262,7 +269,7 @@ class _MainPagePageState extends State<MainPage> {
                                                                       color: Colors
                                                                           .black),
                                                                 ),
-                                                                Text(
+                                                                const Text(
                                                                   "  -  ",
                                                                   style: TextStyle(
                                                                       fontWeight:
@@ -274,23 +281,29 @@ class _MainPagePageState extends State<MainPage> {
                                                                           .black),
                                                                 ),
                                                                 Text(
-                                                                  "${classInfo.value[1]}",
-                                                                  style: TextStyle(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w700,
-                                                                      fontSize:
-                                                                          16,
-                                                                      color: Colors
-                                                                          .black),
-                                                                ),
+                                                                  classInfo.value
+                                                                              .length >
+                                                                          1
+                                                                      ? "${classInfo.value[1]}"
+                                                                      : "Default Value",
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    fontSize:
+                                                                        16,
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                )
                                                               ],
                                                             ),
                                                           );
                                                         }).toList(),
                                                       );
                                                     } else {
-                                                      return Text("hogehoge");
+                                                      return const Text("");
                                                     }
                                                   }
                                                   return const Center(
@@ -307,22 +320,45 @@ class _MainPagePageState extends State<MainPage> {
                                   ],
                                 ),
                               ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              // ElevatedButton(
+                              //   onPressed: () {
+                              //     // TODO: Implement logout functionality
+                              //     _auth.signOut();
+                              //   },
+                              //   child: Text('logout'),
+                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  menuIcon(
+                                  Flexible(
+                                    child: menuIcon(
                                       Icons.home,
                                       "https://kwic.kwansei.ac.jp/login",
-                                      "大学ホーム"),
-                                  menuIcon(Icons.discount, "/discount", "学割情報"),
-                                  menuIcon(
-                                      Icons.discount, "/intern", "インターン\n　バイト"),
-                                  menuIcon(
-                                      Icons.discount, "/discount", "課外イベント"),
+                                      "大学ホーム",
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: menuIcon(Icons.shopping_bag,
+                                        "/discount", "学割情報"),
+                                  ),
+                                  Flexible(
+                                    child: menuIcon(Icons.business_center,
+                                        "/intern", "インターン\n　バイト"),
+                                  ),
+                                  Flexible(
+                                    child: menuIcon(
+                                        Icons.discount, "/discount", "課外イベント"),
+                                  ),
                                 ],
                               ),
-                              Card.outlined(
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              const Card.outlined(
                                 child: Column(
                                   children: [
                                     SizedBox(
@@ -335,10 +371,13 @@ class _MainPagePageState extends State<MainPage> {
                                   ],
                                 ),
                               ),
+                              const SizedBox(
+                                height: 20,
+                              ),
                               Container(
-                                padding: EdgeInsets.only(left: 40),
+                                padding: const EdgeInsets.only(left: 40),
                                 width: double.infinity,
-                                child: Row(
+                                child: const Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(
@@ -350,7 +389,7 @@ class _MainPagePageState extends State<MainPage> {
                                   ],
                                 ),
                               ),
-                              Card.outlined(
+                              const Card.outlined(
                                 child: Column(
                                   children: [
                                     SizedBox(
@@ -374,7 +413,7 @@ class _MainPagePageState extends State<MainPage> {
             );
           }
         } else {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );
@@ -384,7 +423,7 @@ class _MainPagePageState extends State<MainPage> {
     return Container(
       width: 100,
       height: 100,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
       ),
       child: Column(children: [
