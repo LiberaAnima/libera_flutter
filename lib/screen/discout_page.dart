@@ -12,12 +12,12 @@ class _DiscountPageState extends State<DiscountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("割引画面"),
+        title: Text("学割情報"),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text("割引画面"),
+            Text("coming soon..."),
           ],
         ),
       ),
