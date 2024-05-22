@@ -29,12 +29,12 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
               // 検索画面に遷移
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            onPressed: () {
-              // フィルター画面に遷移
-            },
-          ),
+          // IconButton(
+          //   icon: const Icon(Icons.filter_list),
+          //   onPressed: () {
+          //     // フィルター画面に遷移
+          //   },
+          // ),
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
