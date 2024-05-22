@@ -104,6 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           const Divider(height: 40, thickness: 2),
                           profileInfo('大学', _user!.school),
                           profileInfo('学部', _user!.faculty),
+                          profileInfo('学科、専攻', _user!.field),
                           profileInfo('学年', _user!.year),
                           profileInfo('性別', _user!.gender),
                           ElevatedButton(
