@@ -87,10 +87,10 @@ class _TermsOfServiceAgreementState extends State<TermsOfServiceAgreement> {
 
   List<Widget> _renderCheckList() {
     List<String> labels = [
-      '全部同意',
-      '大学生です (必修)',
-      '利用契約 (必修)',
-      'プライバシーポリシー (必修)',
+      'すべて同意',
+      '大学生、または大学院生である (必須)',
+      '利用契約に同意 (必須)',
+      'プライバシーポリシーに同意 (必須)',
       'イベント及び割引特典のご案内 (選択)',
     ];
 
