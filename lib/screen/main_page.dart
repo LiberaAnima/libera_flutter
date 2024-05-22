@@ -114,7 +114,7 @@ class _MainPagePageState extends State<MainPage> {
                                       _user?.school ?? '',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w900,
-                                          fontSize: 30,
+                                          fontSize: 23,
                                           color: Colors.black),
                                     ),
                                   ),
@@ -137,13 +137,12 @@ class _MainPagePageState extends State<MainPage> {
                                     const Text("今日の時間割",
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20)),
+                                            fontSize: 16)),
                                     Row(
                                       children: [
-                                        const SizedBox(width: 5),
                                         Container(
                                           color: Colors.white,
-                                          padding: const EdgeInsets.all(30),
+                                          padding: const EdgeInsets.all(20),
                                           child: Column(
                                             children: [
                                               for (var i = 1; i < 6; i++)
@@ -321,7 +320,7 @@ class _MainPagePageState extends State<MainPage> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 20,
+                                height: 5,
                               ),
                               // ElevatedButton(
                               //   onPressed: () {
@@ -356,7 +355,7 @@ class _MainPagePageState extends State<MainPage> {
                                 ],
                               ),
                               const SizedBox(
-                                height: 5,
+                                height: 10,
                               ),
                               const Card.outlined(
                                 child: Column(
@@ -372,7 +371,7 @@ class _MainPagePageState extends State<MainPage> {
                                 ),
                               ),
                               const SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               Container(
                                 padding: const EdgeInsets.only(left: 40),
