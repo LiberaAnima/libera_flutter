@@ -56,7 +56,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
       stream: _stream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -210,8 +210,8 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                   Row(
                     children: <Widget>[
                       Padding(
-                        padding:
-                            EdgeInsets.only(left: 8.0, top: 2.0, bottom: 2.0),
+                        padding: const EdgeInsets.only(
+                            left: 8.0, top: 2.0, bottom: 2.0),
                         child: Text(
                           book['faculty'],
                           style: const TextStyle(
@@ -240,7 +240,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
                       book['details'],
                       textAlign: TextAlign.left,
@@ -255,7 +255,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top: 2.0, bottom: 2.0),
+                        padding: const EdgeInsets.only(top: 2.0, bottom: 2.0),
                         child: StreamBuilder<DocumentSnapshot>(
                           stream: FirebaseFirestore.instance
                               .collection('books')
@@ -265,7 +265,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                               AsyncSnapshot<DocumentSnapshot> snapshot) {
                             if (snapshot.hasError) {
                               return Text("Error: ${snapshot.error}",
-                                  style: TextStyle(color: Colors.grey));
+                                  style: const TextStyle(color: Colors.grey));
                             }
 
                             if (snapshot.connectionState ==
@@ -277,11 +277,11 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                     data['bookmark'] ?? [];
                                 return Text(
                                     "保存数 : " + bookmarks.length.toString(),
-                                    style: TextStyle(color: Colors.grey));
+                                    style: const TextStyle(color: Colors.grey));
                               }
                             }
 
-                            return Text("Loading",
+                            return const Text("Loading",
                                 style: TextStyle(color: Colors.grey));
                           },
                         ),
@@ -296,11 +296,11 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsets.only(top: 2.0, bottom: 2.0, right: 8.0),
+                        padding: const EdgeInsets.only(
+                            top: 2.0, bottom: 2.0, right: 8.0),
                         child: Text(
                           "閲覧数 : " + book['viewCount'].toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.grey,
                           ),
                         ),
@@ -359,7 +359,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                         children: [
                           Text(
                             '${book['username']}さんの他の販売商品',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.black,
                               fontSize: 14,
                               fontFamily: 'Inter',
@@ -392,7 +392,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: ShapeDecoration(
-                                      image: DecorationImage(
+                                      image: const DecorationImage(
                                         image: NetworkImage(""),
                                         fit: BoxFit.fill,
                                       ),
@@ -448,7 +448,7 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                                   child: Container(
                                     width: double.infinity,
                                     decoration: ShapeDecoration(
-                                      image: DecorationImage(
+                                      image: const DecorationImage(
                                         image: NetworkImage(""),
                                         fit: BoxFit.fill,
                                       ),
