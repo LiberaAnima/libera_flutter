@@ -70,7 +70,7 @@ class _TermsOfServiceAgreementState extends State<TermsOfServiceAgreement> {
                         }
                       },
                       child: const Text(
-                        '会員登録',
+                        '会員登録へ進む',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
