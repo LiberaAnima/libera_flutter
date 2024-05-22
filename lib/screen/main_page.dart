@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -30,10 +31,21 @@ class _MainPagePageState extends State<MainPage> {
 
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
+  void setupPushNotifications() async {
+    final fcm = FirebaseMessaging.instance;
+
+    await fcm.requestPermission();
+
+    fcm.subscribeToTopic('uid');
+    final token = await fcm.getToken();
+    // print(token);
+  }
+
   @override
   void initState() {
     super.initState();
     _fetchUserData();
+    setupPushNotifications();
   }
 
   void _fetchUserData() async {

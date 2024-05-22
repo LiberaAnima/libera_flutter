@@ -7,15 +7,21 @@ admin.initializeApp();
 // Cloud Firestore triggers ref: https://firebase.google.com/docs/functions/firestore-events
 exports.myFunction = functions.firestore
     .document("chatroom/{chatroomId}/messages/{messageId}")
-    .onCreate((snapshot, context) => {
-    // Return this function's promise, so this ensures the firebase function
-    // will keep running, until the notification is scheduled.
-      return admin.messaging().sendToTopic("chat", {
-      // Sending a notification message.
-        notification: {
-          title: snapshot.data()["username"],
-          body: snapshot.data()["text"],
-          clickAction: "FLUTTER_NOTIFICATION_CLICK",
-        },
+    .onCreate(async (snapshot, context) => {
+      const chatroomId = context.params.chatroomId;
+      const chatroomSnapshot = await admin.firestore()
+          .doc(`chatroom/${chatroomId}`).get();
+      const who = chatroomSnapshot.data().who;
+
+      const promises = who.map((uid) => {
+        return admin.messaging().sendToTopic(uid, {
+          notification: {
+            title: snapshot.data()["username"],
+            body: snapshot.data()["text"],
+            clickAction: "FLUTTER_NOTIFICATION_CLICK",
+          },
+        });
       });
+
+      return Promise.all(promises);
     });
