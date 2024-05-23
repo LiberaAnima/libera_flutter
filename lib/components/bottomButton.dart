@@ -1,6 +1,11 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:libera_flutter/screen/policy/privacypolicy_page.dart';
 import 'package:libera_flutter/screen/policy/terms_of_service_page.dart';
+import 'package:libera_flutter/services/launchUrl_service.dart';
+
+Uri url = Uri.parse("https://forms.gle/ucn4UxGWKyDYufJN8");
 
 class BottomButton extends StatelessWidget {
   const BottomButton({Key? key}) : super(key: key);
@@ -29,7 +34,7 @@ class BottomButton extends StatelessWidget {
               child: const Text("プライバシーポリシー"),
             ),
             TextButton(
-              onPressed: () => Navigator.pushNamed(context, '/'),
+              onPressed: () => launchURL(url),
               child: const Text("Q&A"),
             ),
           ],

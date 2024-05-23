@@ -155,7 +155,7 @@ class _MainPagePageState extends State<MainPage> {
                                   Flexible(
                                     child: menuIcon(
                                       Icons.home,
-                                      "https://kwic.kwansei.ac.jp/login",
+                                      "https://kwic.kwansei.ac.jp/",
                                       "大学ホーム",
                                     ),
                                   ),
