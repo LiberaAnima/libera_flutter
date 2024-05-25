@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:libera_flutter/screen/market/bookmarketlist_page.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         // colorScheme:
         //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 242, 183, 7)),
+        textTheme: GoogleFonts.ibmPlexSansJpTextTheme(
+          Theme.of(context).textTheme,
+        ),
         useMaterial3: true,
       ),
       routes: {
