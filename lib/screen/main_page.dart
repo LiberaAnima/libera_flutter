@@ -38,16 +38,23 @@ class _MainPagePageState extends State<MainPage> {
 
     await fcm.requestPermission();
 
-    fcm.subscribeToTopic('uid');
+    fcm.subscribeToTopic(userId);
     final token = await fcm.getToken();
-    // print(token);
+    print(token);
   }
+
+  // void _subscribe() async {
+  //   final fcm = FirebaseMessaging.instance;
+  //   fcm.subscribeToTopic(userId);
+  // }
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
     setupPushNotifications();
+    // _subscribe();
+    print('d');
   }
 
   void _fetchUserData() async {
