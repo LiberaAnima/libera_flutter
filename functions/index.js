@@ -12,9 +12,9 @@ exports.myFunction = functions.firestore
       const chatroomSnapshot = await admin.firestore()
           .doc(`chatroom/${chatroomId}`).get();
       const who = chatroomSnapshot.data().who;
-      console.log("chat:" + chatroomId);
-      console.log("chatsnap" + chatroomSnapshot.data());
-      console.log("who" + who);
+      // console.log("chat:" + chatroomId);
+      // console.log("chatsnap" + chatroomSnapshot.data());
+      // console.log("who" + who);
 
       const promises = who.map((uid) => {
         return admin.messaging().sendToTopic(uid, {

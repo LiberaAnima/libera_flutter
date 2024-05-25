@@ -32,8 +32,8 @@ class _MainPagePageState extends State<MainPage> {
   UserModel? _user;
 
   final userId = FirebaseAuth.instance.currentUser!.uid;
-
   void setupPushNotifications() async {
+    print(userId);
     final fcm = FirebaseMessaging.instance;
 
     await fcm.requestPermission();
