@@ -33,14 +33,14 @@ class _MainPagePageState extends State<MainPage> {
 
   final userId = FirebaseAuth.instance.currentUser!.uid;
   void setupPushNotifications() async {
-    print(userId);
+    // print(userId);
     final fcm = FirebaseMessaging.instance;
 
     await fcm.requestPermission();
 
     fcm.subscribeToTopic(userId);
     final token = await fcm.getToken();
-    print(token);
+    // print(token);
   }
 
   // void _subscribe() async {

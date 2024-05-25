@@ -53,7 +53,6 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_user?.uid);
     return GestureDetector(
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
@@ -61,241 +60,250 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
           title: const Text('投稿詳細'),
           backgroundColor: Colors.white,
         ),
-        body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('posts')
-              .doc(widget.id)
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              Map<String, dynamic>? data =
-                  snapshot.data!.data() as Map<String, dynamic>?;
-              if (data != null) {
-                return Container(
-                  color: Colors.white,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        const SizedBox(width: 10),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                children: [
-                                  Text(
-                                    data["isAnonymous"] == true
-                                        ? '匿名'
-                                        : data["name"],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
+        body: SingleChildScrollView(
+          child: StreamBuilder<DocumentSnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('posts')
+                .doc(widget.id)
+                .snapshots(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.active) {
+                Map<String, dynamic>? data =
+                    snapshot.data!.data() as Map<String, dynamic>?;
+                if (data != null) {
+                  return Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(width: 10),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Row(
+                                  children: [
+                                    Text(
+                                      data["isAnonymous"] == true
+                                          ? '匿名'
+                                          : data["name"],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
                                     ),
-                                  ),
-                                  if (data['uid'] == user?.uid)
-                                    IconButton(
-                                      icon: const Icon(Icons.more_vert),
-                                      onPressed: () {
-                                        showModalBottomSheet(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                ListTile(
-                                                  leading:
-                                                      const Icon(Icons.edit),
-                                                  title: const Text('修正'),
-                                                  onTap: () {
-                                                    // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                                    Navigator.pop(
-                                                        context); // 시트를 닫습니다.
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            PostEditPage(
-                                                                data: data),
-                                                      ),
-                                                    );
-                                                    // print(data);
-                                                  },
-                                                ),
-                                                ListTile(
-                                                  leading:
-                                                      const Icon(Icons.delete),
-                                                  title: const Text('削除'),
-                                                  onTap: () async {
-                                                    // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
-                                                    await FirebaseFirestore
-                                                        .instance
-                                                        .collection('posts')
-                                                        .doc(data[
-                                                            'documentID']) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
-                                                        .delete();
+                                    if (data['uid'] == user?.uid)
+                                      IconButton(
+                                        icon: const Icon(Icons.more_vert),
+                                        onPressed: () {
+                                          showModalBottomSheet(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    leading:
+                                                        const Icon(Icons.edit),
+                                                    title: const Text('修正'),
+                                                    onTap: () {
+                                                      // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                                      Navigator.pop(
+                                                          context); // 시트를 닫습니다.
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PostEditPage(
+                                                                  data: data),
+                                                        ),
+                                                      );
+                                                      // print(data);
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    leading: const Icon(
+                                                        Icons.delete),
+                                                    title: const Text('削除'),
+                                                    onTap: () async {
+                                                      // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                                      await FirebaseFirestore
+                                                          .instance
+                                                          .collection('posts')
+                                                          .doc(data[
+                                                              'documentID']) // 'id'는 삭제하려는 문서의 ID입니다. 실제 ID로 교체해야 합니다.
+                                                          .delete();
 
-                                                    Navigator.pop(
-                                                        context); // 시트를 닫습니다.
-                                                    Navigator.pop(
-                                                        context); // 시트를 닫습니다.
-                                                  },
-                                                ),
-                                                const SizedBox(height: 20),
-                                              ],
-                                            );
-                                          },
-                                        );
+                                                      Navigator.pop(
+                                                          context); // 시트를 닫습니다.
+                                                      Navigator.pop(
+                                                          context); // 시트를 닫습니다.
+                                                    },
+                                                  ),
+                                                  const SizedBox(height: 20),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                      ),
+                                  ],
+                                ),
+                                Text(
+                                  data['date'] != null
+                                      ? timeAgo(data['date'].toDate())
+                                      : 'Unknown date',
+                                  style: const TextStyle(
+                                      fontSize: 13, color: Colors.grey),
+                                ),
+                                const SizedBox(height: 5),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      data['title'],
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25,
+                                      ),
+                                    ),
+                                    Text(
+                                      data['post_message'],
+                                      style: const TextStyle(fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: <Widget>[
+                                    FavoriteButton(
+                                      documentid: data['documentID'],
+                                      collectionname: 'posts',
+                                    ),
+                                    Text(
+                                      '${data['likes'].length.toString()} いいね',
+                                      style: const TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 5),
+
+                                    //  have to add comment lenght
+
+                                    StreamBuilder<QuerySnapshot>(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('posts')
+                                          .doc(data['documentID'])
+                                          .collection('comments')
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<QuerySnapshot>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          return Text(
+                                              '${snapshot.data!.docs.length.toString()} コメント',
+                                              style: const TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.grey,
+                                              ));
+                                        } else if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        }
+                                        // By default, show a loading spinner.
+                                        return const CircularProgressIndicator();
                                       },
                                     ),
-                                ],
-                              ),
-                              Text(
-                                data['date'] != null
-                                    ? timeAgo(data['date'].toDate())
-                                    : 'Unknown date',
-                                style: const TextStyle(
-                                    fontSize: 13, color: Colors.grey),
-                              ),
-                              const SizedBox(height: 5),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    data['title'],
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                    ),
-                                  ),
-                                  Text(
-                                    data['post_message'],
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 10),
-                              Row(
-                                children: <Widget>[
-                                  FavoriteButton(
-                                    documentid: data['documentID'],
-                                    collectionname: 'posts',
-                                  ),
-                                  Text(
-                                    '${data['likes'].length.toString()} いいね',
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5),
-
-                                  //  have to add comment lenght
-
-                                  StreamBuilder<QuerySnapshot>(
-                                    stream: FirebaseFirestore.instance
-                                        .collection('posts')
-                                        .doc(data['documentID'])
-                                        .collection('comments')
-                                        .snapshots(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot<QuerySnapshot> snapshot) {
-                                      if (snapshot.hasData) {
-                                        return Text(
-                                            '${snapshot.data!.docs.length.toString()} コメント',
-                                            style: const TextStyle(
-                                              fontSize: 13,
-                                              color: Colors.grey,
-                                            ));
-                                      } else if (snapshot.hasError) {
-                                        return Text('Error: ${snapshot.error}');
-                                      }
-                                      // By default, show a loading spinner.
-                                      return const CircularProgressIndicator();
-                                    },
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        const Divider(
-                          color: Color.fromRGBO(165, 165, 165, 1),
-                          thickness: .5,
-                          indent: 15,
-                          endIndent: 15,
-                        ),
-                        // comment box
-                        StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('posts')
-                              .doc(widget.id)
-                              .collection('comments')
-                              .orderBy('timestamp', descending: true)
-                              .snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.active) {
-                              if (snapshot.data != null) {
-                                return ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: snapshot.data!.docs.length,
-                                  itemBuilder: (context, index) {
-                                    var comment = snapshot.data!.docs[index]
-                                        .data() as Map<String, dynamic>;
-                                    return ListTile(
-                                        title: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              comment["isAnonymous"] == true
-                                                  ? '匿名'
-                                                  : comment["name"],
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                              ),
+                          const Divider(
+                            color: Color.fromRGBO(165, 165, 165, 1),
+                            thickness: .5,
+                            indent: 15,
+                            endIndent: 15,
+                          ),
+                          // comment box
+                          StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('posts')
+                                .doc(widget.id)
+                                .collection('comments')
+                                .orderBy('timestamp', descending: true)
+                                .snapshots(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.active) {
+                                if (snapshot.data != null) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 60.0),
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: snapshot.data!.docs.length,
+                                      itemBuilder: (context, index) {
+                                        var comment = snapshot.data!.docs[index]
+                                            .data() as Map<String, dynamic>;
+                                        return ListTile(
+                                            title: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  comment["isAnonymous"] == true
+                                                      ? '匿名'
+                                                      : comment["name"],
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                                Text(comment['text']),
+                                              ],
                                             ),
-                                            Text(comment['text']),
-                                          ],
-                                        ),
-                                        subtitle: Text(
-                                          timeAgo(
-                                              comment['timestamp'].toDate()),
-                                          style: const TextStyle(
-                                              fontSize: 12, color: Colors.grey),
-                                        )
-                                        // Add other fields as needed
-                                        );
-                                  },
-                                );
+                                            subtitle: Text(
+                                              timeAgo(comment['timestamp']
+                                                  .toDate()),
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.grey),
+                                            )
+                                            // Add other fields as needed
+                                            );
+                                      },
+                                    ),
+                                  );
+                                } else {
+                                  return const Text('No comments');
+                                }
+                              } else if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return const CircularProgressIndicator();
                               } else {
-                                return const Text('No comments');
+                                return const Text('Error');
                               }
-                            } else if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else {
-                              return const Text('Error');
-                            }
-                          },
-                        ),
-                      ],
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else {
+                  return const Text('No data');
+                }
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
               } else {
-                return const Text('No data');
+                return const Text('Error');
               }
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else {
-              return const Text('Error');
-            }
-          },
+            },
+          ),
         ),
 
         // Add comment
