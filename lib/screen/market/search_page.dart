@@ -61,8 +61,6 @@ class _SearchPageState extends State<SearchPage> {
           decoration: InputDecoration(
             hintText: "商品を検索",
             hintStyle: TextStyle(color: Colors.black),
-            border: InputBorder.none,
-            prefixIcon: Icon(Icons.search, color: Colors.black),
           ),
           style: TextStyle(color: Colors.black),
           onChanged: (value) {
