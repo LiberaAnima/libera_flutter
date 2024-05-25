@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
+import 'package:libera_flutter/components/bottomButton.dart';
 import 'package:libera_flutter/components/input_box.dart';
 import 'package:libera_flutter/screen/policy/privacypolicy_page.dart';
 import 'package:libera_flutter/screen/policy/terms_of_service_page.dart';
@@ -77,33 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     height: 80,
                   ),
-                  Row(
-                    // 利用契約、プライバシーポリシー、Q&A　リンク
-
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TermsOfServicePage()),
-                        ),
-                        child: const Text("利用契約"),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PrivacyPolicyPage()),
-                        ),
-                        child: const Text("プライバシーポリシー"),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pushNamed(context, '/'),
-                        child: const Text("Q&A"),
-                      ),
-                    ],
-                  )
+                  const BottomButton(),
                 ],
               ),
             ),

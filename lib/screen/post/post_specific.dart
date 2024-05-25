@@ -86,7 +86,9 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                               Row(
                                 children: [
                                   Text(
-                                    data['name'],
+                                    data["isAnonymous"] == true
+                                        ? '匿名'
+                                        : data["name"],
                                     style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
@@ -103,8 +105,9 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                               mainAxisSize: MainAxisSize.min,
                                               children: <Widget>[
                                                 ListTile(
-                                                  leading: Icon(Icons.edit),
-                                                  title: Text('修正'),
+                                                  leading:
+                                                      const Icon(Icons.edit),
+                                                  title: const Text('修正'),
                                                   onTap: () {
                                                     // 수정하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
                                                     Navigator.pop(
@@ -121,8 +124,9 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                                   },
                                                 ),
                                                 ListTile(
-                                                  leading: Icon(Icons.delete),
-                                                  title: Text('削除'),
+                                                  leading:
+                                                      const Icon(Icons.delete),
+                                                  title: const Text('削除'),
                                                   onTap: () async {
                                                     // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
                                                     await FirebaseFirestore
@@ -138,7 +142,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                                         context); // 시트를 닫습니다.
                                                   },
                                                 ),
-                                                SizedBox(height: 20),
+                                                const SizedBox(height: 20),
                                               ],
                                             );
                                           },
@@ -151,27 +155,27 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                 data['date'] != null
                                     ? timeAgo(data['date'].toDate())
                                     : 'Unknown date',
-                                style:
-                                    TextStyle(fontSize: 13, color: Colors.grey),
+                                style: const TextStyle(
+                                    fontSize: 13, color: Colors.grey),
                               ),
-                              SizedBox(height: 5),
+                              const SizedBox(height: 5),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
                                     data['title'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25,
                                     ),
                                   ),
                                   Text(
                                     data['post_message'],
-                                    style: TextStyle(fontSize: 15),
+                                    style: const TextStyle(fontSize: 15),
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Row(
                                 children: <Widget>[
                                   FavoriteButton(
@@ -180,12 +184,12 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                   ),
                                   Text(
                                     '${data['likes'].length.toString()} いいね',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: Colors.grey,
                                     ),
                                   ),
-                                  SizedBox(width: 5),
+                                  const SizedBox(width: 5),
 
                                   //  have to add comment lenght
 
@@ -200,7 +204,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                       if (snapshot.hasData) {
                                         return Text(
                                             '${snapshot.data!.docs.length.toString()} コメント',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 13,
                                               color: Colors.grey,
                                             ));
@@ -208,7 +212,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                         return Text('Error: ${snapshot.error}');
                                       }
                                       // By default, show a loading spinner.
-                                      return CircularProgressIndicator();
+                                      return const CircularProgressIndicator();
                                     },
                                   ),
                                 ],
@@ -334,7 +338,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                       Expanded(
                         child: TextField(
                           controller: _commentController, // Add this
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'コメントを入力してください。',
                             border: InputBorder.none,
                             contentPadding:
@@ -365,7 +369,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                         ),
                       ),
                       IconButton(
-                        icon: Icon(Icons.send),
+                        icon: const Icon(Icons.send),
                         onPressed: () async {
                           // Add this
                           final DocumentSnapshot userDoc =

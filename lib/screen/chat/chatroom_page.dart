@@ -27,21 +27,21 @@ class _ChatRoomState extends State<ChatRoom> {
   UserModel? _user;
   final User? user = FirebaseAuth.instance.currentUser;
 
-  void setupPushNotifications() async {
-    final fcm = FirebaseMessaging.instance;
+  // void setupPushNotifications() async {
+  //   final fcm = FirebaseMessaging.instance;
 
-    await fcm.requestPermission();
+  //   await fcm.requestPermission();
 
-    fcm.subscribeToTopic('chat');
-    final token = await fcm.getToken();
-    // print(token);
-  }
+  //   fcm.subscribeToTopic('chat');
+  //   final token = await fcm.getToken();
+  //   // print(token);
+  // }
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
-    setupPushNotifications();
+    // setupPushNotifications();
   }
 
   void _fetchUserData() async {
