@@ -12,6 +12,7 @@ class _ClassPageState extends State<ClassPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("授業画面"),
       ),
       body: Center(
