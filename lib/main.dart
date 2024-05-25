@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:libera_flutter/screen/market/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/chat/chatlist_page.dart';
 import 'package:libera_flutter/screen/class_page.dart';
-import 'package:libera_flutter/screen/discout_page.dart';
+import 'package:libera_flutter/screen/discount_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
