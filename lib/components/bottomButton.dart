@@ -15,7 +15,7 @@ class BottomButton extends StatelessWidget {
     return SizedBox(
         width: double.infinity,
         child: Row(
-          // 利用契約、プライバシーポリシー、Q&A　リンク
+          // 利用契約、プライバシーポリシー、お問い合わせ　リンク
 
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -35,7 +35,7 @@ class BottomButton extends StatelessWidget {
             ),
             TextButton(
               onPressed: () => launchURL(url),
-              child: const Text("Q&A"),
+              child: const Text("お問い合わせ"),
             ),
           ],
         ));

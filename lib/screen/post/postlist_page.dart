@@ -178,7 +178,7 @@ class _PostListPagePageState extends State<PostListPage> {
               //           ),
               //         ),
               //         child: Text(
-              //           "Q&A",
+              //           "お問い合わせ",
               //           style: TextStyle(
               //             color: Colors.black,
               //             fontSize: 12,
