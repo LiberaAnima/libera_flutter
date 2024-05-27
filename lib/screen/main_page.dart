@@ -124,7 +124,7 @@ class _MainPagePageState extends State<MainPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               Row(
                                 children: [
@@ -135,7 +135,7 @@ class _MainPagePageState extends State<MainPage> {
                                       _user?.school ?? '',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w900,
-                                          fontSize: 30,
+                                          fontSize: 20,
                                           color: Colors.black),
                                     ),
                                   ),
