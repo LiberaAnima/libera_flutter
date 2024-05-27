@@ -108,8 +108,11 @@ class _ChatListPageState extends State<ChatListPage> {
                               }
                             },
                           ),
-                          subtitle: Text(chatroomData['lastMessage']['text'] ??
-                              'No last message'),
+                          subtitle: Text(
+                            chatroomData['lastMessage']['text'] ??
+                                'No last message',
+                            style: const TextStyle(fontSize: 15),
+                          ),
 
                           isThreeLine: true,
                           onTap: () {
