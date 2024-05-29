@@ -519,12 +519,24 @@ class _MarketSpecificPageState extends State<MarketSpecificPage> {
                               .update({
                             'bookmark': FieldValue.arrayUnion([user.uid]),
                           });
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .update({
+                            'bookmark': FieldValue.arrayUnion([widget.uid]),
+                          });
                         } else {
                           await FirebaseFirestore.instance
                               .collection('books')
                               .doc(widget.uid)
                               .update({
                             'bookmark': FieldValue.arrayRemove([user.uid]),
+                          });
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .update({
+                            'bookmark': FieldValue.arrayRemove([widget.uid]),
                           });
                         }
                       }
