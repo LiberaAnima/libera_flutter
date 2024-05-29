@@ -98,8 +98,13 @@ class _ChatListPageState extends State<ChatListPage> {
                                     ),
                                     const SizedBox(width: 40),
                                     Text(
-                                      timeAgo(
-                                          chatroomData['timestamp'].toDate()),
+                                      chatroomData['lastMessage']
+                                                  ['timestamp'] !=
+                                              null
+                                          ? timeAgo(chatroomData['lastMessage']
+                                                  ['timestamp']
+                                              .toDate())
+                                          : 'No last message',
                                       style: const TextStyle(
                                           fontSize: 12, color: Colors.grey),
                                     )
@@ -113,9 +118,17 @@ class _ChatListPageState extends State<ChatListPage> {
                                 'No last message',
                             style: const TextStyle(fontSize: 15),
                           ),
-
+                          trailing: (chatroomData['isNew'] ?? false)
+                              ? const Icon(Icons.new_releases)
+                              : null,
                           isThreeLine: true,
-                          onTap: () {
+                          onTap: () async {
+                            FirebaseFirestore.instance
+                                .collection('chatroom')
+                                .doc(chatroomData['id'])
+                                .update({
+                              'isNew': false,
+                            });
                             Navigator.push(
                               context,
                               MaterialPageRoute(

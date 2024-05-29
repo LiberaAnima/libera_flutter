@@ -86,6 +86,7 @@ class _ChatRoomState extends State<ChatRoom> {
         userId: widget.userId,
         chatroomId: widget.chatroomId,
         username: _user?.username ?? '',
+        current: _user?.uid ?? '',
       ),
     );
   }
@@ -96,12 +97,14 @@ class ChatroomPage extends StatelessWidget {
   final String userId;
   final String chatroomId;
   final String username;
+  final String current;
 
   ChatroomPage({
     required this.otherId,
     required this.userId,
     required this.chatroomId,
     required this.username,
+    required this.current,
   });
 
   @override
@@ -146,6 +149,13 @@ class ChatroomPage extends StatelessWidget {
                 'text': message.text,
                 'username': username,
                 'timestamp': FieldValue.serverTimestamp(),
+              });
+
+              await FirebaseFirestore.instance
+                  .collection('chatroom')
+                  .doc(chatroomId)
+                  .update({
+                'isNew': true,
               });
             },
             user: types.User(id: userId),
