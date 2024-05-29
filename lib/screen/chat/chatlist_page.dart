@@ -98,8 +98,13 @@ class _ChatListPageState extends State<ChatListPage> {
                                     ),
                                     const SizedBox(width: 40),
                                     Text(
-                                      timeAgo(
-                                          chatroomData['timestamp'].toDate()),
+                                      chatroomData['lastMessage']
+                                                  ['timestamp'] !=
+                                              null
+                                          ? timeAgo(chatroomData['lastMessage']
+                                                  ['timestamp']
+                                              .toDate())
+                                          : 'No last message',
                                       style: const TextStyle(
                                           fontSize: 12, color: Colors.grey),
                                     )
