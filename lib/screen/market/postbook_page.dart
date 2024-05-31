@@ -47,12 +47,12 @@ class _PostBookPagePageState extends State<PostBookPage> {
         .collection('users')
         .doc(user.uid)
         .get();
-    print(user.uid);
+    // print(user.uid);
     String username = userDoc.get('username');
     String faculty = userDoc.get('faculty');
     //firestoreにデータを追加
     CollectionReference books = FirebaseFirestore.instance.collection('books');
-    print(books);
+    // print(books);
     final post = FirebaseFirestore.instance.collection('books').doc();
     await post.set(
       {
