@@ -42,82 +42,82 @@ class _PostListPagePageState extends State<PostListPage> {
           ),
         ],
       ),
-      // drawer: Drawer(
-      //   child: Column(
-      //     children: [
-      //       const SizedBox(height: 90),
-      //       const Text(
-      //         "カテゴリー",
-      //         style: TextStyle(
-      //           fontSize: 20,
-      //           fontWeight: FontWeight.bold,
-      //         ),
-      //       ),
-      //       const Divider(
-      //         color: Colors.orange,
-      //         thickness: 1,
-      //         indent: 0,
-      //         endIndent: 0,
-      //       ),
-      //       Container(
-      //         decoration: const BoxDecoration(
-      //           border: Border(
-      //             bottom: BorderSide(
-      //               color: Colors.grey,
-      //               width: .5,
-      //             ),
-      //           ),
-      //         ),
-      //         child: const ListTile(
-      //           title: Text('講義・授業'),
-      //           onTap: null,
-      //         ),
-      //       ),
-      //       Container(
-      //         decoration: const BoxDecoration(
-      //           border: Border(
-      //             bottom: BorderSide(
-      //               color: Colors.grey,
-      //               width: .5,
-      //             ),
-      //           ),
-      //         ),
-      //         child: const ListTile(
-      //           title: Text('部活動・サークル'),
-      //           onTap: null,
-      //         ),
-      //       ),
-      //       Container(
-      //         decoration: const BoxDecoration(
-      //           border: Border(
-      //             bottom: BorderSide(
-      //               color: Colors.grey,
-      //               width: .5,
-      //             ),
-      //           ),
-      //         ),
-      //         child: const ListTile(
-      //           title: Text('アルバイト'),
-      //           onTap: null,
-      //         ),
-      //       ),
-      //       Container(
-      //         decoration: const BoxDecoration(
-      //           border: Border(
-      //             bottom: BorderSide(
-      //               color: Colors.grey,
-      //               width: .5,
-      //             ),
-      //           ),
-      //         ),
-      //         child: const ListTile(
-      //           title: Text('恋愛'),
-      //           onTap: null,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            const SizedBox(height: 90),
+            const Text(
+              "カテゴリー",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const Divider(
+              color: Colors.orange,
+              thickness: 1,
+              indent: 0,
+              endIndent: 0,
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('講義・授業'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('部活動・サークル'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('アルバイト'),
+                onTap: null,
+              ),
+            ),
+            Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey,
+                    width: .5,
+                  ),
+                ),
+              ),
+              child: const ListTile(
+                title: Text('就活'),
+                onTap: null,
+              ),
+            ),
+          ],
+        ),
+      ),
       body: StreamBuilder<QuerySnapshot>(
         stream: postlists,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
