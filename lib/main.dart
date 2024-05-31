@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:libera_flutter/screen/event_page.dart';
+import 'package:libera_flutter/screen/intern_page.dart';
 import 'package:libera_flutter/screen/market/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/chat/chatlist_page.dart';
 import 'package:libera_flutter/screen/class_page.dart';
@@ -70,6 +72,8 @@ class MyApp extends StatelessWidget {
         '/postbook': (context) => const PostBookPage(),
         '/chatlist': (context) => const ChatListPage(),
         '/discount': (context) => DiscountPage(),
+        '/event': (context) => const EventPage(),
+        '/intern': (context) => const InternPage(),
         '/findpassword': (context) => FindPasswordPage(),
         '/editprofile': (context) => const ProfileEditPage(),
         '/checkpolicy': (context) => const TermsOfServiceAgreement(),

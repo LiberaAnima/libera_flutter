@@ -172,11 +172,11 @@ class _MainPagePageState extends State<MainPage> {
                                   ),
                                   Flexible(
                                     child: menuIcon(Icons.business_center,
-                                        "/discount", "インターン\n　バイト"),
+                                        "/intern", "インターン\n　バイト"),
                                   ),
                                   Flexible(
                                     child: menuIcon(
-                                        Icons.discount, "/discount", "課外イベント"),
+                                        Icons.discount, "/event", "課外イベント"),
                                   ),
                                 ],
                               ),
