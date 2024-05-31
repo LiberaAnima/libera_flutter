@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
         '/post': (context) => PostPage(),
         '/postbook': (context) => const PostBookPage(),
         '/chatlist': (context) => const ChatListPage(),
-        '/discount': (context) => const DiscountPage(),
+        '/discount': (context) => DiscountPage(),
         '/findpassword': (context) => FindPasswordPage(),
         '/editprofile': (context) => const ProfileEditPage(),
         '/checkpolicy': (context) => const TermsOfServiceAgreement(),
