@@ -17,10 +17,13 @@ class PostBookPage extends StatefulWidget {
 }
 
 class _PostBookPagePageState extends State<PostBookPage> {
-  TextEditingController _booknameEditingController = TextEditingController();
-  TextEditingController _bookauthorEditingController = TextEditingController();
-  TextEditingController _priceEditingController = TextEditingController();
-  TextEditingController _detailsEditingController = TextEditingController();
+  final TextEditingController _booknameEditingController =
+      TextEditingController();
+  final TextEditingController _bookauthorEditingController =
+      TextEditingController();
+  final TextEditingController _priceEditingController = TextEditingController();
+  final TextEditingController _detailsEditingController =
+      TextEditingController();
   File? _bookImage;
 
   void _onSubmitted(String bookname, String bookauthor, String price,
