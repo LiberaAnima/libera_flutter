@@ -59,7 +59,7 @@ class _ChatListPageState extends State<ChatListPage> {
                       var lastMessageData = snapshot.data!.data();
                       if (lastMessageData != null) {
                         chatroomData['lastMessage'] = lastMessageData;
-                        print(chatroomData);
+                        // print(chatroomData);
                         return ListTile(
                           // tileColor: Colors.red,
                           dense: true,
@@ -119,7 +119,10 @@ class _ChatListPageState extends State<ChatListPage> {
                             style: const TextStyle(fontSize: 15),
                           ),
                           trailing: (chatroomData['isNew'] ?? false)
-                              ? const Icon(Icons.new_releases)
+                              ? const Icon(
+                                  Icons.new_releases,
+                                  color: Colors.orange,
+                                )
                               : null,
                           isThreeLine: true,
                           onTap: () async {
