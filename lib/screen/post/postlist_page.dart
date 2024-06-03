@@ -268,30 +268,25 @@ class _PostListPagePageState extends State<PostListPage> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 5),
+                                      const SizedBox(height: 10),
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
                                           const SizedBox(width: 10),
+                                          if (data['imageUrl'] != null) ...[
+                                            Image.network(data['imageUrl'],
+                                                width: 100, height: 100),
+                                            const SizedBox(width: 30),
+                                          ],
                                           Text(
-                                            data['post_message'].length > 40
-                                                ? '${data['post_message'].substring(0, 40)}...'
+                                            data['post_message'].length > 15
+                                                ? '${data['post_message'].substring(0, 15)}...'
                                                 : data['post_message'],
                                           ),
-                                          // if (data['imageUrl'] != null)
-                                          //   Center(
-                                          //     child: ClipRRect(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(8.0),
-                                          //       child: Image.network(
-                                          //         data['imageUrl'],
-                                          //         width: 100,
-                                          //       ),
-                                          //     ),
-                                          //   ),
                                         ],
                                       ),
+                                      const SizedBox(height: 10),
                                       const Divider(
                                         color: Color.fromRGBO(165, 165, 165, 1),
                                         thickness: .5,
