@@ -263,32 +263,81 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                       itemBuilder: (context, index) {
                                         var comment = snapshot.data!.docs[index]
                                             .data() as Map<String, dynamic>;
-                                        return ListTile(
-                                            title: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  comment["isAnonymous"] == true
-                                                      ? '匿名'
-                                                      : comment["name"],
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15,
+                                        return GestureDetector(
+                                          onLongPress: () {
+                                            if (comment['user'] == user?.uid) {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: const Text('確認'),
+                                                    content: const Text(
+                                                        'コメントを削除しますか？'),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        child:
+                                                            const Text('キャンセル'),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                      TextButton(
+                                                        child: const Text('削除'),
+                                                        onPressed: () async {
+                                                          await FirebaseFirestore
+                                                              .instance
+                                                              .collection(
+                                                                  'posts')
+                                                              .doc(widget.id)
+                                                              .collection(
+                                                                  'comments')
+                                                              .doc(snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                                  .id)
+                                                              .delete();
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            }
+                                          },
+                                          child: ListTile(
+                                              // コメントタイル
+                                              title: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    comment["isAnonymous"] ==
+                                                            true
+                                                        ? '匿名'
+                                                        : comment["name"],
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15,
+                                                    ),
                                                   ),
-                                                ),
-                                                Text(comment['text']),
-                                              ],
-                                            ),
-                                            subtitle: Text(
-                                              timeAgo(comment['timestamp']
-                                                  .toDate()),
-                                              style: const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.grey),
-                                            )
-                                            // Add other fields as needed
-                                            );
+                                                  Text(comment['text']),
+                                                ],
+                                              ),
+                                              subtitle: Text(
+                                                timeAgo(comment['timestamp']
+                                                    .toDate()),
+                                                style: const TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey),
+                                              )
+                                              // Add other fields as needed
+                                              ),
+                                        );
                                       },
                                     ),
                                   );
