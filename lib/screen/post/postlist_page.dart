@@ -275,19 +275,21 @@ class _PostListPagePageState extends State<PostListPage> {
                                         children: [
                                           const SizedBox(width: 10),
                                           Text(
-                                            data['post_message'],
+                                            data['post_message'].length > 40
+                                                ? '${data['post_message'].substring(0, 40)}...'
+                                                : data['post_message'],
                                           ),
-                                          if (data['imageUrl'] != null)
-                                            Center(
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: Image.network(
-                                                  data['imageUrl'],
-                                                  width: 100,
-                                                ),
-                                              ),
-                                            ),
+                                          // if (data['imageUrl'] != null)
+                                          //   Center(
+                                          //     child: ClipRRect(
+                                          //       borderRadius:
+                                          //           BorderRadius.circular(8.0),
+                                          //       child: Image.network(
+                                          //         data['imageUrl'],
+                                          //         width: 100,
+                                          //       ),
+                                          //     ),
+                                          //   ),
                                         ],
                                       ),
                                       const Divider(
