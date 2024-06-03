@@ -229,7 +229,7 @@ class _PostListPagePageState extends State<PostListPage> {
                             document.data()! as Map<String, dynamic>;
                         return GestureDetector(
                           onTap: () {
-                            print(document.id);
+                            // print(document.id);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -277,6 +277,17 @@ class _PostListPagePageState extends State<PostListPage> {
                                           Text(
                                             data['post_message'],
                                           ),
+                                          if (data['imageUrl'] != null)
+                                            Center(
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                child: Image.network(
+                                                  data['imageUrl'],
+                                                  width: 100,
+                                                ),
+                                              ),
+                                            ),
                                         ],
                                       ),
                                       const Divider(
