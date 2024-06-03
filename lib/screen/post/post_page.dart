@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:libera_flutter/screen/post/postlist_page.dart';
@@ -15,14 +16,45 @@ class _PostPagePageState extends State<PostPage> {
   TextEditingController _textEditingController = TextEditingController();
   TextEditingController _titleEditingController = TextEditingController();
   bool _isAnonymous = false;
-  File? _bookImage;
+  File? _postImage;
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
 
-  _onSubmitted(String content) {
+  void _onSubmitted(String content, File? postImage) async {
+    String imageUrl = '';
+    if (postImage != null) {
+      String fileName = 'books/${DateTime.now().millisecondsSinceEpoch}.jpg';
+      FirebaseStorage storage = FirebaseStorage.instance;
+      TaskSnapshot snapshot = await storage.ref(fileName).putFile(postImage);
+      imageUrl = await snapshot.ref.getDownloadURL();
+    }
+
+    final User? user = FirebaseAuth.instance.currentUser;
+    final uid = user?.uid;
+    final DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
+    final post = FirebaseFirestore.instance.collection('posts').doc();
+    post.set({
+      // 匿名投稿の場合は、名前を「名無し」とする　( if 得意名　checks -> true)
+      'title': _titleEditingController.text,
+      'post_message': _textEditingController.text,
+      'date': FieldValue.serverTimestamp(),
+      'name': userDoc['username'],
+      'likes': [],
+      'uid': uid,
+      'documentID': post.id,
+      'isAnonymous': _isAnonymous,
+      'imageUrl': imageUrl,
+    });
+
     /// 入力欄をクリアにする
     _textEditingController.clear();
     _titleEditingController.clear();
+    if (mounted) {
+      setState(() {
+        _postImage = null;
+      });
+    }
   }
 
   Future<void> _pickImage() async {
@@ -30,7 +62,7 @@ class _PostPagePageState extends State<PostPage> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
-        _bookImage = File(pickedFile.path);
+        _postImage = File(pickedFile.path);
       });
     }
   }
@@ -137,25 +169,7 @@ class _PostPagePageState extends State<PostPage> {
               return;
             }
             if (user != null) {
-              final String uid = user.uid;
-              final DocumentSnapshot userDoc = await FirebaseFirestore.instance
-                  .collection('users')
-                  .doc(uid)
-                  .get();
-              final post = FirebaseFirestore.instance.collection('posts').doc();
-              post.set({
-                // 匿名投稿の場合は、名前を「名無し」とする　( if 得意名　checks -> true)
-                'title': _titleEditingController.text,
-                'post_message': _textEditingController.text,
-                'date': FieldValue.serverTimestamp(),
-                'name': userDoc['username'],
-                'likes': [],
-                'uid': uid,
-                'documentID': post.id,
-                'isAnonymous': _isAnonymous,
-                'imageUrl': _bookImage != null ? _bookImage!.path : null,
-              });
-              _onSubmitted(_textEditingController.text);
+              _onSubmitted(_textEditingController.text, _postImage);
               Navigator.pop(context);
             }
           },
