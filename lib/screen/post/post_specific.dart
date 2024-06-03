@@ -169,10 +169,23 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                         fontSize: 25,
                                       ),
                                     ),
+                                    const SizedBox(height: 10),
                                     Text(
                                       data['post_message'],
                                       style: const TextStyle(fontSize: 15),
                                     ),
+                                    const SizedBox(height: 20),
+                                    if (data['imageUrl'] != null)
+                                      Center(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          child: Image.network(
+                                            data['imageUrl'],
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
                                   ],
                                 ),
                                 const SizedBox(height: 10),
