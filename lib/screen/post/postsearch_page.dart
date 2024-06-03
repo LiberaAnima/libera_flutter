@@ -47,10 +47,6 @@ class _PostSearchPageState extends State<PostSearchPage> {
             .where("title", isGreaterThanOrEqualTo: searchController.text)
             .where("title",
                 isLessThanOrEqualTo: searchController.text + '\uf8ff')
-            .where("post_message",
-                isGreaterThanOrEqualTo: searchController.text)
-            .where("post_message",
-                isLessThanOrEqualTo: searchController.text + '\uf8ff')
             .orderBy('date', descending: true)
             .snapshots();
       });
