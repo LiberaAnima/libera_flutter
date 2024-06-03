@@ -138,8 +138,6 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
 
                                                       Navigator.pop(
                                                           context); // 시트를 닫습니다.
-                                                      Navigator.pop(
-                                                          context); // 시트를 닫습니다.
                                                     },
                                                   ),
                                                   const SizedBox(height: 20),
@@ -264,66 +262,73 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                         var comment = snapshot.data!.docs[index]
                                             .data() as Map<String, dynamic>;
                                         return GestureDetector(
-                                          onLongPress: () {
-                                            if (comment['user'] == user?.uid) {
-                                              showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: const Text('確認'),
-                                                    content: const Text(
-                                                        'コメントを削除しますか？'),
-                                                    actions: <Widget>[
-                                                      TextButton(
-                                                        child:
-                                                            const Text('キャンセル'),
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                      ),
-                                                      TextButton(
-                                                        child: const Text('削除'),
-                                                        onPressed: () async {
-                                                          await FirebaseFirestore
-                                                              .instance
-                                                              .collection(
-                                                                  'posts')
-                                                              .doc(widget.id)
-                                                              .collection(
-                                                                  'comments')
-                                                              .doc(snapshot
-                                                                  .data!
-                                                                  .docs[index]
-                                                                  .id)
-                                                              .delete();
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            }
-                                          },
                                           child: ListTile(
                                               // コメントタイル
                                               title: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    comment["isAnonymous"] ==
-                                                            true
-                                                        ? '匿名'
-                                                        : comment["name"],
-                                                    style: const TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 15,
-                                                    ),
+                                                  Row(
+                                                    children: [
+                                                      Text(
+                                                        comment["isAnonymous"] ==
+                                                                true
+                                                            ? '匿名'
+                                                            : comment["name"],
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 5),
+                                                      if (comment['user'] ==
+                                                          user?.uid)
+                                                        IconButton(
+                                                          icon: Icon(
+                                                              Icons.more_vert),
+                                                          onPressed: () => {
+                                                            showModalBottomSheet(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: <Widget>[
+                                                                    ListTile(
+                                                                      leading:
+                                                                          const Icon(
+                                                                              Icons.delete),
+                                                                      title: const Text(
+                                                                          '削除'),
+                                                                      onTap:
+                                                                          () async {
+                                                                        // 삭제하기 버튼이 눌렸을 때의 동작을 여기에 작성합니다.
+                                                                        await FirebaseFirestore
+                                                                            .instance
+                                                                            .collection('posts')
+                                                                            .doc(widget.id)
+                                                                            .collection('comments')
+                                                                            .doc(snapshot.data!.docs[index].id)
+                                                                            .delete();
+
+                                                                        Navigator.pop(
+                                                                            context); // 시트를 닫습니다.
+                                                                      },
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        height:
+                                                                            20),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            ),
+                                                          },
+                                                        ),
+                                                    ],
                                                   ),
                                                   Text(comment['text']),
                                                 ],
