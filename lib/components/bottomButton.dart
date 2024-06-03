@@ -24,18 +24,18 @@ class BottomButton extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => TermsOfServicePage()),
               ),
-              child: const Text("利用契約"),
+              child: const Text("利用契約", style: TextStyle(fontSize: 12)),
             ),
             TextButton(
               onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => PrivacyPolicyPage()),
               ),
-              child: const Text("プライバシーポリシー"),
+              child: const Text("プライバシーポリシー", style: TextStyle(fontSize: 12)),
             ),
             TextButton(
               onPressed: () => launchURL(url),
-              child: const Text("お問い合わせ"),
+              child: const Text("お問い合わせ", style: TextStyle(fontSize: 12)),
             ),
           ],
         ));
