@@ -134,6 +134,12 @@ class _PostPagePageState extends State<PostPage> {
               SizedBox(
                 height: 20,
               ),
+              if (_postImage != null)
+                Image.file(
+                  _postImage!,
+                  width: 200,
+                  height: 200,
+                ),
               Row(
                 children: [
                   const Text('匿名投稿'),
