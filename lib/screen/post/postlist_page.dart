@@ -268,23 +268,30 @@ class _PostListPagePageState extends State<PostListPage> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 10),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const SizedBox(width: 10),
-                                          if (data['imageUrl'] != null) ...[
-                                            Image.network(data['imageUrl'],
-                                                width: 100, height: 100),
-                                            const SizedBox(width: 30),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 25),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              data['post_message'].length > 15
+                                                  ? '${data['post_message'].substring(0, 15)}...'
+                                                  : data['post_message'],
+                                            ),
+                                            if (data['imageUrl'] != null) ...[
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                child: Image.network(
+                                                    data['imageUrl'],
+                                                    width: 150,
+                                                    height: 100),
+                                              ),
+                                            ],
                                           ],
-                                          Text(
-                                            data['post_message'].length > 15
-                                                ? '${data['post_message'].substring(0, 15)}...'
-                                                : data['post_message'],
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                       const SizedBox(height: 10),
                                       const Divider(

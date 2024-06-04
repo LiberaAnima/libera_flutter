@@ -150,7 +150,7 @@ class _PostSpecificPageState extends State<PostSpecificPage> {
                                   ],
                                 ),
                                 Text(
-                                  data['date'] != null
+                                  data['date'] != ""
                                       ? timeAgo(data['date'].toDate())
                                       : 'Unknown date',
                                   style: const TextStyle(
