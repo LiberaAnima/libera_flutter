@@ -44,7 +44,7 @@ class _PostPagePageState extends State<PostPage> {
       'uid': uid,
       'documentID': post.id,
       'isAnonymous': _isAnonymous,
-      'imageUrl': imageUrl ?? null,
+      'imageUrl': imageUrl == '' ? null : imageUrl,
     });
 
     /// 入力欄をクリアにする
