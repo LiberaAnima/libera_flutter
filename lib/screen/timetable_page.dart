@@ -19,7 +19,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
 
   @override
   Widget build(BuildContext context) {
-    print(user?.uid);
+    // print(user?.uid);
     return Scaffold(
       body: Center(
         child: Container(
@@ -48,7 +48,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                 padding:
                     const EdgeInsets.only(top: 50.0, left: 30.0, right: 20.0),
                 child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 5,
                     childAspectRatio: 0.65,
                   ),
@@ -62,9 +62,9 @@ class _TimeTablePageState extends State<TimeTablePage> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting)
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator();
                           if (snapshot.hasError) {
-                            return Text('Something went wrong');
+                            return const Text('Something went wrong');
                           } else {
                             Map<String, dynamic> data =
                                 snapshot.data!.data() as Map<String, dynamic>;
@@ -116,19 +116,21 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                             children: <Widget>[
                                               TextField(
                                                 controller: classController,
-                                                decoration: InputDecoration(
-                                                    hintText: "講義名"),
+                                                decoration:
+                                                    const InputDecoration(
+                                                        hintText: "講義名"),
                                               ),
                                               TextField(
                                                 controller: roomController,
-                                                decoration: InputDecoration(
-                                                    hintText: "教室"),
+                                                decoration:
+                                                    const InputDecoration(
+                                                        hintText: "教室"),
                                               ),
                                             ],
                                           ),
                                           actions: [
                                             TextButton(
-                                              child: Text('登録'),
+                                              child: const Text('登録'),
                                               onPressed: () {
                                                 Navigator.of(context).pop({
                                                   'class': roomController.text,
@@ -174,11 +176,11 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                         Text(
                                           classInfo[0],
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 15,
                                         ),
                                         Text(classInfo[1] ?? ''),
@@ -224,15 +226,15 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         TextField(
-                                          decoration:
-                                              InputDecoration(hintText: '講義名'),
+                                          decoration: const InputDecoration(
+                                              hintText: '講義名'),
                                           onChanged: (value) {
                                             className = value;
                                           },
                                         ),
                                         TextField(
-                                          decoration:
-                                              InputDecoration(hintText: '教'),
+                                          decoration: const InputDecoration(
+                                              hintText: '教'),
                                           onChanged: (value) {
                                             roomName = value;
                                           },
@@ -241,7 +243,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                     ),
                                     actions: [
                                       TextButton(
-                                        child: Text('登録'),
+                                        child: const Text('登録'),
                                         onPressed: () {
                                           if (className.isNotEmpty &&
                                               roomName.isNotEmpty) {
@@ -252,7 +254,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                           } else {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              SnackBar(
+                                              const SnackBar(
                                                 content:
                                                     Text("講義名と教室を入力してください。"),
                                                 duration: Duration(seconds: 2),
@@ -300,11 +302,11 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                     Text(
                                       classes[index]?['class'] ?? '',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 15,
                                     ),
                                     Text(classes[index]?['room'] ?? ''),
