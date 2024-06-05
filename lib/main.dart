@@ -6,7 +6,7 @@ import 'package:libera_flutter/screen/event_page.dart';
 import 'package:libera_flutter/screen/intern_page.dart';
 import 'package:libera_flutter/screen/market/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/chat/chatlist_page.dart';
-import 'package:libera_flutter/screen/class_page.dart';
+import 'package:libera_flutter/screen/classComment_page.dart';
 import 'package:libera_flutter/screen/discount_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
         // '/marketspecific': (context) => const MarketSpecificPage(),
-        '/class': (context) => const ClassPage(),
+        '/class': (context) => const ClassCommentPage(),
         '/post': (context) => PostPage(),
         '/postbook': (context) => const PostBookPage(),
         '/chatlist': (context) => const ChatListPage(),

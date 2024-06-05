@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TimeTablePage extends StatefulWidget {
-  const TimeTablePage({Key? key}) : super(key: key);
+  const TimeTablePage({super.key});
 
   @override
   _TimeTablePageState createState() => _TimeTablePageState();
@@ -109,7 +109,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                       context: context,
                                       builder: (context) {
                                         return AlertDialog(
-                                          title: Text('$day,$period限',
+                                          title: Text('$day $period限',
                                               textAlign: TextAlign.center),
                                           content: Column(
                                             mainAxisSize: MainAxisSize.min,
@@ -220,7 +220,7 @@ class _TimeTablePageState extends State<TimeTablePage> {
                                   String roomName = '';
 
                                   return AlertDialog(
-                                    title: Text('$day,$period限',
+                                    title: Text('$day $period限',
                                         textAlign: TextAlign.center),
                                     content: Column(
                                       mainAxisSize: MainAxisSize.min,
