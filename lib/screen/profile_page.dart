@@ -122,11 +122,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          ElevatedButton(
-                            onPressed: () async => await _auth.signOut().then(
-                                (_) => Navigator.pushNamed(context, "/logIn")),
-                            child: const Text("ログアウト"),
-                          ),
                           const Divider(height: 40, thickness: 2),
                           const Text('自分の投稿',
                               style: TextStyle(
@@ -229,7 +224,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           _bookmark.isEmpty
                               ? const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Text('フリマ投稿がありません',
+                                  child: Text('ブックマークがありません',
                                       textAlign: TextAlign.center),
                                 )
                               : Column(
@@ -270,6 +265,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ))
                                       .toList(),
                                 ),
+                          ElevatedButton(
+                            onPressed: () async => await _auth.signOut().then(
+                                (_) => Navigator.pushNamed(context, "/logIn")),
+                            child: const Text("ログアウト"),
+                          ),
                         ],
                       ),
                     ),
