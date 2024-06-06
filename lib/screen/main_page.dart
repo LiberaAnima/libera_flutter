@@ -3,9 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/components/bottomButton.dart';
 import 'package:libera_flutter/components/timetable.dart';
 import 'package:libera_flutter/models/user_model.dart';
@@ -13,10 +11,7 @@ import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
-import 'package:intl/intl.dart';
 import 'package:libera_flutter/services/user_service.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

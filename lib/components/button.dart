@@ -5,10 +5,10 @@ class SendButton extends StatelessWidget {
   final Function()? onPressed;
 
   const SendButton({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PostEditPage extends StatefulWidget {
   final Map<String, dynamic> data;
 
-  PostEditPage({required this.data});
+  const PostEditPage({super.key, required this.data});
 
   @override
   _PostEditPageState createState() => _PostEditPageState();

@@ -7,7 +7,8 @@ class SchoolDropdown extends StatefulWidget {
   final ValueChanged<String?> onFacultySelected;
   final ValueChanged<String?> onFieldSelected;
 
-  SchoolDropdown({
+  const SchoolDropdown({
+    super.key,
     required this.futureSchools,
     required this.onSchoolSelected,
     required this.onFacultySelected,

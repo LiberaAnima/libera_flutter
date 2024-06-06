@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/components/bottomButton.dart';
 import 'package:libera_flutter/components/input_box.dart';
-import 'package:libera_flutter/screen/policy/privacypolicy_page.dart';
-import 'package:libera_flutter/screen/policy/terms_of_service_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
