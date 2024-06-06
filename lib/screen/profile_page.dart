@@ -20,6 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   List<dynamic> _posts = [];
   List<dynamic> _books = [];
+  List<dynamic> _bookmark = [];
 
   @override
   void initState() {
@@ -50,9 +51,15 @@ class _ProfilePageState extends State<ProfilePage> {
         .where('uid', isEqualTo: widget.uid)
         .get();
 
+    var bookmarkSnapshot = await FirebaseFirestore.instance
+        .collection('books')
+        .where('bookmark', arrayContains: widget.uid)
+        .get();
+
     setState(() {
       _posts = postsSnapshot.docs.map((doc) => doc.data()).toList();
       _books = booksSnapshot.docs.map((doc) => doc.data()).toList();
+      _bookmark = bookmarkSnapshot.docs.map((doc) => doc.data()).toList();
     });
   }
 
@@ -214,9 +221,55 @@ class _ProfilePageState extends State<ProfilePage> {
                                       .toList(),
                                 ),
                           const Divider(height: 40, thickness: 2),
-                          const Text('お気に入り商品',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          const Text(
+                            'お気に入り商品',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          _bookmark.isEmpty
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('フリマ投稿がありません',
+                                      textAlign: TextAlign.center),
+                                )
+                              : Column(
+                                  children: _bookmark
+                                      .map((book) => GestureDetector(
+                                            onTap: () {
+                                              DocumentReference docRef =
+                                                  FirebaseFirestore.instance
+                                                      .collection('books')
+                                                      .doc(book['documentId']);
+
+                                              // Increment the viewCount field
+                                              docRef.update({
+                                                'viewCount':
+                                                    FieldValue.increment(1)
+                                              });
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MarketSpecificPage(
+                                                          uid: book[
+                                                              'documentId']),
+                                                ),
+                                              );
+                                            },
+                                            child: ListTile(
+                                              title: Text(
+                                                book['bookname'],
+                                                style: const TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              subtitle:
+                                                  Text('${book['price']}円'),
+                                            ),
+                                          ))
+                                      .toList(),
+                                ),
                         ],
                       ),
                     ),
