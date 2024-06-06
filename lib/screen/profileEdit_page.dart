@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:libera_flutter/components/school_select.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key? key}) : super(key: key);
+  const ProfileEditPage({super.key});
 
   @override
   State<ProfileEditPage> createState() => _ProfileEditPageState();

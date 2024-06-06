@@ -6,7 +6,7 @@ import 'package:libera_flutter/screen/market/postbook_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 class BookMarketListPage extends StatefulWidget {
-  const BookMarketListPage({Key? key}) : super(key: key);
+  const BookMarketListPage({super.key});
 
   @override
   _BookMarketListPageState createState() => _BookMarketListPageState();

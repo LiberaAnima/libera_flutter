@@ -5,7 +5,7 @@ import 'package:libera_flutter/services/likebutton.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 class PostSearchPage extends StatefulWidget {
-  const PostSearchPage({Key? key}) : super(key: key);
+  const PostSearchPage({super.key});
 
   @override
   _PostSearchPageState createState() => _PostSearchPageState();

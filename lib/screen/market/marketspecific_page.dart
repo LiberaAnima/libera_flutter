@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/market/marketedit_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';

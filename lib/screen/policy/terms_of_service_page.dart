@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TermsOfServicePage extends StatelessWidget {
+  const TermsOfServicePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('利用規約'),
+        title: const Text('利用規約'),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),

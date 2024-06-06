@@ -1,15 +1,7 @@
 // import 'dart:html';
-
-import 'dart:io';
-import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/post/post_edit.dart';
 import 'package:libera_flutter/services/likebutton.dart';
@@ -20,7 +12,7 @@ import 'package:libera_flutter/services/user_service.dart';
 class PostSpecificPage extends StatefulWidget {
   final String id;
 
-  PostSpecificPage({required this.id});
+  const PostSpecificPage({super.key, required this.id});
 
   @override
   _PostSpecificPageState createState() => _PostSpecificPageState();

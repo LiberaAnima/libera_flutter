@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
 import 'package:libera_flutter/components/button.dart';
 import 'package:libera_flutter/components/school_select.dart';
 import 'package:libera_flutter/screen/home_page.dart';

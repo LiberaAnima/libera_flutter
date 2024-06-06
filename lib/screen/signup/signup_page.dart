@@ -4,7 +4,7 @@ import 'package:libera_flutter/components/input_box.dart';
 import 'package:libera_flutter/screen/signup/signup2_page.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
