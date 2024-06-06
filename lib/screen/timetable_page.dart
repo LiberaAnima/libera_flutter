@@ -99,11 +99,16 @@ class _TimeTablePageState extends State<TimeTablePage> {
                               if (classInfo.length >= 2) {
                                 return GestureDetector(
                                   onTap: () async {
+                                    String currentClass = classInfo[0];
+                                    String currentRoom = classInfo[1];
+
                                     // Show dialog to get new class and room information
                                     TextEditingController classController =
-                                        TextEditingController();
+                                        TextEditingController(
+                                            text: currentClass);
                                     TextEditingController roomController =
-                                        TextEditingController();
+                                        TextEditingController(
+                                            text: currentRoom);
 
                                     await showDialog(
                                       context: context,
