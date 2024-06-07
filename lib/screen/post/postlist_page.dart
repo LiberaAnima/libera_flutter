@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:libera_flutter/components/postDrawer.dart';
+import 'package:libera_flutter/components/tag.dart';
 import 'package:libera_flutter/screen/post/postsearch_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
@@ -189,6 +190,7 @@ class _PostListPagePageState extends State<PostListPage> {
                                                   20, // ここでタイトルのフォントサイズを変更
                                             ),
                                           ),
+                                          Tag(title: "d"),
                                         ],
                                       ),
                                       Padding(
