@@ -72,10 +72,10 @@ class _PostPagePageState extends State<PostPage> {
       onTap: () => {FocusScope.of(context).unfocus()},
       child: Scaffold(
         appBar: AppBar(
-          title: Text("投稿作成"),
+          title: const Text("投稿作成"),
         ),
         body: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               Center(
@@ -93,7 +93,7 @@ class _PostPagePageState extends State<PostPage> {
                       return null;
                     },
                     //maxLengthEnforced: false, // 入力上限になったときに、文字入力を抑制するか
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                     obscureText: false,
                     maxLines: 1,
                     decoration: const InputDecoration(
@@ -120,7 +120,7 @@ class _PostPagePageState extends State<PostPage> {
                       return null;
                     },
                     //maxLengthEnforced: false, // 入力上限になったときに、文字入力を抑制するか
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                     obscureText: false,
                     maxLines: 7,
                     decoration: const InputDecoration(
@@ -130,7 +130,7 @@ class _PostPagePageState extends State<PostPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               if (_postImage != null)
@@ -152,12 +152,12 @@ class _PostPagePageState extends State<PostPage> {
                       });
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   IconButton(
                     onPressed: _pickImage,
-                    icon: Icon(Icons.camera_alt_outlined),
+                    icon: const Icon(Icons.camera_alt_outlined),
                   ),
                 ],
               )
@@ -178,7 +178,7 @@ class _PostPagePageState extends State<PostPage> {
               Navigator.pop(context);
             }
           },
-          child: Icon(Icons.send, color: Colors.white),
+          child: const Icon(Icons.send, color: Colors.white),
         ),
       ),
     );
