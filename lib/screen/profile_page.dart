@@ -123,9 +123,24 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 10,
                           ),
                           const Divider(height: 40, thickness: 2),
-                          const Text('自分の投稿',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('自分の投稿',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              GestureDetector(
+                                child: const Row(
+                                  children: [
+                                    Text("more"),
+                                    SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward_ios),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                           _posts.isEmpty
                               ? const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
@@ -136,12 +151,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                   children: _posts
                                       .map((post) => GestureDetector(
                                             onTap: () {
-                                              DocumentReference docRef =
-                                                  FirebaseFirestore.instance
-                                                      .collection('posts')
-                                                      .doc(post['documentID']);
-
-                                              // Increment the viewCount field
+                                              FirebaseFirestore.instance
+                                                  .collection('posts')
+                                                  .doc(post['documentID']);
 
                                               Navigator.push(
                                                 context,
@@ -168,9 +180,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                       .toList(),
                                 ),
                           const Divider(height: 40, thickness: 2),
-                          const Text('フリマ投稿',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('フリマ投稿',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              GestureDetector(
+                                child: const Row(
+                                  children: [
+                                    Text("more"),
+                                    SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward_ios),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                           _books.isEmpty
                               ? const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
@@ -216,10 +243,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                       .toList(),
                                 ),
                           const Divider(height: 40, thickness: 2),
-                          const Text(
-                            'お気に入り商品',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'お気に入り商品',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              GestureDetector(
+                                child: const Row(
+                                  children: [
+                                    Text("more"),
+                                    SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward_ios),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                           _bookmark.isEmpty
                               ? const Padding(
@@ -265,6 +306,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ))
                                       .toList(),
                                 ),
+                          const Divider(height: 40, thickness: 2),
                           ElevatedButton(
                             onPressed: () async => await _auth.signOut().then(
                                 (_) => Navigator.pushNamed(context, "/logIn")),
