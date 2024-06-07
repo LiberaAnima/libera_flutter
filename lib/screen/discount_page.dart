@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 List<String> categories = ['全体', 'グルメ', 'カフェー', '交通', 'その他'];
 
 class DiscountPage extends StatefulWidget {
-  DiscountPage({Key? key}) : super(key: key);
+  const DiscountPage({super.key});
 
   @override
   State<DiscountPage> createState() => _DiscountPageState();

@@ -16,8 +16,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final UserService _userService = UserService();
-  UserModel? _user;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  UserModel? _user;
   List<dynamic> _posts = [];
   List<dynamic> _books = [];
   List<dynamic> _bookmark = [];
@@ -149,11 +149,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Column(
                                   children: _posts
+                                      .take(3)
                                       .map((post) => GestureDetector(
                                             onTap: () {
                                               FirebaseFirestore.instance
                                                   .collection('posts')
-                                                  .doc(post['documentID']);
+                                                  .doc(post['documentID'])
+                                                  .collection('comments')
+                                                  .get();
 
                                               Navigator.push(
                                                 context,
@@ -206,6 +209,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Column(
                                   children: _books
+                                      .take(3)
                                       .map((book) => GestureDetector(
                                             onTap: () {
                                               DocumentReference docRef =
@@ -270,6 +274,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Column(
                                   children: _bookmark
+                                      .take(3)
                                       .map((book) => GestureDetector(
                                             onTap: () {
                                               DocumentReference docRef =
