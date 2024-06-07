@@ -13,7 +13,7 @@ import 'package:libera_flutter/services/likebutton.dart';
 import 'package:libera_flutter/screen/post/post_specific.dart';
 
 class PostListPage extends StatefulWidget {
-  const PostListPage({Key? key}) : super(key: key);
+  const PostListPage({super.key});
 
   @override
   _PostListPagePageState createState() => _PostListPagePageState();
@@ -190,7 +190,14 @@ class _PostListPagePageState extends State<PostListPage> {
                                                   20, // ここでタイトルのフォントサイズを変更
                                             ),
                                           ),
-                                          Tag(title: "d"),
+                                          data['tag'] == null
+                                              ? Container()
+                                              : Row(
+                                                  children: <Widget>[
+                                                    const SizedBox(width: 10),
+                                                    Tag(title: '${data['tag']}')
+                                                  ],
+                                                ),
                                         ],
                                       ),
                                       Padding(
