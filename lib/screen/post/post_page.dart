@@ -18,6 +18,8 @@ class _PostPagePageState extends State<PostPage> {
   File? _postImage;
   final _formKey1 = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
+  List<String> selectedTags = [];
+  String dropdownValue = 'その他'; // Add this line
 
   void _onSubmitted(String content, File? postImage) async {
     String imageUrl = '';
@@ -33,18 +35,21 @@ class _PostPagePageState extends State<PostPage> {
     final DocumentSnapshot userDoc =
         await FirebaseFirestore.instance.collection('users').doc(uid).get();
     final post = FirebaseFirestore.instance.collection('posts').doc();
-    post.set({
-      // 匿名投稿の場合は、名前を「名無し」とする　( if 得意名　checks -> true)
-      'title': _titleEditingController.text,
-      'post_message': _textEditingController.text,
-      'date': FieldValue.serverTimestamp(),
-      'name': userDoc['username'],
-      'likes': [],
-      'uid': uid,
-      'documentID': post.id,
-      'isAnonymous': _isAnonymous,
-      'imageUrl': imageUrl == '' ? null : imageUrl,
-    });
+    post.set(
+      {
+        // 匿名投稿の場合は、名前を「名無し」とする　( if 得意名　checks -> true)
+        'title': _titleEditingController.text,
+        'post_message': _textEditingController.text,
+        'date': FieldValue.serverTimestamp(),
+        'name': userDoc['username'],
+        'likes': [],
+        'uid': uid,
+        'documentID': post.id,
+        'isAnonymous': _isAnonymous,
+        'imageUrl': imageUrl == '' ? null : imageUrl,
+        'tag': dropdownValue,
+      },
+    );
 
     /// 入力欄をクリアにする
     _textEditingController.clear();
@@ -98,7 +103,7 @@ class _PostPagePageState extends State<PostPage> {
                     maxLines: 1,
                     decoration: const InputDecoration(
                       hintText: '投稿タイトルを入力してください',
-                      labelText: 'タイトル',
+                      labelText: 'タイトル*',
                     ),
                   ),
                 ),
@@ -125,7 +130,7 @@ class _PostPagePageState extends State<PostPage> {
                     maxLines: 7,
                     decoration: const InputDecoration(
                       hintText: '投稿内容を記載します',
-                      labelText: '投稿内容',
+                      labelText: '投稿内容*',
                     ),
                   ),
                 ),
@@ -140,6 +145,7 @@ class _PostPagePageState extends State<PostPage> {
                   height: 200,
                 ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   const Text('匿名投稿'),
                   Checkbox(
@@ -148,16 +154,37 @@ class _PostPagePageState extends State<PostPage> {
                     onChanged: (bool? value) {
                       setState(() {
                         _isAnonymous = value!;
-                        print(_isAnonymous);
+                        // print(_isAnonymous);
                       });
                     },
-                  ),
-                  const SizedBox(
-                    width: 20,
                   ),
                   IconButton(
                     onPressed: _pickImage,
                     icon: const Icon(Icons.camera_alt_outlined),
+                  ),
+                  const Text("タグ選択 : "),
+                  DropdownButton<String>(
+                    value: dropdownValue,
+                    // icon: const Icon(Icons.arrow_downward),
+                    iconSize: 24,
+                    elevation: 16,
+                    // style: const TextStyle(color: Colors.deepPurple),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.grey,
+                    ),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        dropdownValue = newValue!;
+                      });
+                    },
+                    items: <String>['講義・授業', '部活・サークル', 'アルバイト', '就活', 'その他']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
                   ),
                 ],
               )
