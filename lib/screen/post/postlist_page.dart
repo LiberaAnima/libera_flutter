@@ -22,46 +22,72 @@ class PostListPage extends StatefulWidget {
 }
 
 class _PostListPagePageState extends State<PostListPage> {
-  final StreamController<List<DocumentSnapshot>> streamController =
-      StreamController<List<DocumentSnapshot>>();
-  List<DocumentSnapshot>? currentDocuments;
-  DocumentSnapshot? lastDocument;
-  final int documentLimit = 10;
+  final ScrollController _scrollController = ScrollController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<DocumentSnapshot> _posts = [];
+  bool _isLoading = false;
+  DocumentSnapshot? _lastDocument;
+
+  Future<void> _handleRefresh() async {
+    // Clear the existing posts
+    _posts.clear();
+    _lastDocument = null;
+
+    // Load the posts again
+    _loadPosts();
+  }
 
   @override
   void initState() {
     super.initState();
-    getData();
+    _scrollController.addListener(_scrollListener);
+    _loadPosts();
   }
 
-  Future<void> getData() async {
-    Query query = FirebaseFirestore.instance
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      _loadPosts();
+    }
+  }
+
+  void _loadPosts() async {
+    if (_isLoading) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    Query query = _firestore
         .collection('posts')
         .orderBy('date', descending: true)
-        .limit(documentLimit);
+        .limit(10);
 
-    if (lastDocument != null &&
-        (lastDocument!.data() as Map<String, dynamic>).containsKey('date')) {
-      query = query.startAfterDocument(lastDocument!);
+    if (_lastDocument != null) {
+      query = query.startAfterDocument(_lastDocument!);
     }
 
-    QuerySnapshot querySnapshot = await query.get();
+    final querySnapshot = await query.get();
 
-    if (querySnapshot.docs.length > 0) {
-      lastDocument = querySnapshot.docs[querySnapshot.docs.length - 1];
-      currentDocuments = List<DocumentSnapshot>.from(currentDocuments ?? [])
-        ..addAll(querySnapshot.docs);
-      streamController.add(currentDocuments!);
+    if (querySnapshot.docs.isNotEmpty) {
+      _lastDocument = querySnapshot.docs.last;
+      _posts.addAll(querySnapshot.docs);
     }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    Stream<QuerySnapshot> postlists;
-    postlists = FirebaseFirestore.instance
-        .collection('posts')
-        .orderBy('date', descending: true)
-        .snapshots();
     return Scaffold(
       appBar: AppBar(
         title: const Text('掲示板'),
@@ -79,208 +105,176 @@ class _PostListPagePageState extends State<PostListPage> {
         ],
       ),
       drawer: postDrawer(),
-      body: StreamBuilder<List<DocumentSnapshot>>(
-        stream: streamController.stream,
-        builder: (BuildContext context,
-            AsyncSnapshot<List<DocumentSnapshot>> snapshot) {
-          if (snapshot.hasError) {
-            return const Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return Column(
-            children: [
-              const Divider(
-                color: Colors.grey,
-                thickness: .5,
-                indent: 0,
-                endIndent: 0,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: snapshot.data!.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index == snapshot.data!.length) {
-                      getData();
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      DocumentSnapshot document = snapshot.data![index];
-
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-                      return GestureDetector(
-                        onTap: () {
-                          // print(document.id);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PostSpecificPage(
-                                id: data['documentID'],
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(),
-                            ),
-                          ),
-                          child: ListTile(
-                            contentPadding:
-                                const EdgeInsets.only(top: 0, bottom: 0),
-                            title: Column(
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: <Widget>[
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          '${data['title']}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20, // ここでタイトルのフォントサイズを変更
-                                          ),
-                                        ),
-                                        data['tag'] == null
-                                            ? Container()
-                                            : Row(
-                                                children: <Widget>[
-                                                  const SizedBox(width: 10),
-                                                  Tag(title: '${data['tag']}')
-                                                ],
-                                              ),
-                                      ],
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 10, right: 25),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            data['post_message'].length > 15
-                                                ? '${data['post_message'].substring(0, 15)}...'
-                                                : data['post_message'],
-                                          ),
-                                          if (data['imageUrl'] != null) ...[
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              child: Image.network(
-                                                  data['imageUrl'],
-                                                  width: 150,
-                                                  height: 100),
-                                            ),
-                                          ],
+      body: RefreshIndicator(
+        onRefresh: _handleRefresh,
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: _isLoading ? _posts.length + 1 : _posts.length,
+          itemBuilder: (context, index) {
+            if (index == _posts.length) {
+              return const CircularProgressIndicator();
+            } else {
+              final post = _posts[index];
+              // Render your post
+              // print(post);
+              return GestureDetector(
+                onTap: () {
+                  // print(document.id);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PostSpecificPage(
+                        id: post['documentID'],
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(),
+                    ),
+                  ),
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.only(top: 0, bottom: 0),
+                    title: Column(
+                      children: [
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: <Widget>[
+                                const SizedBox(width: 10),
+                                Text(
+                                  '${post['title']}',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20, // ここでタイトルのフォントサイズを変更
+                                  ),
+                                ),
+                                post['tag'] == null
+                                    ? Container()
+                                    : Row(
+                                        children: <Widget>[
+                                          const SizedBox(width: 10),
+                                          Tag(title: '${post['tag']}')
                                         ],
                                       ),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    const Divider(
-                                      color: Color.fromRGBO(165, 165, 165, 1),
-                                      thickness: .5,
-                                      indent: 15,
-                                      endIndent: 15,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          data["isAnonymous"] == true
-                                              ? '匿名'
-                                              : data["name"],
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                          data['date'] != null
-                                              ? timeAgo(data['date'].toDate())
-                                              : 'Unknown date',
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                        FavoriteButton(
-                                          documentid: data['documentID'],
-                                          collectionname: 'posts',
-                                        ),
-                                        Text(
-                                          '${data['likes'].length.toString()} いいね',
-                                          style: const TextStyle(
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        IconButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    PostSpecificPage(
-                                                  id: data['documentID'],
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          icon: const Icon(
-                                            Icons.messenger_outline_rounded,
-                                            size: 20,
-                                          ),
-                                        ),
-                                        StreamBuilder<QuerySnapshot>(
-                                          stream: FirebaseFirestore.instance
-                                              .collection('posts')
-                                              .doc(data['documentID'])
-                                              .collection('comments')
-                                              .snapshots(),
-                                          builder: (BuildContext context,
-                                              AsyncSnapshot<QuerySnapshot>
-                                                  snapshot) {
-                                            if (snapshot.hasData) {
-                                              return Text(
-                                                  '${snapshot.data!.docs.length.toString()} コメント',
-                                                  style: const TextStyle(
-                                                    fontSize: 10,
-                                                  ));
-                                            } else if (snapshot.hasError) {
-                                              return Text(
-                                                  'Error: ${snapshot.error}');
-                                            }
-                                            // By default, show a loading spinner.
-                                            return CircularProgressIndicator();
-                                          },
-                                        ),
-                                      ],
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10, right: 25),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    post['post_message'].length > 15
+                                        ? '${post['post_message'].substring(0, 15)}...'
+                                        : post['post_message'],
+                                  ),
+                                  if (post['imageUrl'] != null) ...[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(post['imageUrl'],
+                                          width: 150, height: 100),
                                     ),
                                   ],
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            const Divider(
+                              color: Color.fromRGBO(165, 165, 165, 1),
+                              thickness: .5,
+                              indent: 15,
+                              endIndent: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const SizedBox(width: 10),
+                                Text(
+                                  post["isAnonymous"] == true
+                                      ? '匿名'
+                                      : post["name"],
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                Text(
+                                  post['date'] != null
+                                      ? timeAgo(post['date'].toDate())
+                                      : 'Unknown date',
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                FavoriteButton(
+                                  documentid: post['documentID'],
+                                  collectionname: 'posts',
+                                ),
+                                Text(
+                                  '${post['likes'].length.toString()} いいね',
+                                  style: const TextStyle(
+                                    fontSize: 10,
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PostSpecificPage(
+                                          id: post['documentID'],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.messenger_outline_rounded,
+                                    size: 20,
+                                  ),
+                                ),
+                                StreamBuilder<QuerySnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('posts')
+                                      .doc(post['documentID'])
+                                      .collection('comments')
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if (snapshot.hasData) {
+                                      // Change 'haspost' to 'hasData'
+                                      return Text(
+                                          '${snapshot.data!.docs.length.toString()} コメント',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ));
+                                    } else if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    }
+                                    // By default, show a loading spinner.
+                                    return const CircularProgressIndicator();
+                                  },
                                 ),
                               ],
                             ),
-                          ),
+                          ],
                         ),
-                      );
-                    }
-                  },
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          );
-        },
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
