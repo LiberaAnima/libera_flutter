@@ -18,6 +18,15 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
   bool _isLoading = false;
   DocumentSnapshot? _lastDocument;
 
+  Future<void> _handleRefresh() async {
+    // Clear the existing posts
+    _books.clear();
+    _lastDocument = null;
+
+    // Load the posts again
+    _getBooks();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -90,140 +99,144 @@ class _BookMarketListPageState extends State<BookMarketListPage> {
           // ),
         ],
       ),
-      body: ListView.builder(
-        controller: _scrollController,
-        itemCount: _isLoading ? _books.length + 1 : _books.length,
-        itemBuilder: (context, index) {
-          if (index == _books.length) {
-            return _isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : null;
-          } else {
-            final book = _books[index];
-            // Render your book
-            return GestureDetector(
-              onTap: () {
-                DocumentReference docRef =
-                    FirebaseFirestore.instance.collection('books').doc(book.id);
+      body: RefreshIndicator(
+        onRefresh: _handleRefresh,
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: _isLoading ? _books.length + 1 : _books.length,
+          itemBuilder: (context, index) {
+            if (index == _books.length) {
+              return _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : null;
+            } else {
+              final book = _books[index];
+              // Render your book
+              return GestureDetector(
+                onTap: () {
+                  DocumentReference docRef = FirebaseFirestore.instance
+                      .collection('books')
+                      .doc(book.id);
 
-                // Increment the viewCount field
-                docRef.update({'viewCount': FieldValue.increment(1)});
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MarketSpecificPage(
-                      uid: book['documentId'],
+                  // Increment the viewCount field
+                  docRef.update({'viewCount': FieldValue.increment(1)});
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MarketSpecificPage(
+                        uid: book['documentId'],
+                      ),
                     ),
-                  ),
-                );
-              },
-              child: ListTile(
-                minVerticalPadding: 0,
-                contentPadding: EdgeInsets.zero,
-                title: Column(
-                  children: [
-                    const Divider(
-                      color: Colors.black,
-                      thickness: 1,
-                      indent: 0.0,
-                      endIndent: 0.0,
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: <Widget>[
-                            const SizedBox(width: 8),
-                            Image.network(
-                              book['imageUrl'],
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                            ),
-                            const SizedBox(width: 16),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(book['bookname'],
-                                    style: const TextStyle(
-                                      fontSize: 17,
+                  );
+                },
+                child: ListTile(
+                  minVerticalPadding: 0,
+                  contentPadding: EdgeInsets.zero,
+                  title: Column(
+                    children: [
+                      const Divider(
+                        color: Colors.black,
+                        thickness: 1,
+                        indent: 0.0,
+                        endIndent: 0.0,
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: <Widget>[
+                              const SizedBox(width: 8),
+                              Image.network(
+                                book['imageUrl'],
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                              const SizedBox(width: 16),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(book['bookname'],
+                                      style: const TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                  Text(
+                                    "${book['price']}円",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.orange[700],
                                       fontWeight: FontWeight.bold,
-                                    )),
-                                Text(
-                                  "${book['price']}円",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.orange[700],
-                                    fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 4),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Text(
-                                      book['username'] ?? 'null',
-                                      style: const TextStyle(
-                                        fontSize: 12,
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(
+                                        book['username'] ?? 'null',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      book['faculty'] ?? 'null',
-                                      style: const TextStyle(
-                                        fontSize: 12,
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        book['faculty'] ?? 'null',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                      timeAgo((book['postedAt'] as Timestamp)
-                                          .toDate()), // Convert Timestamp to DateTime
-                                      style: const TextStyle(
-                                        fontSize: 12,
+                                      const SizedBox(width: 10),
+                                      Text(
+                                        timeAgo((book['postedAt'] as Timestamp)
+                                            .toDate()), // Convert Timestamp to DateTime
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 15,
-                                    ),
-                                    Text(
-                                      '${(book.data() as Map<String, dynamic>).containsKey('bookmark') ? book['bookmark'].length.toString() : '0'} ',
-                                      style: const TextStyle(
-                                        fontSize: 12,
+                                      const SizedBox(
+                                        width: 15,
                                       ),
-                                    ),
-                                    const Icon(Icons.bookmark_border),
-                                    const SizedBox(width: 10),
-                                    // Text("${post["viewCount"]}閲覧",
-                                    // style: TextStyle(
-                                    //   fontSize: 12,
-                                    // )),
-                                    // Text('$viewCount閲覧'),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                      Text(
+                                        '${(book.data() as Map<String, dynamic>).containsKey('bookmark') ? book['bookmark'].length.toString() : '0'} ',
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                      const Icon(Icons.bookmark_border),
+                                      const SizedBox(width: 10),
+                                      // Text("${post["viewCount"]}閲覧",
+                                      // style: TextStyle(
+                                      //   fontSize: 12,
+                                      // )),
+                                      // Text('$viewCount閲覧'),
+                                    ],
+                                  ),
+                                ],
+                              ),
 
-                            // いいね数とコメント数を表示
-                            // Row(
-                            //   children: <Widget>[
-                            //     const Icon(Icons.favorite_border),
-                            //     Text(post['likes'].toString()),
-                            //     const SizedBox(width: 8),
-                            //     const Icon(Icons.comment),
-                            //     Text(post['comments'].toString()),
-                            //   ],
-                            // ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
+                              // いいね数とコメント数を表示
+                              // Row(
+                              //   children: <Widget>[
+                              //     const Icon(Icons.favorite_border),
+                              //     Text(post['likes'].toString()),
+                              //     const SizedBox(width: 8),
+                              //     const Icon(Icons.comment),
+                              //     Text(post['comments'].toString()),
+                              //   ],
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          }
-        },
+              );
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.orange,
