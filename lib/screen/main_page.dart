@@ -160,6 +160,7 @@ class _MainPagePageState extends State<MainPage> {
                               const SizedBox(
                                 height: 10,
                               ),
+
                               Timetable(userId: userId),
                               const SizedBox(
                                 height: 20,
