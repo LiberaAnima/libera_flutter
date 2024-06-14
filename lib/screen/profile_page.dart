@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/market/marketspecific_page.dart';
 import 'package:libera_flutter/screen/post/post_specific.dart';
+import 'package:libera_flutter/screen/profileMore_page.dart';
 import 'package:libera_flutter/services/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -131,6 +132,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold)),
                               GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileMorePage(
+                                          userId: widget.uid,
+                                          dataSnapshot: _posts, // 스냅샷 데이터를 전달
+                                          title: "自分の投稿"),
+                                    ),
+                                  )
+                                },
                                 child: const Row(
                                   children: [
                                     Text("more"),
@@ -191,6 +203,17 @@ class _ProfilePageState extends State<ProfilePage> {
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold)),
                               GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileMorePage(
+                                          userId: widget.uid,
+                                          dataSnapshot: _books, // 스냅샷 데이터를 전달
+                                          title: "フリマ投稿"),
+                                    ),
+                                  )
+                                },
                                 child: const Row(
                                   children: [
                                     Text("more"),
@@ -256,6 +279,18 @@ class _ProfilePageState extends State<ProfilePage> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                               ),
                               GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileMorePage(
+                                        userId: widget.uid,
+                                        dataSnapshot: _bookmark, // 스냅샷 데이터를 전달
+                                        title: "お気に入り商品",
+                                      ),
+                                    ),
+                                  )
+                                },
                                 child: const Row(
                                   children: [
                                     Text("more"),
