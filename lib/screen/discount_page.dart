@@ -87,8 +87,8 @@ class _DiscountPageState extends State<DiscountPage> {
                       var title = document['title'];
                       var url = document['URL'];
                       // Cut the content to a maximum of 50 characters
-                      if (content.length > 50) {
-                        content = content.substring(0, 50) + '...';
+                      if (content.length > 30) {
+                        content = content.substring(0, 30) + '...';
                       }
                       return GestureDetector(
                         onTap: () => launch(url),
@@ -96,14 +96,14 @@ class _DiscountPageState extends State<DiscountPage> {
                           color: Colors.white,
                           shadowColor: Colors.grey,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: Column(
                               children: <Widget>[
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 15),
                                 Text(
                                   title,
                                   style: const TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 30),
