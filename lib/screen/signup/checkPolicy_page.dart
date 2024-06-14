@@ -126,8 +126,10 @@ class _TermsOfServiceAgreementState extends State<TermsOfServiceAgreement> {
                   color: checked ? Colors.white : Colors.grey, size: 18),
             ),
             const SizedBox(width: 15),
-            Text(text,
-                style: const TextStyle(color: Colors.grey, fontSize: 18)),
+            Flexible(
+              child: Text(text,
+                  style: const TextStyle(color: Colors.grey, fontSize: 18)),
+            ),
           ],
         ),
       ),

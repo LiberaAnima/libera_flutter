@@ -192,7 +192,7 @@ class _MainPagePageState extends State<MainPage> {
                                   ),
                                   Flexible(
                                     child: menuIcon(
-                                        Icons.discount, "/event", "課外イベント"),
+                                        Icons.discount, "/event", "イベント"),
                                   ),
                                 ],
                               ),

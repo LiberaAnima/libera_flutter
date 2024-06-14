@@ -64,7 +64,7 @@ class ProfileMorePage extends StatelessWidget {
                 ],
               ),
             )
-          : Center(child: Text('No data')),
+          : const Center(child: Text('データがありません')),
     );
     // 여기에서 userId와 data을 사용하여 컬렉션의 내용을 디스플레이합니다.
   }

@@ -111,7 +111,7 @@ class _PostListPagePageState extends State<PostListPage> {
         children: <Widget>[
           //tagの選択
           SizedBox(
-            height: 30,
+            height: 50,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
@@ -124,7 +124,7 @@ class _PostListPagePageState extends State<PostListPage> {
                     });
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: Text(
                       categories[index],
                       style: TextStyle(
