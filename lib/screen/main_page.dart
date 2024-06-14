@@ -8,6 +8,7 @@ import 'package:libera_flutter/components/bottomButton.dart';
 import 'package:libera_flutter/components/timetable.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/login_page.dart';
+import 'package:libera_flutter/screen/post/post_specific.dart';
 import 'package:libera_flutter/screen/profile_page.dart';
 import 'package:libera_flutter/services/launchUrl_service.dart';
 
@@ -49,7 +50,6 @@ class _MainPagePageState extends State<MainPage> {
     _fetchUserData();
     setupPushNotifications();
     // _subscribe();
-    print('d');
   }
 
   void _fetchUserData() async {
@@ -64,10 +64,31 @@ class _MainPagePageState extends State<MainPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => LoginPage(), // Replace with your login page
+            builder: (context) =>
+                const LoginPage(), // Replace with your login page
           ),
         );
       }
+    }
+  }
+
+// posts collection
+  Future<List<DocumentSnapshot>> getPosts() async {
+    // 한 주 전의 날짜를 계산
+    DateTime oneWeekAgo = DateTime.now().subtract(const Duration(days: 7));
+
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('posts')
+        .where('date', isGreaterThan: oneWeekAgo) // 한 주 동안 게시된 게시물만 쿼리
+        .get();
+
+    List<DocumentSnapshot> docs = querySnapshot.docs;
+
+    if (docs.length <= 8) {
+      return docs;
+    } else {
+      docs.shuffle();
+      return docs.take(8).toList();
     }
   }
 
@@ -91,7 +112,7 @@ class _MainPagePageState extends State<MainPage> {
                   IconButton(
                     onPressed: () {
                       final String? uid = _auth.currentUser?.uid;
-                      print(uid);
+                      // print(uid);
 
                       if (uid != null) {
                         // uid를 ProfilePage로 전달하면서 이동합니다.
@@ -178,21 +199,24 @@ class _MainPagePageState extends State<MainPage> {
                               const SizedBox(
                                 height: 5,
                               ),
-                              const Card.outlined(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      width: double.infinity,
-                                      height: 100,
-                                      child: Center(
-                                        child: Text("お知らせ？ "),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+
+                              // アップデート
+
+                              // const Card.outlined(
+                              //   child: Column(
+                              //     children: [
+                              //       SizedBox(
+                              //         width: double.infinity,
+                              //         height: 100,
+                              //         child: Center(
+                              //           child: Text("お知らせ？ "),
+                              //         ),
+                              //       )
+                              //     ],
+                              //   ),
+                              // ),
                               const SizedBox(
-                                height: 20,
+                                height: 10,
                               ),
                               Container(
                                 padding: const EdgeInsets.only(left: 40),
@@ -209,17 +233,98 @@ class _MainPagePageState extends State<MainPage> {
                                   ],
                                 ),
                               ),
-                              const Card.outlined(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      width: double.infinity,
-                                      height: 200,
-                                      child: Center(
-                                        child: Text("何か入れる"),
-                                      ),
-                                    )
-                                  ],
+                              Card.outlined(
+                                child: FutureBuilder<List<DocumentSnapshot>>(
+                                  future: getPosts(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<List<DocumentSnapshot>>
+                                          snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Text('Error: ${snapshot.error}');
+                                    } else {
+                                      return Container(
+                                        color: Colors.white,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Column(
+                                            children: snapshot.data!
+                                                .map<Widget>((post) {
+                                              // Ensure that the map function returns a Widget
+                                              var data = post.data()
+                                                  as Map<String, dynamic>?;
+                                              var title = data != null &&
+                                                      data.containsKey('title')
+                                                  ? data['title']
+                                                  : 'No title';
+                                              var likes = data != null &&
+                                                      data.containsKey('likes')
+                                                  ? data['likes'] as List
+                                                  : [];
+                                              // var messages = data != null &&
+                                              //         data.containsKey(
+                                              //             'post_message')
+                                              //     ? data['post_message']
+                                              //     : 'No message';
+                                              var tag = data != null &&
+                                                      data.containsKey('tag')
+                                                  ? data['tag']
+                                                  : 'No tag';
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          PostSpecificPage(
+                                                        id: post['documentID'],
+                                                      ),
+                                                    ),
+                                                  );
+                                                },
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        '$tag',
+                                                        style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text('$title'),
+                                                          Row(
+                                                            children: [
+                                                              const Icon(Icons
+                                                                  .favorite_border_rounded),
+                                                              Text(
+                                                                  '${likes.length}'),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ); // Return a Text widget
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                               ),
                               const BottomButton(),
