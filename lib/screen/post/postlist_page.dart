@@ -109,6 +109,7 @@ class _PostListPagePageState extends State<PostListPage> {
       // drawer: postDrawer(),
       body: Column(
         children: <Widget>[
+          //tagの選択
           SizedBox(
             height: 30,
             child: ListView.builder(
@@ -158,7 +159,6 @@ class _PostListPagePageState extends State<PostListPage> {
                     } else {
                       final post = filteredPosts[index];
                       // Render your post
-                      // print(post);
                       return GestureDetector(
                         onTap: () {
                           // print(document.id);

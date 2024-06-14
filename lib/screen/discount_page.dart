@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-List<String> categories = ['全体', 'グルメ', 'カフェー', '交通', 'その他'];
+List<String> categories = ['全体', 'サブスク', 'グルメ', 'カフェー', '交通', 'その他'];
 
 class DiscountPage extends StatefulWidget {
   const DiscountPage({super.key});
