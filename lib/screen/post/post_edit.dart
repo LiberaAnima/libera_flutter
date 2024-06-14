@@ -24,13 +24,13 @@ class _PostEditPageState extends State<PostEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.data);
+    // print(widget.data);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Post'),
+        title: const Text('Edit Post'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -41,7 +41,7 @@ class _PostEditPageState extends State<PostEditPage> {
                     Expanded(
                       child: TextFormField(
                         controller: _titleController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Title',
                         ),
                       ),
@@ -50,7 +50,7 @@ class _PostEditPageState extends State<PostEditPage> {
                 ),
                 TextFormField(
                   controller: _descriptionController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Description',
                   ),
                   maxLines: 6,
@@ -82,7 +82,7 @@ class _PostEditPageState extends State<PostEditPage> {
             'post_message': postMessage,
           });
         },
-        child: Icon(Icons.save),
+        child: const Icon(Icons.save),
       ),
     );
   }
