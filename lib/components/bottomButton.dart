@@ -8,7 +8,7 @@ import 'package:libera_flutter/services/launchUrl_service.dart';
 Uri url = Uri.parse("https://forms.gle/ucn4UxGWKyDYufJN8");
 
 class BottomButton extends StatelessWidget {
-  const BottomButton({Key? key}) : super(key: key);
+  const BottomButton({super.key});
 
   @override
   Widget build(BuildContext context) {

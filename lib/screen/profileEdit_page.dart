@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:libera_flutter/components/school_select.dart';
 
 class ProfileEditPage extends StatefulWidget {
   const ProfileEditPage({super.key});
@@ -11,9 +10,9 @@ class ProfileEditPage extends StatefulWidget {
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  String? _selectedSchool;
-  String? _selectedField;
-  String? _selectedValue;
+  // String? _selectedSchool;
+  // String? _selectedField;
+  // String? _selectedValue;
 
   String schoolDropdouwnValue = 'School';
   String facultyDropdouwnValue = 'Faculty';

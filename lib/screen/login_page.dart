@@ -53,9 +53,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   loginButton(),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -69,9 +69,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: () =>
                             Navigator.pushNamed(context, '/checkpolicy'),
-                        child: Text("アカウントを作成する")),
+                        child: const Text("アカウントを作成する")),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 80,
                   ),
                   const BottomButton(),
@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> {
               debugPrint('Wrong password provided for that user');
             }
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text("ログインに失敗しました。もう一度お試しください。"),
               ),
             );
