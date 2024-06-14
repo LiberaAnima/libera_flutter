@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:libera_flutter/components/school_select.dart';
 
 class ProfileEditPage extends StatefulWidget {
-  const ProfileEditPage({Key? key}) : super(key: key);
+  const ProfileEditPage({super.key});
 
   @override
   State<ProfileEditPage> createState() => _ProfileEditPageState();
@@ -14,6 +15,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
   String? _selectedField;
   String? _selectedValue;
 
+  String schoolDropdouwnValue = 'School';
+  String facultyDropdouwnValue = 'Faculty';
+  String fieldDropdouwnValue = 'Field';
+
   Future<QuerySnapshot<Map<String, dynamic>>> getSchools() {
     return FirebaseFirestore.instance.collection('school').get();
   }
@@ -24,11 +29,24 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       appBar: AppBar(
         title: const Text("プロフィール編集"),
       ),
-      body: Center(
-          // child: SchoolDropdown(
-          //   futureSchools: getSchools(),
-          // ),
-          ),
+      body: const Center(
+        // child: SchoolDropdown(
+        //   futureSchools: getSchools(),
+        //   onSchoolSelected: (String? school) {
+        //     schoolDropdouwnValue = school!;
+        //   },
+        //   onFacultySelected: (String? faculty) {
+        //     facultyDropdouwnValue = faculty!;
+        //   },
+        //   onFieldSelected: (String? field) {
+        //     fieldDropdouwnValue = field!;
+        //   },
+        // ),
+        child: Text(
+          '準備中です',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 }

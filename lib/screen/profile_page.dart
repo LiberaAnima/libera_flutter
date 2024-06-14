@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:libera_flutter/models/user_model.dart';
 import 'package:libera_flutter/screen/market/marketspecific_page.dart';
 import 'package:libera_flutter/screen/post/post_specific.dart';
+import 'package:libera_flutter/screen/profileMore_page.dart';
 import 'package:libera_flutter/services/user_service.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,10 +17,11 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final UserService _userService = UserService();
-  UserModel? _user;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  UserModel? _user;
   List<dynamic> _posts = [];
   List<dynamic> _books = [];
+  List<dynamic> _bookmark = [];
 
   @override
   void initState() {
@@ -50,9 +52,15 @@ class _ProfilePageState extends State<ProfilePage> {
         .where('uid', isEqualTo: widget.uid)
         .get();
 
+    var bookmarkSnapshot = await FirebaseFirestore.instance
+        .collection('books')
+        .where('bookmark', arrayContains: widget.uid)
+        .get();
+
     setState(() {
       _posts = postsSnapshot.docs.map((doc) => doc.data()).toList();
       _books = booksSnapshot.docs.map((doc) => doc.data()).toList();
+      _bookmark = bookmarkSnapshot.docs.map((doc) => doc.data()).toList();
     });
   }
 
@@ -104,6 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           const Divider(height: 40, thickness: 2),
                           profileInfo('大学', _user!.school),
                           profileInfo('学部', _user!.faculty),
+                          profileInfo('学科,専攻,コース', _user!.field),
                           profileInfo('学年', _user!.year),
                           profileInfo('性別', _user!.gender),
                           ElevatedButton(
@@ -114,15 +123,36 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(
                             height: 10,
                           ),
-                          ElevatedButton(
-                            onPressed: () async => await _auth.signOut().then(
-                                (_) => Navigator.pushNamed(context, "/logIn")),
-                            child: const Text("ログアウト"),
-                          ),
                           const Divider(height: 40, thickness: 2),
-                          const Text('自分の投稿',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('自分の投稿',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileMorePage(
+                                          userId: widget.uid,
+                                          dataSnapshot: _posts, // 스냅샷 데이터를 전달
+                                          title: "自分の投稿"),
+                                    ),
+                                  )
+                                },
+                                child: const Row(
+                                  children: [
+                                    Text("more"),
+                                    SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward_ios),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                           _posts.isEmpty
                               ? const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
@@ -131,14 +161,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Column(
                                   children: _posts
+                                      .take(3)
                                       .map((post) => GestureDetector(
                                             onTap: () {
-                                              DocumentReference docRef =
-                                                  FirebaseFirestore.instance
-                                                      .collection('posts')
-                                                      .doc(post['documentID']);
-
-                                              // Increment the viewCount field
+                                              FirebaseFirestore.instance
+                                                  .collection('posts')
+                                                  .doc(post['documentID'])
+                                                  .collection('comments')
+                                                  .get();
 
                                               Navigator.push(
                                                 context,
@@ -165,9 +195,35 @@ class _ProfilePageState extends State<ProfilePage> {
                                       .toList(),
                                 ),
                           const Divider(height: 40, thickness: 2),
-                          const Text('フリマ投稿',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text('フリマ投稿',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                              GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileMorePage(
+                                          userId: widget.uid,
+                                          dataSnapshot: _books, // 스냅샷 데이터를 전달
+                                          title: "フリマ投稿"),
+                                    ),
+                                  )
+                                },
+                                child: const Row(
+                                  children: [
+                                    Text("more"),
+                                    SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward_ios),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                           _books.isEmpty
                               ? const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 10),
@@ -176,6 +232,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )
                               : Column(
                                   children: _books
+                                      .take(3)
                                       .map((book) => GestureDetector(
                                             onTap: () {
                                               DocumentReference docRef =
@@ -213,9 +270,88 @@ class _ProfilePageState extends State<ProfilePage> {
                                       .toList(),
                                 ),
                           const Divider(height: 40, thickness: 2),
-                          const Text('お気に入り商品',
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'お気に入り商品',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              GestureDetector(
+                                onTap: () => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfileMorePage(
+                                        userId: widget.uid,
+                                        dataSnapshot: _bookmark, // 스냅샷 데이터를 전달
+                                        title: "お気に入り商品",
+                                      ),
+                                    ),
+                                  )
+                                },
+                                child: const Row(
+                                  children: [
+                                    Text("more"),
+                                    SizedBox(width: 10),
+                                    Icon(Icons.arrow_forward_ios),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          _bookmark.isEmpty
+                              ? const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Text('ブックマークがありません',
+                                      textAlign: TextAlign.center),
+                                )
+                              : Column(
+                                  children: _bookmark
+                                      .take(3)
+                                      .map((book) => GestureDetector(
+                                            onTap: () {
+                                              DocumentReference docRef =
+                                                  FirebaseFirestore.instance
+                                                      .collection('books')
+                                                      .doc(book['documentId']);
+
+                                              // Increment the viewCount field
+                                              docRef.update({
+                                                'viewCount':
+                                                    FieldValue.increment(1)
+                                              });
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      MarketSpecificPage(
+                                                          uid: book[
+                                                              'documentId']),
+                                                ),
+                                              );
+                                            },
+                                            child: ListTile(
+                                              title: Text(
+                                                book['bookname'],
+                                                style: const TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              subtitle:
+                                                  Text('${book['price']}円'),
+                                            ),
+                                          ))
+                                      .toList(),
+                                ),
+                          const Divider(height: 40, thickness: 2),
+                          ElevatedButton(
+                            onPressed: () async => await _auth.signOut().then(
+                                (_) => Navigator.pushNamed(context, "/logIn")),
+                            child: const Text("ログアウト"),
+                          ),
                         ],
                       ),
                     ),

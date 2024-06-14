@@ -8,7 +8,6 @@ import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/post/postlist_page.dart';
 import 'package:libera_flutter/screen/school_page.dart';
-import 'package:libera_flutter/services/user_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,8 +19,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   UserModel? _user;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  UserService _userService = UserService();
 
   int currentPageIndex = 0;
   final List<Widget> _pages = <Widget>[

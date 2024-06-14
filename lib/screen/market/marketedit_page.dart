@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class MarketEditPage extends StatefulWidget {
   final Map<String, dynamic> data;
 
-  const MarketEditPage({Key? key, required this.data}) : super(key: key);
+  const MarketEditPage({super.key, required this.data});
 
   @override
   _MarketEditPageState createState() => _MarketEditPageState();

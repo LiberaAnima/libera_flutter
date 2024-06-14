@@ -5,7 +5,7 @@ import 'package:libera_flutter/services/likebutton.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 class PostSearchPage extends StatefulWidget {
-  const PostSearchPage({Key? key}) : super(key: key);
+  const PostSearchPage({super.key});
 
   @override
   _PostSearchPageState createState() => _PostSearchPageState();
@@ -59,11 +59,11 @@ class _PostSearchPageState extends State<PostSearchPage> {
       appBar: AppBar(
         title: TextField(
           controller: searchController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: '投稿を検索',
             hintStyle: TextStyle(color: Colors.black),
           ),
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black),
         ),
       ),
       body: StreamBuilder(
@@ -139,8 +139,15 @@ class _PostSearchPageState extends State<PostSearchPage> {
                                             MainAxisAlignment.start,
                                         children: [
                                           const SizedBox(width: 10),
+                                          if (data['imageUrl'] != null) ...[
+                                            Image.network(data['imageUrl'],
+                                                width: 100, height: 100),
+                                            const SizedBox(width: 30),
+                                          ],
                                           Text(
-                                            data['post_message'],
+                                            data['post_message'].length > 15
+                                                ? '${data['post_message'].substring(0, 15)}...'
+                                                : data['post_message'],
                                           ),
                                         ],
                                       ),
@@ -221,7 +228,7 @@ class _PostSearchPageState extends State<PostSearchPage> {
                                                     'Error: ${snapshot.error}');
                                               }
                                               // By default, show a loading spinner.
-                                              return CircularProgressIndicator();
+                                              return const CircularProgressIndicator();
                                             },
                                           ),
                                         ],

@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -27,21 +26,21 @@ class _ChatRoomState extends State<ChatRoom> {
   UserModel? _user;
   final User? user = FirebaseAuth.instance.currentUser;
 
-  void setupPushNotifications() async {
-    final fcm = FirebaseMessaging.instance;
+  // void setupPushNotifications() async {
+  //   final fcm = FirebaseMessaging.instance;
 
-    await fcm.requestPermission();
+  //   await fcm.requestPermission();
 
-    fcm.subscribeToTopic('chat');
-    final token = await fcm.getToken();
-    // print(token);
-  }
+  //   fcm.subscribeToTopic('chat');
+  //   final token = await fcm.getToken();
+  //   // print(token);
+  // }
 
   @override
   void initState() {
     super.initState();
     _fetchUserData();
-    setupPushNotifications();
+    // setupPushNotifications();
   }
 
   void _fetchUserData() async {
@@ -86,6 +85,7 @@ class _ChatRoomState extends State<ChatRoom> {
         userId: widget.userId,
         chatroomId: widget.chatroomId,
         username: _user?.username ?? '',
+        current: _user?.uid ?? '',
       ),
     );
   }
@@ -96,12 +96,14 @@ class ChatroomPage extends StatelessWidget {
   final String userId;
   final String chatroomId;
   final String username;
+  final String current;
 
   ChatroomPage({
     required this.otherId,
     required this.userId,
     required this.chatroomId,
     required this.username,
+    required this.current,
   });
 
   @override
@@ -146,6 +148,13 @@ class ChatroomPage extends StatelessWidget {
                 'text': message.text,
                 'username': username,
                 'timestamp': FieldValue.serverTimestamp(),
+              });
+
+              await FirebaseFirestore.instance
+                  .collection('chatroom')
+                  .doc(chatroomId)
+                  .update({
+                'isNew': true,
               });
             },
             user: types.User(id: userId),

@@ -4,7 +4,7 @@ import 'package:libera_flutter/screen/market/marketspecific_page.dart';
 import 'package:libera_flutter/services/timeago.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  const SearchPage({super.key});
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -61,8 +61,6 @@ class _SearchPageState extends State<SearchPage> {
           decoration: InputDecoration(
             hintText: "商品を検索",
             hintStyle: TextStyle(color: Colors.black),
-            border: InputBorder.none,
-            prefixIcon: Icon(Icons.search, color: Colors.black),
           ),
           style: TextStyle(color: Colors.black),
           onChanged: (value) {

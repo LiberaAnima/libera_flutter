@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
+import 'package:libera_flutter/screen/event_page.dart';
+import 'package:libera_flutter/screen/intern_page.dart';
 import 'package:libera_flutter/screen/market/bookmarketlist_page.dart';
 import 'package:libera_flutter/screen/chat/chatlist_page.dart';
-import 'package:libera_flutter/screen/class_page.dart';
-import 'package:libera_flutter/screen/discout_page.dart';
+import 'package:libera_flutter/screen/classComment_page.dart';
+import 'package:libera_flutter/screen/discount_page.dart';
 import 'package:libera_flutter/screen/home_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
@@ -18,7 +20,6 @@ import 'package:libera_flutter/screen/signup/findpassword_page.dart';
 import 'package:libera_flutter/screen/signup/signup_page.dart';
 
 import 'firebase_options.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         // colorScheme:
         //     ColorScheme.fromSeed(seedColor: Color.fromARGB(0, 242, 183, 7)),
+        textTheme: GoogleFonts.ibmPlexSansJpTextTheme(
+          Theme.of(context).textTheme,
+        ),
         useMaterial3: true,
       ),
       routes: {
@@ -61,11 +65,13 @@ class MyApp extends StatelessWidget {
         '/postlist': (context) => const PostListPage(),
         '/bookmarketlist': (context) => const BookMarketListPage(),
         // '/marketspecific': (context) => const MarketSpecificPage(),
-        '/class': (context) => const ClassPage(),
+        '/class': (context) => const ClassCommentPage(),
         '/post': (context) => PostPage(),
         '/postbook': (context) => const PostBookPage(),
         '/chatlist': (context) => const ChatListPage(),
-        '/discount': (context) => const DiscountPage(),
+        '/discount': (context) => DiscountPage(),
+        '/event': (context) => const EventPage(),
+        '/intern': (context) => const InternPage(),
         '/findpassword': (context) => FindPasswordPage(),
         '/editprofile': (context) => const ProfileEditPage(),
         '/checkpolicy': (context) => const TermsOfServiceAgreement(),

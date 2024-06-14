@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class EmailInput extends StatelessWidget {
   final TextEditingController controller;
 
-  EmailInput({required this.controller});
+  const EmailInput({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +13,7 @@ class EmailInput extends StatelessWidget {
       autofocus: true,
       validator: (val) {
         if (val!.isEmpty) {
-          return "Please enter your email";
+          return "メールアドレスを入力してください";
         } else {
           return null;
         }
@@ -23,8 +23,8 @@ class EmailInput extends StatelessWidget {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        hintText: "Input your Email Address",
-        labelText: "Email Address",
+        hintText: "メールアドレスを入力してください",
+        labelText: "メールアドレス",
       ),
     );
   }
@@ -50,7 +50,7 @@ class _PasswordInputState extends State<PasswordInput> {
       autofocus: true,
       validator: (val) {
         if (val!.isEmpty) {
-          return "Please enter your password";
+          return "パスワードを入力してください";
         } else {
           return null;
         }
@@ -60,8 +60,8 @@ class _PasswordInputState extends State<PasswordInput> {
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
         ),
-        hintText: "Input your Password",
-        labelText: "Password",
+        hintText: "パスワードを入力してください",
+        labelText: "パスワード",
         suffixIcon: IconButton(
           icon: Icon(_isObscure ? Icons.visibility_off : Icons.visibility),
           onPressed: () {

@@ -4,6 +4,7 @@ class UserModel {
   final String email;
   final String username;
   final String faculty;
+  final String field;
   final String school;
   final String gender;
   final String year;
@@ -13,6 +14,7 @@ class UserModel {
     required this.email,
     required this.username,
     required this.faculty,
+    required this.field,
     required this.school,
     required this.gender,
     required this.year,
@@ -24,6 +26,7 @@ class UserModel {
       email: data['email'],
       username: data['username'],
       faculty: data['faculty'],
+      field: data['field'],
       school: data['school'],
       gender: data['gender'],
       year: data['year'],

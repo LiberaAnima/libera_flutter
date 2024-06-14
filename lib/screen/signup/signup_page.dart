@@ -4,7 +4,7 @@ import 'package:libera_flutter/components/input_box.dart';
 import 'package:libera_flutter/screen/signup/signup2_page.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({Key? key}) : super(key: key);
+  const SignupPage({super.key});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -95,17 +95,17 @@ class _SignupPageState extends State<SignupPage> {
 
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                  content: Text("Sign Up Success"),
+                  content: Text("サインアップに成功しました"),
                 ),
               );
             } on FirebaseAuthException catch (error) {
-              if (error.code == 'email-already-in-use') {
+              if (error.code == 'メールアドレスがすでに使用されています') {
                 //
               }
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(error.message ?? "Authentication Failed"),
+                  content: Text(error.message ?? "認証に失敗しました"),
                 ),
               );
             }

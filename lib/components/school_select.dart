@@ -7,7 +7,8 @@ class SchoolDropdown extends StatefulWidget {
   final ValueChanged<String?> onFacultySelected;
   final ValueChanged<String?> onFieldSelected;
 
-  SchoolDropdown({
+  const SchoolDropdown({
+    super.key,
     required this.futureSchools,
     required this.onSchoolSelected,
     required this.onFacultySelected,
@@ -30,7 +31,7 @@ class _SchoolDropdownState extends State<SchoolDropdown> {
       builder: (BuildContext context,
           AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -38,6 +39,8 @@ class _SchoolDropdownState extends State<SchoolDropdown> {
               snapshot.data!.docs;
           return Column(
             children: [
+              const Text("大学",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               DropdownButton<String>(
                 value: _selectedSchool,
                 onChanged: (String? newValue) {
@@ -55,6 +58,11 @@ class _SchoolDropdownState extends State<SchoolDropdown> {
                   );
                 }).toList(),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("学部",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               DropdownButton<String>(
                 value: _selectedField,
                 onChanged: (String? newValue) {
@@ -79,6 +87,11 @@ class _SchoolDropdownState extends State<SchoolDropdown> {
                   );
                 }).toList(),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text("学科",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               if (_selectedField != null)
                 DropdownButton<String>(
                   value: _selectedValue,

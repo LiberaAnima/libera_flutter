@@ -1,26 +1,27 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PostBookPage extends StatefulWidget {
-  const PostBookPage({Key? key}) : super(key: key);
+  const PostBookPage({super.key});
 
   @override
   _PostBookPagePageState createState() => _PostBookPagePageState();
 }
 
 class _PostBookPagePageState extends State<PostBookPage> {
-  TextEditingController _booknameEditingController = TextEditingController();
-  TextEditingController _bookauthorEditingController = TextEditingController();
-  TextEditingController _priceEditingController = TextEditingController();
-  TextEditingController _detailsEditingController = TextEditingController();
+  final TextEditingController _booknameEditingController =
+      TextEditingController();
+  final TextEditingController _bookauthorEditingController =
+      TextEditingController();
+  final TextEditingController _priceEditingController = TextEditingController();
+  final TextEditingController _detailsEditingController =
+      TextEditingController();
   File? _bookImage;
 
   void _onSubmitted(String bookname, String bookauthor, String price,
@@ -44,12 +45,12 @@ class _PostBookPagePageState extends State<PostBookPage> {
         .collection('users')
         .doc(user.uid)
         .get();
-    print(user.uid);
+    // print(user.uid);
     String username = userDoc.get('username');
     String faculty = userDoc.get('faculty');
     //firestoreにデータを追加
     CollectionReference books = FirebaseFirestore.instance.collection('books');
-    print(books);
+    // print(books);
     final post = FirebaseFirestore.instance.collection('books').doc();
     await post.set(
       {

@@ -3,7 +3,7 @@ import 'package:libera_flutter/components/button.dart';
 import 'package:libera_flutter/services/auth/resetPassword.dart';
 
 class FindPasswordPage extends StatelessWidget {
-  FindPasswordPage({Key? key}) : super(key: key);
+  FindPasswordPage({super.key});
 
   final TextEditingController _emailController = TextEditingController();
 
