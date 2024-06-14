@@ -219,7 +219,7 @@ class _MainPagePageState extends State<MainPage> {
                                 height: 10,
                               ),
                               Container(
-                                padding: const EdgeInsets.only(left: 40),
+                                padding: const EdgeInsets.only(left: 10),
                                 width: double.infinity,
                                 child: const Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -288,6 +288,9 @@ class _MainPagePageState extends State<MainPage> {
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: [
+                                                    SizedBox(
+                                                      height: 30,
+                                                    ),
                                                     Expanded(
                                                       child: Text(
                                                         '$tag',
@@ -307,8 +310,11 @@ class _MainPagePageState extends State<MainPage> {
                                                           Text('$title'),
                                                           Row(
                                                             children: [
-                                                              const Icon(Icons
-                                                                  .favorite_border_rounded),
+                                                              const Icon(
+                                                                Icons
+                                                                    .favorite_border_rounded,
+                                                                size: 20,
+                                                              ),
                                                               Text(
                                                                   '${likes.length}'),
                                                             ],

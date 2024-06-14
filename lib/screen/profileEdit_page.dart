@@ -29,18 +29,22 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       appBar: AppBar(
         title: const Text("プロフィール編集"),
       ),
-      body: Center(
-        child: SchoolDropdown(
-          futureSchools: getSchools(),
-          onSchoolSelected: (String? school) {
-            schoolDropdouwnValue = school!;
-          },
-          onFacultySelected: (String? faculty) {
-            facultyDropdouwnValue = faculty!;
-          },
-          onFieldSelected: (String? field) {
-            fieldDropdouwnValue = field!;
-          },
+      body: const Center(
+        // child: SchoolDropdown(
+        //   futureSchools: getSchools(),
+        //   onSchoolSelected: (String? school) {
+        //     schoolDropdouwnValue = school!;
+        //   },
+        //   onFacultySelected: (String? faculty) {
+        //     facultyDropdouwnValue = faculty!;
+        //   },
+        //   onFieldSelected: (String? field) {
+        //     fieldDropdouwnValue = field!;
+        //   },
+        // ),
+        child: Text(
+          '準備中です',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     );
