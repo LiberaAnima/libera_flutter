@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:libera_flutter/screen/login_page.dart';
 import 'package:libera_flutter/screen/main_page.dart';
 import 'package:libera_flutter/screen/post/post_page.dart';
+import 'package:libera_flutter/screen/post/class_post_page.dart';
 import 'package:libera_flutter/screen/market/postbook_page.dart';
 import 'package:libera_flutter/screen/post/postlist_page.dart';
 import 'package:libera_flutter/screen/profileEdit_page.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
         '/findpassword': (context) => FindPasswordPage(),
         '/editprofile': (context) => const ProfileEditPage(),
         '/checkpolicy': (context) => const TermsOfServiceAgreement(),
+        //'/classpost': (context) => const ClassPostPage(),
       },
     );
   }
